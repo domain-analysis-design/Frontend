@@ -1,6 +1,8 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled,{css} from 'styled-components';
-import {AiOutlinePlus} from "react-icons/ai";
+import {AiOutlinePlus,AiOutlineEllipsis} from "react-icons/ai";
+import useToggle from '../../hooks/useToggle';
+import BoardOption from "../common/BoardOption";
 
 export const BoardItem = styled.div`
     width:30vh;
@@ -8,9 +10,12 @@ export const BoardItem = styled.div`
     cursor:pointer;
     background : rgb(2,106,167);
     margin-bottom:3vh;
+    font-size:24px;
+    color : white;
+    position:relative;
 `;
 
-export function CreateBoard(){
+export const CreateBoard = () => {
     function createBoard(){
         console.log("생성")
     }
@@ -22,9 +27,38 @@ export function CreateBoard(){
         </>
     )
 }
+const BoardBox = styled.div`
+  display: flex;
+  flex-wrap : wrap;
+  justify-content:space-between;
+`;
 
-function Board(){
-    return <div>안녕</div>
+function Board({lists}){
+    let num = lists.length;
+    
+    let initShow = new Array();
+
+    for(var i = 0; i < num; i++){
+        initShow[i] = false;
+    }
+
+    const optionOpen = (list)=>{
+        let index = lists.indexOf(list)
+
+        initShow[index] = !initShow[index];
+    }
+    return (
+        <BoardBox>
+            {{lists}.lists.map(list => 
+            <BoardItem >
+                <div style = {{position:'absolute',top:"1.5vh",left:"2vh"}}>{list.boardName} Board</div>
+                <AiOutlineEllipsis style = {{position:"absolute", top:"0",right:"1vh",width:"4vh",height:"4vh"}} 
+                onClick = {() => optionOpen(list)}/>
+                {initShow[{lists}.lists.indexOf(list)] === true &&  <BoardOption list = {list} />}
+            </BoardItem>)}
+            <CreateBoard/>
+        </BoardBox>
+    )
 }
 
 export default Board;
