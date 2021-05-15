@@ -3,11 +3,8 @@ import styled,{css} from 'styled-components';
 
 const Input = styled.input`
     color: rgb(94, 94, 94);
-    border-top-left-radius: 0px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 0px;
-    border-width: 1px 1px 1px 0px;
+    border-radius : 4px;
+    border-width: 1px;
     border-style: solid;
     border-color: rgb(204, 204, 204);
     box-sizing : border-box;
@@ -17,18 +14,24 @@ const Input = styled.input`
         outline : none;
         border : 2px solid;
         border-color : rgb(126, 201, 252);
+        &:focus::placeholder{
+            color:transparent;
+        }
     }
 
     ${props => props.feature === "login" &&
     css`
         width:48vh;
         height:9vh;
+        border-top-left-radius: 0px;    
+        border-bottom-left-radius: 0px;
+        border-left-width: 0px;
     `}
 
     ${props => props.feature === "register" &&
     css`
-        width:300px;
-        height:42px;
+        width:50vh;
+        height:6vh;
     `}
 
     ${props => props.feature === "findUser" &&

@@ -18,16 +18,10 @@ const Button = styled.div`
         height:6vh;
     `}
 
-    ${props => props.feature === "login" &&
-    css` //mainpage  before login 
+    ${props => (props.feature === "login" || props.feature === "register") &&
+    css` //mainpage  login  or register button
         width:26vh;
         height:7vh;
-    `}
-
-    ${props => props.feature === "register" &&
-    css`  //회원가입
-        width:180px;
-        height:40px;
     `}
 
     ${props => props.feature === "board" &&

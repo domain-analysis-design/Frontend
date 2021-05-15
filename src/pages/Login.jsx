@@ -58,18 +58,18 @@ const Login = () => {
             <Icon>
               <FaUserAlt style = {{width:"5vh", height:"5vh", color : "white"}}/>
             </Icon>
-            <Input feature = "login" placeholder = "UserID" type = "text" name = "userID" value = {user.userID} onChange = {onChangeInput}/>
+            <Input feature = "login" placeholder = "  UserID" type = "text" name = "userID" value = {user.userID} onChange = {onChangeInput}/>
           </div>
           
           <div style = {{display : "flex", marginBottom : "30px"}}>
             <Icon>
               <FaKey style = {{width:"5vh", height:"5vh", color : "white"}} />
             </Icon>
-            <Input feature = "login" placeholder = "password" type = "text" name = "password" value = {user.password} onChange = {onChangeInput}/>
+            <Input feature = "login" placeholder = "  password" type = "text" name = "password" value = {user.password} onChange = {onChangeInput}/>
           </div >
 
           <ButtonGroup>
-            <Button feature = "login" onClick = {onReset}>Login</Button>
+            <Button feature = "login" type = "submit" onClick = {onReset}>Login</Button>
             <Link to = "/register" style = {{textDecoration : 'none'}}>
               <Button feature = "login">Register</Button>
             </Link>
