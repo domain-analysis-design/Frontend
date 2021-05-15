@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Main from "./pages/Main";
 import Select from "./pages/Select";
+import "./App.css";
 
 const App = () => {
   return (
