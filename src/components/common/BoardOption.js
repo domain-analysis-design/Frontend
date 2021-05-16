@@ -33,15 +33,22 @@ const Block = styled.div`
     cursor : pointer;
 `;
 
+function BoardOption({list,method}){
+    const DeleteBoard = () => {
+        console.log("보드를 삭제하시겠습니까?")
+    }
 
-function BoardOption({list}){
+    const DeleteMember = () => {
+        console.log("멤버를 지우시겠습니까?")
+    }
+
     console.log(list)
     return(
         <Box style = {{position : "absolute", top:"4vh",left:"25vh",zIndex:"1"}}>
-            <AiOutlineClose style = {{color :"black", position :"absolute",top:"1vh",left:"25vh",width:"3vh",height:"3vh"}}/>
+            <AiOutlineClose onClick = {method} style = {{color :"black", position :"absolute",top:"1vh",left:"25vh",width:"3vh",height:"3vh"}}/>
             <BoardTitle>{list.boardName} Board</BoardTitle>
-            <Block>보드 삭제</Block>
-            <Block>팀원 추방</Block>
+            <Block onClick = {DeleteBoard}>보드 삭제</Block>
+            <Block onClick = {DeleteMember}>팀원 추방</Block>
         </Box>
     )
 }
