@@ -10,6 +10,8 @@ export const createUser = () => {
   };
 };
 
+export const createBoardInUser = () => {};
+
 export const createBoard = () => {
   return {
     boardName: faker.random.word(),
