@@ -35,17 +35,19 @@ const BoardBox = styled.div`
 
 function Board({lists}){
     let num = lists.length;
-    
     let initShow = new Array();
-
+    
     for(var i = 0; i < num; i++){
         initShow[i] = false;
     }
-
+    const [showOption,setShowOption] = useState(initShow)
+    
     const optionOpen = (list)=>{
         let index = lists.indexOf(list)
-
-        initShow[index] = !initShow[index];
+        
+        initShow[index] = !initShow[index]
+        
+        setShowOption(initShow)
     }
     return (
         <BoardBox>
@@ -54,7 +56,7 @@ function Board({lists}){
                 <div style = {{position:'absolute',top:"1.5vh",left:"2vh"}}>{list.boardName} Board</div>
                 <AiOutlineEllipsis style = {{position:"absolute", top:"0",right:"1vh",width:"4vh",height:"4vh"}} 
                 onClick = {() => optionOpen(list)}/>
-                {initShow[{lists}.lists.indexOf(list)] === true &&  <BoardOption list = {list} />}
+                {showOption[{lists}.lists.indexOf(list)] === true &&  <BoardOption list = {list} method = {()=>optionOpen(list)} />}
             </BoardItem>)}
             <CreateBoard/>
         </BoardBox>
