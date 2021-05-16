@@ -9,6 +9,14 @@ export const createUser = () => {
     })),
   };
 };
+export const createBoardInUser = () =>{
+  return{
+    boardName : faker.random.word(),
+    member : new Array(5).fill().map((v,i) => ({
+      memberID : faker.name.findName()
+    }))
+  }
+}
 
 export const createBoard = () => {
   return {

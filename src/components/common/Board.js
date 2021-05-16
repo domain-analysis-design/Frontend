@@ -40,15 +40,32 @@ function Board({lists}){
     for(var i = 0; i < num; i++){
         initShow[i] = false;
     }
-    const [showOption,setShowOption] = useState(initShow)
     
-    const optionOpen = (list)=>{
-        let index = lists.indexOf(list)
-        
-        initShow[index] = !initShow[index]
-        
-        setShowOption(initShow)
+    const [showOption,setShowOption] = useState([...initShow])
+    const resetOption = () =>{
     }
+    const optionOpen = (list)=>{
+        // resetOption()
+        const tempVisible = new Array();
+        // tempVisible = lists.map(i => {
+        //     if( i === list) {tempVisible.push(true)}
+        //     else{tempVisible.push(false)}
+        // })
+        // console.log(tempVisible)
+        initShow.map(i => tempVisible.push(i))
+        console.log(tempVisible)
+        let index = lists.indexOf(list)
+        tempVisible[index] = !tempVisible[index]
+        console.log(tempVisible)
+        // console.log(initShow)
+        // console.log(showOption)
+        // showOption[index] = !showOption[index]
+
+        // console.log(initShow)
+        // console.log(showOption)
+        setShowOption([...tempVisible])
+    }
+
     return (
         <BoardBox>
             {{lists}.lists.map(list => 
