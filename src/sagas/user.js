@@ -7,6 +7,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+  REGISTER_REQUEST,
 } from "../reducers/user";
 
 function* loadUserSaga() {
@@ -29,7 +32,18 @@ function* loginSaga() {
   }
 }
 
+function* registerSaga() {
+  try {
+    yield delay(100);
+    const res = createUser();
+    yield put({ type: REGISTER_SUCCESS });
+  } catch (error) {
+    yield put({ type: REGISTER_FAILURE, error });
+  }
+}
+
 export function* watchUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUserSaga);
   yield takeLatest(LOGIN_REQUEST, loginSaga);
+  yield takeLatest(REGISTER_REQUEST, registerSaga);
 }
