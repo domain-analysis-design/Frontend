@@ -54,13 +54,17 @@ function Board({lists}){
     }
 
     const optionOpen = (list) => {
-        const tempVisible = new Array();
-        initShow.map(i => tempVisible.push(i))
-        console.log(tempVisible)
         let index = lists.indexOf(list)
-        tempVisible[index] = !tempVisible[index]
-        console.log(tempVisible)
-        setShowOption([...tempVisible])
+
+        if(showOption[index]){
+            showOption[index] = false
+            setShowOption([...showOption])
+        }else{
+            const tempVisible = new Array();
+            initShow.map(i => tempVisible.push(i))
+            tempVisible[index] = !tempVisible[index]
+            setShowOption([...tempVisible])
+        }
     };
     return (
         <BoardBox>
