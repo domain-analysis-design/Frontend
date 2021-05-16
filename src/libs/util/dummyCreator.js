@@ -2,6 +2,7 @@ import faker from "faker";
 
 export const createUser = () => {
   return {
+    // name : faker.random.word(),
     name: faker.name.findName(),
     boardList: new Array(5).fill().map((v, i) => ({
       ...createBoard(),

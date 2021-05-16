@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "../components/common/Button";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { createBoard } from "../libs/util/dummyCreator";
 
 const LandingBlock = styled.div`
   display: flex;
@@ -28,10 +27,6 @@ const ButtonGroup = styled.div`
 `;
 
 const Landing = () => {
-  useEffect(() => {
-    let board = createBoard();
-    console.log(board);
-  }, []);
   return (
     <LandingBlock>
       <CenterBlock>
