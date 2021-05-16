@@ -20,7 +20,6 @@ function* loadUserSaga() {
 }
 
 function* loginSaga() {
-  console.log("login");
   try {
     yield delay(100);
     const res = createUser();
