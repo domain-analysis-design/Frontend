@@ -10,6 +10,9 @@ export const initialState = {
   loginLoading: false,
   loginDone: false,
   loginError: null,
+  registerLoading: false,
+  registerDone: false,
+  registerError: null,
 };
 
 // action type
@@ -22,11 +25,17 @@ export const LOGIN_REQUEST = "user/LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "user/LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "user/LOGIN_FAILURE";
 
+export const REGISTER_REQUEST = "user/REGISTER_REQUEST";
+export const REGISTER_SUCCESS = "user/REGISTER_SUCCESS";
+export const REGISTER_FAILURE = "user/REGISTER_FAILURE";
+
 // action creator
 
 export const loadUserRequestAction = createAction(LOAD_USER_REQUEST);
 
 export const loginRequestAction = createAction(LOGIN_REQUEST);
+
+export const registerRequestAction = createAction(REGISTER_REQUEST);
 
 // reducer
 
@@ -69,6 +78,25 @@ const user = handleActions(
       loginLoading: false,
       loginDone: false,
       loginError: "error",
+    }),
+    [REGISTER_REQUEST]: (state, action) => ({
+      ...state,
+      registerLoading: true,
+      registerDone: false,
+      registerError: null,
+    }),
+    [REGISTER_SUCCESS]: (state, action) => ({
+      ...state,
+      registerLoading: false,
+      registerDone: true,
+      registerError: null,
+      //user: action.user,
+    }),
+    [REGISTER_FAILURE]: (state, action) => ({
+      ...state,
+      registerLoading: false,
+      registerDone: false,
+      registerError: "error",
     }),
   },
   initialState,
