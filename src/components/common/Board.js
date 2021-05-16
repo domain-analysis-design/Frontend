@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import { AiOutlinePlus, AiOutlineEllipsis } from "react-icons/ai";
 import useToggle from "../../hooks/useToggle";
 import BoardOption from "../common/BoardOption";
-import Modal from "./Modal";
 
 export const BoardItem = styled.div`
   width: 30vh;
@@ -43,50 +42,49 @@ const BoardBox = styled.div`
   justify-content: space-between;
 `;
 
-function Board({ lists }) {
-  const [showModal, setShowModal] = useToggle(false);
-  let num = lists.length;
+function Board({lists}){
+    let num = lists.length;
+    
+    let initShow = new Array();
 
-  let initShow = new Array();
+    const [showOption, setShowOption] = useState([...initShow]);
 
-  for (var i = 0; i < num; i++) {
-    initShow[i] = false;
-  }
+    for (var i = 0; i < num; i++) {
+        initShow[i] = false;
+    }
 
-  const optionOpen = (list) => {
-    console.log(list);
-    let index = lists.indexOf(list);
-
-    initShow[index] = !initShow[index];
-  };
-  return (
-    <BoardBox>
-      {{ lists }.lists.map((list) => (
-        <BoardItem>
-          <div style={{ position: "absolute", top: "1.5vh", left: "2vh" }}>
-            {list.boardName} Board
-          </div>
-          <AiOutlineEllipsis
-            style={{
-              position: "absolute",
-              top: "0",
-              right: "1vh",
-              width: "4vh",
-              height: "4vh",
-              border: "1px solid red",
-            }}
-            // onClick={() => optionOpen(list)}
-            onClick={setShowModal}
-          />
-          {/* {initShow[{ lists }.lists.indexOf(list)] === true && (
-            <BoardOption list={list} />
-          )} */}
-          {showModal && <Modal list={list}></Modal>}
-        </BoardItem>
-      ))}
-      <CreateBoard />
-    </BoardBox>
-  );
-}
+    const optionOpen = (list) => {
+        const tempVisible = new Array();
+        initShow.map(i => tempVisible.push(i))
+        console.log(tempVisible)
+        let index = lists.indexOf(list)
+        tempVisible[index] = !tempVisible[index]
+        console.log(tempVisible)
+        setShowOption([...tempVisible])
+    };
+    return (
+        <BoardBox>
+        {{ lists }.lists.map((list) => (
+            <BoardItem>
+                <div style={{ position: "absolute", top: "1.5vh", left: "2vh" }}>
+                    {list.boardName} Board
+                </div>
+                <AiOutlineEllipsis
+                    style={{
+                    position: "absolute",
+                    top: "0",
+                    right: "1vh",
+                    width: "4vh",
+                    height: "4vh",
+                    }}
+                    onClick={() => optionOpen(list)}
+                />
+                {showOption[{lists}.lists.indexOf(list)] === true &&  <BoardOption list = {list} method = {()=>optionOpen(list)} />}
+            </BoardItem>
+        ))}
+        <CreateBoard />
+        </BoardBox>
+    );
+    }
 
 export default Board;
