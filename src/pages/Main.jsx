@@ -1,53 +1,56 @@
-import React,{useEffect} from "react";
-import styled from 'styled-components';
+import React, { useEffect } from "react";
+import styled from "styled-components";
 import Header from "../components/common/Header";
 import { FaUserAlt } from "react-icons/fa";
 import { createBoard, createUser } from "../libs/util/dummyCreator";
-import { BoardItem , CreateBoard } from "../components/common/Board";
-import { useDispatch,useSelector } from "react-redux";
-import { loadUserPostRequestAction } from "../reducers/post";
+import { BoardItem, CreateBoard } from "../components/common/Board";
+import { useDispatch, useSelector } from "react-redux";
 import Board from "../components/common/Board";
+import { loadBoardListRequestAction } from "../reducers/board";
 const MainBlock = styled.div`
-  width:55%;
-  height:90vh;
+  width: 55%;
+  height: 90vh;
 `;
 
 const UserTitle = styled.div`
-  display:inline-flex;
-  align-items:center;
-  font-size:2vh;
-  padding-bottom : 8%;
+  display: inline-flex;
+  align-items: center;
+  font-size: 2vh;
+  padding-bottom: 8%;
 `;
 
 const Main = () => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const { boardList } = useSelector((state) => state.board);
 
-  const {userPost} = useSelector(state => state.post)
-  
-  useEffect(()=>{
-    dispatch(loadUserPostRequestAction())
-  },[])
+  useEffect(() => {
+    dispatch(loadBoardListRequestAction());
+  }, []);
 
-  if(!userPost) return(
-    <div>11</div>
-  )
+  if (!boardList) return null;
   return (
     <>
-      <Header/>
-      <div style={{width:"100%",display:"flex",justifyContent:"center"}}>
+      <Header />
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <MainBlock>
-          <div style={{width:"100%",height:"20%"}} />
+          <div style={{ width: "100%", height: "20%" }} />
           <UserTitle>
-            <FaUserAlt style = {{width:"4vh", height:"4vh", color : "rgb(2,106,167)", paddingRight: "5vh"}}/>
-            <div>{userPost.name}'s Board</div>
+            <FaUserAlt
+              style={{
+                width: "4vh",
+                height: "4vh",
+                color: "rgb(2,106,167)",
+                paddingRight: "5vh",
+              }}
+            />
+            <div>{boardList.name}'s Board</div>
           </UserTitle>
-          <Board lists = {userPost.boardList}/>
+          <Board lists={boardList.boardList} />
         </MainBlock>
-
       </div>
     </>
-  )
+  );
 };
 
 export default Main;
