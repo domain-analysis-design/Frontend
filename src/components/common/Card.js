@@ -22,8 +22,14 @@ const CardBox = styled.div`
 
 
 function Card({card,feature}){
+    const OpenCard = ({card,feature}) => {
+        if (feature !== "send"){
+
+            console.log(card)
+        }
+    }
     return (
-        <CardBox feature={feature}>{card.cardName}</CardBox>        
+        <CardBox feature={feature} onClick = {() => OpenCard({card,feature})}>{card.cardName}</CardBox>        
     )
 }
 

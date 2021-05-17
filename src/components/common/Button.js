@@ -32,8 +32,8 @@ const Button = styled.div`
 
     ${props => (props.feature === "accept" || props.feature === "deny") &&
     css` // card receive accept or deny
-        width:80px;
-        height:40px;
+        width:10vh;
+        height:5vh;
     `}
 
     ${props => props.feature === "choiceBoard" &&
