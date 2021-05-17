@@ -1,21 +1,29 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled,{css} from 'styled-components';
 
 const CardBox = styled.div`
-    width:30vh;
-    height:10vh;
+    width:300px;
+    height:100px;
     background : white;
     padding: 2vh;
     box-sizing : border-box;
     margin:2vh 0;
     font-size:20px;
     cursor : pointer;
+
+    ${props=>props.feature === "send" &&
+    css`
+        width:300px;
+        height:80px;
+        text-align : center;
+
+    `}
 `;
 
 
-function Card({card}){
+function Card({card,feature}){
     return (
-        <CardBox>{card.cardName}</CardBox>        
+        <CardBox feature={feature}>{card.cardName}</CardBox>        
     )
 }
 
