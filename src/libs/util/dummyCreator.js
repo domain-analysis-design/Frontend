@@ -36,7 +36,7 @@ export const createBoard = () => {
 export const createList = () => {
   return {
     listName: faker.random.word(),
-    card: new Array(5).fill().map((v, i) => ({
+    cards: new Array(5).fill().map((v, i) => ({
       ...createCard(),
     })),
   };
