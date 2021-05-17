@@ -21,7 +21,7 @@ export const createBoardInUser = () =>{
 export const createBoard = () => {
   return {
     boardName: faker.random.word(),
-    list: new Array(5).fill().map((v, i) => ({
+    lists: new Array(5).fill().map((v, i) => ({
       ...createList(),
     })),
     waitingCard: new Array(5).fill().map((v, i) => ({
