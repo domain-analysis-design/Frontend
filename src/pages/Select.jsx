@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import List from "../components/common/List";
 import BoardHeader from "../components/BoardHeader";
 import {createBoard} from "../libs/util/dummyCreator";
+// import LeftSide from "../components/LeftSide";
 import Card from "../components/common/Card";
 import Button from "../components/common/Button";
 
@@ -18,10 +19,12 @@ const LeftSide = styled.div`
   display: flex;
   flex-direction : column;
   align-items:center;
+  overflow : auto;
 `;
 const ButtonBox = styled.div`
   display : flex;
-  
+  justify-content:center;
+  padding-bottom : 1vh;
 `;
 
 const MainBox = styled.div`
@@ -39,18 +42,27 @@ const RightSide = styled.div`
 
 const Select = () => {
   const board = createBoard();
-  console.log(board)
+
+  const AcceptCard = ({card}) =>{
+    console.log(card)
+  }
+
+  const DenyCard = ({card}) =>{
+    console.log(card)
+  }
   return (
     <>
       <BoardHeader />
       <Body>
         <LeftSide>
           {board.waitingCard.map(card =>
-          <>
+          <div style = {{borderBottom : "1px solid black"}}>
             <Card card = {card} feature = "send"/>
-            <Button feature = "accept" >승인</Button>
-            <Button feature = "deny" >거절</Button>  
-          </>
+            <ButtonBox>
+              <Button feature = "accept" onClick = {() => AcceptCard({card})} >승인</Button>
+              <Button feature = "deny" onClick = {() => DenyCard({card})} style= {{marginLeft:"20px"}}>거절</Button>  
+            </ButtonBox>
+          </div>
           )}
         </LeftSide>
         <MainBox>
