@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/common/Header";
 import Input from "../components/common/Input";
 import { FaUserAlt, FaKey } from "react-icons/fa";
 import Button from "../components/common/Button";
-import { Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import { useDispatch } from "react-redux";
 import { loginRequestAction } from "../reducers/user";

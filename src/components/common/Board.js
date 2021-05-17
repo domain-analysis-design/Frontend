@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { AiOutlinePlus, AiOutlineEllipsis } from "react-icons/ai";
-import useToggle from "../../hooks/useToggle";
 import BoardOption from "../common/BoardOption";
 
 export const BoardItem = styled.div`
@@ -42,8 +41,8 @@ const BoardBox = styled.div`
   justify-content: space-between;
 `;
 
-function Board({lists}){
-    let num = lists.length;
+function Board({boards}){
+    let num = boards.length;
     
     let initShow = new Array();
 
@@ -53,8 +52,8 @@ function Board({lists}){
         initShow[i] = false;
     }
 
-    const optionOpen = (list) => {
-        let index = lists.indexOf(list)
+    const optionOpen = (board) => {
+        let index = boards.indexOf(board)
 
         if(showOption[index]){
             showOption[index] = false
@@ -68,10 +67,10 @@ function Board({lists}){
     };
     return (
         <BoardBox>
-        {{ lists }.lists.map((list) => (
+        {{ boards }.boards.map((board) => (
             <BoardItem>
                 <div style={{ position: "absolute", top: "1.5vh", left: "2vh" }}>
-                    {list.boardName} Board
+                    {board.boardName} Board
                 </div>
                 <AiOutlineEllipsis
                     style={{
@@ -81,9 +80,9 @@ function Board({lists}){
                     width: "4vh",
                     height: "4vh",
                     }}
-                    onClick={() => optionOpen(list)}
+                    onClick={() => optionOpen(board)}
                 />
-                {showOption[{lists}.lists.indexOf(list)] === true &&  <BoardOption list = {list} method = {()=>optionOpen(list)} />}
+                {showOption[{boards}.boards.indexOf(board)] === true &&  <BoardOption board = {board} method = {()=>optionOpen(board)} />}
             </BoardItem>
         ))}
         <CreateBoard />
