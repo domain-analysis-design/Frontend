@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/common/Header";
 import { FaUserAlt } from "react-icons/fa";
-import { createBoard, createUser } from "../libs/util/dummyCreator";
-import { BoardItem, CreateBoard } from "../components/common/Board";
 import { useDispatch, useSelector } from "react-redux";
 import Board from "../components/common/Board";
 import { loadBoardListRequestAction } from "../reducers/board";
+
 const MainBlock = styled.div`
   width: 55%;
   height: 90vh;
@@ -46,7 +45,7 @@ const Main = () => {
             />
             <div>{boardList.name}'s Board</div>
           </UserTitle>
-          <Board lists={boardList.boardList} />
+          <Board boards={boardList.boardList} />
         </MainBlock>
       </div>
     </>
