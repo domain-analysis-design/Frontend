@@ -40,12 +40,13 @@ const Button = styled.div`
     css` // card sending choice board button
         width:110px;
         height:40px;
+        margin : 2vh auto 0;
     `}
 
     ${props => props.feature === "sendingCard" &&
     css` // card sending button
-        width:150px;
-        height:30px;
+        width:25vh;
+        height:4vh;
     `}
 
     ${props => props.feature === "checkListDelete" &&

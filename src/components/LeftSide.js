@@ -19,11 +19,27 @@ const ButtonBox = styled.div`
     padding-bottom : 1vh;
 `;
 
-function LeftSide(){
-    
+function LeftSide({Board}){
+
+    const AcceptCard = ({card}) =>{
+        console.log(card)
+    }
+
+    const DenyCard = ({card}) =>{
+        console.log(card)
+    }
 
     return(
-        
+        <Block>
+            {Board.waitingCard.map(card =>
+            <div style = {{borderBottom : "1px solid black"}}>
+                <Card card = {card} feature = "send"/>
+                <ButtonBox>
+                    <Button feature = "accept" onClick = {() => AcceptCard({card})} >승인</Button>
+                    <Button feature = "deny" onClick = {() => DenyCard({card})} style= {{marginLeft:"20px"}}>거절</Button>  
+                </ButtonBox>
+            </div>)}
+        </Block>
     )
 }
 
