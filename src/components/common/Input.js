@@ -42,8 +42,8 @@ const Input = styled.input`
 
     ${props => props.feature === "findGroup" &&
     css`
-        width:190px;
-        height:40px;
+        width:37vh;
+        height:7vh;
     `}
 
     ${props => props.feature === "checkList" &&
