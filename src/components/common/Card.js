@@ -7,7 +7,7 @@ const CardBox = styled.div`
     background : white;
     padding: 2vh;
     box-sizing : border-box;
-    margin:2vh 0;
+    margin:2vh auto;
     font-size:20px;
     cursor : pointer;
 

@@ -1,5 +1,12 @@
 import faker from "faker";
 
+export const createOtherBoard = () => {
+  return{
+    boardList : new Array(20).fill().map((v,i)=>({
+      ...createBoardInUser(),
+    }))
+  }
+}
 export const createUser = () => {
   return {
     // name : faker.random.word(),

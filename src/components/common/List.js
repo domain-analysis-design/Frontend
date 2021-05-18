@@ -2,20 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import {AiOutlineEllipsis,AiOutlinePlus} from 'react-icons/ai';
 import Card from './Card';
+import { createList } from '../../libs/util/dummyCreator';
 
 const ListBlock = styled.div`
-    display:flex;
+    /* display:flex;
     flex-direction:column;
-    align-items:center;
+    align-items:center; */
     
     background-color: rgb(235, 236, 240);
+    
     border-radius : 4px;
     
-    margin-left : 3vh;
-
+    margin: 0 1vh;
 `;
 
 const ListHeader = styled.div`
+    margin: 0 auto;
     width:330px;
     height:70px;
     padding:2vh;
@@ -28,13 +30,30 @@ const ListHeader = styled.div`
 
 
 const ListFooter = styled.div`
+    margin : 0 auto;
     width:90%;
     height:80px;
     font-size:2.8vh;
     line-height:5vh;
     display: flex;
+    justify-content:center;
+    align-items:center;
     cursor : pointer;
 `;
+
+export const CreateList = () => {
+    const createList = () => {
+        console.log("createList")
+    }
+    return(
+        <ListBlock>
+            <ListHeader style = {{cursor:"pointer"}} onClick = {() => createList()}>
+                <AiOutlinePlus style = {{width:"5vh",height:"5vh"}}/>
+                <div>Add another List</div>
+            </ListHeader>
+        </ListBlock>
+    )
+}
 
 function List({list}){
     const createCard = () => {
