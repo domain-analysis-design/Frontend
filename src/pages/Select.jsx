@@ -13,6 +13,7 @@ const Body = styled.div`
 
 const MainBox = styled.div`
   width:60%;
+  height:100%;
   display:flex;
   overflow: auto;
   justify-content:space-between;
@@ -20,14 +21,14 @@ const MainBox = styled.div`
 
 const Select = () => {
   const board = createBoard();
-
+  
   return (
     <>
-      <BoardHeader />
+      <BoardHeader users = {board.member}/>
       <Body>
         <LeftSide Board={board}/>
         
-        <MainBox >
+        <MainBox>
           {board.lists.map(list =>
             <List list = {list}></List>
           )}

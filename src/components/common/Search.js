@@ -27,7 +27,8 @@ const BoardBox = styled.div`
     cursor : pointer;
 `;
 
-function SearchGroup(){
+function Search({feature}){
+    
     const board = createOtherBoard();
     const checkBoard = () => {
         console.log("이 보드를 선택하시겠습니까?")
@@ -42,4 +43,4 @@ function SearchGroup(){
     )
 }
 
-export default SearchGroup;
+export default Search;
