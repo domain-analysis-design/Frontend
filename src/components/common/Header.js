@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AiFillHome } from "react-icons/ai";
 import { BsBellFill } from "react-icons/bs";
+import { Link } from 'react-router-dom';
 
 const IconBox = styled.div`
     display:flex;
@@ -25,9 +26,12 @@ function Header(){
     return (
         <HeaderBlock>
             <IconBox>
-                <AiFillHome style = {{width : "7vh", height : "7vh", color:"white", cursor : "pointer"}}/>
+                <Link to= "/login" style = {{textDecoration : "none"}}>
+                    <AiFillHome style = {{width : "7vh", height : "7vh", color:"white", cursor : "pointer"}}/>
+                </Link>
             </IconBox>
             <div style = {{fontSize: "32px", color : "white", cursor:"pointer"}}>김박이조하</div>
+            
             <IconBox>
                 <BsBellFill style = {{width : "7vh", height : "7vh", color:"white", cursor : "pointer"}} />
             </IconBox>

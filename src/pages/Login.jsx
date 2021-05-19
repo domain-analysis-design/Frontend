@@ -60,7 +60,7 @@ const Login = ({ history }) => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
 
       <BodyBlock>
         <LoginBlock>
