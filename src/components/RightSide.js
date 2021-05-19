@@ -4,7 +4,7 @@ import {AiOutlinePlus} from 'react-icons/ai';
 import Input from './common/Input';
 import Button from './common/Button';
 import useToggle from '../hooks/useToggle';
-import SearchGroup from './common/SearchGroup';
+import Search from './common/Search';
 
 const Block = styled.div`
     width:20%;
@@ -37,18 +37,19 @@ function RightSide(){
     const [toggle,setToggle] = useToggle();
     const [sendCard,setSendCard] = useState(initSendCard);
 
-    console.log(sendCard === [])
-    console.log(sendCard === Array(0))
-    console.log(sendCard === null)
-    console.log(sendCard == [""])
-    console.log(sendCard === [''])
-    console.log(sendCard == initSendCard)
+    // console.log(sendCard === [])
+    // console.log(sendCard === Array(0))
+    // console.log(sendCard === null)
+    // console.log(sendCard == [""])
+    // console.log(sendCard === [''])
+    // console.log(sendCard == initSendCard)
 
     const SendCardListStyle = {
         display:"flex",
         justifyContent: "center",
         alignItems:"center",
     }
+
     return(
         <Block>
             {sendCard == initSendCard && 
@@ -56,21 +57,22 @@ function RightSide(){
                     <AiOutlinePlus style = {{width:"5vh",height:"5vh"}}/>
                 </SendCardList>
             }
-            {sendCard != initSendCard &&
+            {sendCard !== initSendCard &&
                 <SendCardList>
                     {sendCard.map(card=>{
                         <div style = {{width:"100%",height:"6vh",borderBottom : "1px solid black"}}>
-                            <SendCard>{card.cardName}</SendCard>
+                            1
+                            {/* <SendCard>{card.cardName}</SendCard> */}
                         </div>
                     })}
                 </SendCardList>
             }
-            <Input feature = "findGroup" onClick = {setToggle}/>
+            <Input feature = "findGroup" onClick = {setToggle} placeholder = "  Search Board ..."/>
             {!toggle && 
             <div style = {{background : "red",height:"20vh"}}/>
             }
             {toggle &&
-                <SearchGroup/>
+                <Search feature = "board"/>
             }
             <Button feature = "sendingCard">Send</Button>
         </Block>

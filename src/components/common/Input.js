@@ -36,8 +36,8 @@ const Input = styled.input`
 
     ${props => props.feature === "findUser" &&
     css`
-        width:165px;
-        height:40px;
+        width:25vh;
+        height:5vh;
     `}
 
     ${props => props.feature === "findGroup" &&

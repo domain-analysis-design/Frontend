@@ -1,5 +1,12 @@
 import faker from "faker";
 
+export const createOtherUser = () =>{
+  return{
+    UserList : new Array(20).fill().map((v,i)=>({
+      name : faker.name.findName(),
+    }))
+  }
+}
 export const createOtherBoard = () => {
   return{
     boardList : new Array(20).fill().map((v,i)=>({
@@ -34,9 +41,9 @@ export const createBoard = () => {
     waitingCard: new Array(5).fill().map((v, i) => ({
       ...createCard(),
     })),
-    // member: new Array(5).fill().map((v, i) => ({
-    //   ...createUser(),
-    // })),
+    member: new Array(5).fill().map((v, i) => ({
+      memberID : faker.name.findName()
+    })),
   };
 };
 

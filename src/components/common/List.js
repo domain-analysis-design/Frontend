@@ -2,17 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import {AiOutlineEllipsis,AiOutlinePlus} from 'react-icons/ai';
 import Card from './Card';
-import { createList } from '../../libs/util/dummyCreator';
 
 const ListBlock = styled.div`
-    /* display:flex;
-    flex-direction:column;
-    align-items:center; */
-    
     background-color: rgb(235, 236, 240);
-    
     border-radius : 4px;
-    
     margin: 0 1vh;
 `;
 

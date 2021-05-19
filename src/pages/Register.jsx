@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../components/common/Header";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import useInput from "../hooks/useInput";
@@ -53,7 +52,7 @@ const Register = ({ history }) => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
 
       <BodyBlock>
         <div style={{ fontSize: "48px", padding: "25px" }}>회원가입</div>
