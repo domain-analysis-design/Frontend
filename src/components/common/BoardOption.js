@@ -1,6 +1,9 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import {AiOutlineClose} from "react-icons/ai";
+import {BiUserCircle, BiCheckbox} from "react-icons/bi";
+import Button from "./Button";
+import { Modal } from './Modal';
 
 const Box = styled.div`
     width:30vh;
@@ -33,22 +36,82 @@ const Block = styled.div`
     cursor : pointer;
 `;
 
+const MemberBox = styled.div`
+    display:flex;
+    width:90%;
+    height:20%;
+    color:black;
+    margin : 2px auto;
+    border-bottom : 1px solid gray;
+`;
+
 function BoardOption({board,method}){
+    const [deleteToggle,setDeleteToggle] = useState(false);
+    const [deportToggle,setDeportToggle] = useState(false);
+
+    const onClickDelete = () => {
+        setDeportToggle(false)
+        setDeleteToggle(!deleteToggle)
+    }
+    const onClickDeport = () => {
+        setDeleteToggle(false)
+        setDeportToggle(!deportToggle)
+    }
     const DeleteBoard = () => {
-        console.log("보드를 삭제하시겠습니까?")
+        console.log("보드진짜 지워줘")
     }
 
     const DeleteMember = () => {
         console.log("멤버를 지우시겠습니까?")
     }
 
+    const closeStyle = {
+        width: "5vh",
+        height: "5vh",
+        color : "black",
+    }
+
+    const deleteTextStyle = {
+        display:"flex",
+        alignItems:"center",
+        fontSize : "25px",
+        width:"100%",
+        height:"10vh",
+        color:"black",
+        marginLeft : "1vh"
+    }
     console.log(board)
     return(
         <Box style = {{position : "absolute", top:"4vh",left:"25vh",zIndex:"1"}}>
             <AiOutlineClose onClick = {method} style = {{color :"black", position :"absolute",top:"1vh",left:"25vh",width:"3vh",height:"3vh"}}/>
             <BoardTitle>{board.boardName} Board</BoardTitle>
-            <Block onClick = {DeleteBoard}>보드 삭제</Block>
-            <Block onClick = {DeleteMember}>팀원 추방</Block>
+            <Block onClick = {onClickDelete}>보드 삭제</Block>
+            {deleteToggle &&
+                <Modal>
+                    <div style={{display:"flex", justifyContent : "flex-end", height:"5vh"}}>
+                        <AiOutlineClose style = {closeStyle} onClick = {onClickDelete}/>
+                    </div>
+                    <div style = {deleteTextStyle}>
+                        board를 지우시겠습니까?
+                    </div>
+                    <div style = {{display :"flex",justifyContent:"space-between",marginTop:"2vh"}}>
+                        <Button feature = "board" onClick = {DeleteBoard}>예</Button>
+                        <Button feature = "board" onClick = {onClickDelete}>아니오</Button>
+                    </div>
+                </Modal>
+            }
+            <Block onClick = {onClickDeport}>팀원 추방</Block>
+            {deportToggle &&
+                <Modal feature = "deport">
+                    {board.member.map(member=>
+                        <MemberBox >
+                            <div style = {{width:"20%"}}><BiCheckbox style = {{width:"5vh",height:"5vh"}}/></div>
+                            <div style = {{width:"60%",textAlign : "center",fontSize : "16px",margin:"auto 0"}}> {member.memberID} </div>
+                            <div style = {{width:"20%"}}><BiUserCircle style = {{color : "gray",width:"5vh",height:"5vh"}}/></div>
+                        </MemberBox>)}
+                    <Button feature = "board" style = {{margin: "2vh auto 0px"}}>추방하기</Button>
+                </Modal>
+            }
         </Box>
     )
 }
