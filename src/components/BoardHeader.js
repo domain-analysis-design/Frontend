@@ -97,7 +97,7 @@ function BoardHeader({users}){
                     }
                 </UserBox>
                 <div style = {{display:"flex", alignItems:"center"}}>
-                    <Input onClick = {setToggle} feature = "findUser" placeholder = "  User" />
+                    <Input onClick = {setToggle} feature = "findUser" placeholder = "  Search User ..." />
                     {toggle && 
                     <div style = {{position:"absolute",top:"7vh",left:"32vh",width:"28vh"}}>
                         <Search feature = "user"></Search>

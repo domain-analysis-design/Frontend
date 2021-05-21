@@ -26,8 +26,8 @@ const Button = styled.div`
 
     ${props => props.feature === "board" &&
     css` //board header button + board option team member delete button + board option board delete button
-        width:100px;
-        height:40px;
+        width:13vh;
+        height:5vh;
     `}
 
     ${props => (props.feature === "accept" || props.feature === "deny") &&

@@ -35,6 +35,7 @@ const SendCard = styled.div`
 function RightSide(){
     const initSendCard = [];
     const [toggle,setToggle] = useToggle();
+    const [sendToggle,setSendToggle] = useToggle();
     const [sendCard,setSendCard] = useState(initSendCard);
 
     // console.log(sendCard === [])
@@ -52,12 +53,12 @@ function RightSide(){
 
     return(
         <Block>
-            {sendCard == initSendCard && 
+            {!sendToggle && 
                 <SendCardList style = {SendCardListStyle}>
                     <AiOutlinePlus style = {{width:"5vh",height:"5vh"}}/>
                 </SendCardList>
             }
-            {sendCard !== initSendCard &&
+            {sendToggle &&
                 <SendCardList>
                     {sendCard.map(card=>{
                         <div style = {{width:"100%",height:"6vh",borderBottom : "1px solid black"}}>
