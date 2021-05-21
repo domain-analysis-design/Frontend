@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiFillHome } from "react-icons/ai";
-import { BsBellFill,BsPeopleCircle } from "react-icons/bs";
+import { BsBellFill } from "react-icons/bs";
+import { BiUserCircle } from "react-icons/bi";
 import {GrGroup} from "react-icons/gr";
 import { Link } from 'react-router-dom';
 import Input from './common/Input';
@@ -11,7 +12,6 @@ import Search from './common/Search';
 const LeftGroup = styled.div`
     width:33.5%;
     height:8vh;
-    /* background : red; */
     display: flex;
 `;
 
@@ -38,6 +38,31 @@ const UserBox = styled.div`
     align-items:center;
 `;
 
+const MemberBox = styled.div`
+    border-radius : 4px;
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: rgb(0 0 0 / 31%) 3px 3px 10px 0px;
+    background-color: rgb(255, 255, 255);
+    box-sizing : border-box;
+    width:30vh;
+    height:15vh;
+    overflow : auto;
+`;
+
+const Member = styled.div`
+    width:80%;
+    height:5vh;
+    margin: 3px auto 0;
+    padding : 1px;
+    border-bottom:1px solid black;
+    text-align : center;
+    font-size : 20px;
+    cursor : pointer;
+    display : flex;
+    justify-content:space-between;
+`;
+
+
 const HeaderBlock = styled.div`
     height:8vh;
     background-color: rgb(148, 189, 212);
@@ -50,7 +75,7 @@ function BoardHeader({users}){
     const [toggle,setToggle] = useToggle();
     const [memberToggle,setMemberToggle] = useToggle();
 
-    console.log(users)
+    console.log({users})
     return (
         <HeaderBlock>
             <LeftGroup>
@@ -62,9 +87,14 @@ function BoardHeader({users}){
                 <UserBox>
                     <GrGroup onClick = {setMemberToggle} style = {{cursor:"pointer",width:"4vh",height:"4vh"}}/>
                     {memberToggle &&
-                    <div style = {{position : "absolute",top : "2vh", left:"27vh"}}>
-                        123
-                    </div>}
+                    <MemberBox style = {{position : "absolute",top : "2vh", left:"27vh"}}>
+                        {users.map(user => 
+                            <Member>
+                                <BiUserCircle style = {{color : "gray",width:"4vh",height :"4vh"}}/>
+                                {user.memberID}
+                            </Member>)}
+                    </MemberBox>
+                    }
                 </UserBox>
                 <div style = {{display:"flex", alignItems:"center"}}>
                     <Input onClick = {setToggle} feature = "findUser" placeholder = "  User" />
