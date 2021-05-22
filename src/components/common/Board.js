@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { AiOutlinePlus, AiOutlineEllipsis } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineEllipsis,AiOutlineClose } from "react-icons/ai";
 import BoardOption from "../common/BoardOption";
+import useToggle from "../../hooks/useToggle";
+import { Modal } from "./Modal";
+import Input from "./Input";
+import Button from "./Button";
 
 export const BoardItem = styled.div`
   width: 30vh;
@@ -14,13 +18,12 @@ export const BoardItem = styled.div`
   position: relative;
 `;
 
-export const CreateBoard = () => {
-  function createBoard() {
-    console.log("생성");
-  }
+export const CreateBoard = ({name}) => {
+  const [createToggle,setCreateToggle] = useToggle();
+
   return (
     <>
-      <BoardItem style={{ position: "relative" }} onClick={createBoard}>
+      <BoardItem style={{ position: "relative" }} onClick={setCreateToggle}>
         <AiOutlinePlus
           style={{
             color: "white",
@@ -31,7 +34,26 @@ export const CreateBoard = () => {
             left: "10vh",
           }}
         />
-      </BoardItem>
+        </BoardItem>
+        {createToggle &&
+        <>
+          <div style = {{position:"fixed",top:"0",left:"0",width:"100%",height:"100%",background: "rgba(0, 0, 0, 0.298039)"}}/>
+          <Modal feature = "create">
+            <div style = {{display:"flex",justifyContent:"flex-end"}}>
+              <AiOutlineClose style = {{color : "black",width:"5vh",height:"5vh"}} onClick = {setCreateToggle}/>
+            </div>
+            <Input feature = "create" placeholder = "  Add Board Title" />
+            <div style = {{color : "black", 
+                          fontSize:"20px",
+                          height:"18vh",
+                          display:"flex",
+                          alignItems:"center"}}>
+              {name.name}'s WorkSpace
+            </div>
+          </Modal>
+          <Button feature = "create">Create Board</Button>
+        </>
+        }
     </>
   );
 };
@@ -85,7 +107,6 @@ function Board({boards}){
                 {showOption[{boards}.boards.indexOf(board)] === true &&  <BoardOption board = {board} method = {()=>optionOpen(board)} />}
             </BoardItem>
         ))}
-        <CreateBoard />
         </BoardBox>
     );
     }

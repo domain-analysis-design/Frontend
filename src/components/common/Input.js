@@ -46,6 +46,28 @@ const Input = styled.input`
         height:7vh;
     `}
 
+    ${props => props.feature === "create" &&
+    css`
+        margin-top : 15px;
+        color: rgb(74, 190, 202);
+        border-width: 0px 0px 2px;
+        border-style: solid;
+        box-shadow: none;
+        border-color: rgb(51, 51, 51) rgb(51, 51, 51) rgb(74, 190, 202);
+        border-radius: 0px;
+        background-color: rgba(255, 255, 255, 0);
+        width:50vh;
+        height:4vh;
+        ::placeholder{
+            color: rgb(74, 190, 202);
+        }
+        &:focus{
+            border-top:none;
+            border-left:none;
+            border-right:none;
+        }
+    `}
+
     ${props => props.feature === "checkList" &&
     css`
         width:466px;
