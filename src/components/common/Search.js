@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import { createOtherBoard } from '../../libs/util/dummyCreator';
+import {GrCheckbox,GrCheckboxSelected} from 'react-icons/gr';
 import Button from './Button';
 
 const Box = styled.div`
@@ -27,18 +28,41 @@ const BoardBox = styled.div`
     cursor : pointer;
 `;
 
-function Search({feature}){
+function Search({feature,text}){
     
-    const board = createOtherBoard();
-    const checkBoard = () => {
-        console.log("이 보드를 선택하시겠습니까?")
+    const boards = createOtherBoard();
+    
+    let num = boards.boardList.length;
+    
+    let initShow = new Array();
+
+    
+    for ( var i = 0; i < num; i++){
+        initShow[i] = false;
+    }
+    const [showOption,setShowOption] = useState([...initShow]);
+    
+    const searchBoard = (board) => {
+        showOption[boards.boardList.indexOf(board)] = !showOption[boards.boardList.indexOf(board)]
+        setShowOption([...showOption])
+    }
+    const action = (e) =>{
+        console.log(e)
     }
     return(
         <Box>
-            {board.boardList.map(board=>
-                <BoardBox onClick = {checkBoard}>{board.boardName}</BoardBox>    
+            {boards.boardList.map(board=>
+            <div onClick = {()=>searchBoard(board)} style = {{display:"flex",alignItems:"center",cursor:"pointer"}}>
+                {showOption[boards.boardList.indexOf(board)] === false &&
+                    <GrCheckbox style = {{width:"3vh",height : "3vh",marginLeft:"3px"}}/>
+                }
+                {showOption[boards.boardList.indexOf(board)] === true &&
+                    <GrCheckboxSelected style = {{width:"3vh",height : "3vh",marginLeft:"3px"}}/>
+                }
+                <BoardBox >{board.boardName}</BoardBox>    
+            </div>
             )}
-            <Button feature = "choiceBoard">Choice</Button>
+            <Button feature = "choiceBoard" onClick = {action}>{text}</Button>
         </Box>
     )
 }
