@@ -20,7 +20,7 @@ const ButtonBox = styled.div`
 `;
 
 function LeftSide({Board}){
-
+    console.log(Board)
     const AcceptCard = ({card}) =>{
         console.log(card)
     }
