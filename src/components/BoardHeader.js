@@ -74,8 +74,7 @@ const HeaderBlock = styled.div`
 function BoardHeader({users}){
     const [toggle,setToggle] = useToggle();
     const [memberToggle,setMemberToggle] = useToggle();
-
-    console.log({users})
+    
     return (
         <HeaderBlock>
             <LeftGroup>
@@ -100,11 +99,10 @@ function BoardHeader({users}){
                     <Input onClick = {setToggle} feature = "findUser" placeholder = "  Search User ..." />
                     {toggle && 
                     <div style = {{position:"absolute",top:"7vh",left:"32vh",width:"28vh"}}>
-                        <Search feature = "user"></Search>
+                        <Search feature = "user" text = "invite"></Search>
                     </div>}
                 </div>
             </LeftGroup>
-            {/* <div style = {{textAlign : "center",width: "33%",fontSize: "32px", color : "white", cursor:"pointer"}}>김박이조하</div> */}
             <RightGroup>
                 <IconBox>
                     <BsBellFill style = {{width : "7vh", height : "7vh", color:"white", cursor : "pointer"}} />

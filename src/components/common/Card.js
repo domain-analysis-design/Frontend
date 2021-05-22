@@ -16,7 +16,6 @@ const CardBox = styled.div`
         width:300px;
         height:80px;
         text-align : center;
-
     `}
 `;
 

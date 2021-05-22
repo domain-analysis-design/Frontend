@@ -73,7 +73,7 @@ function RightSide(){
             <div style = {{background : "red",height:"20vh"}}/>
             }
             {toggle &&
-                <Search feature = "board"/>
+                <Search feature = "board" text = "choice"/>
             }
             <Button feature = "sendingCard">Send</Button>
         </Block>
