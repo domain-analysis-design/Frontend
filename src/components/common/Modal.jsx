@@ -26,5 +26,13 @@ export const Modal = styled.div`
     overflow : auto;
   `
   }
+
+  ${props => props.feature === "create" &&
+  css`
+    left : 35%;
+    width: 65vh;
+    height: 30vh;
+  `
+  }
 `;
 

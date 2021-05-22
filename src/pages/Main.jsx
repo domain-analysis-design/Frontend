@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Header from "../components/common/Header";
 import { FaUserAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import Board from "../components/common/Board";
+import Board, { CreateBoard } from "../components/common/Board";
 import { loadBoardListRequestAction } from "../reducers/board";
 
 const MainBlock = styled.div`
@@ -46,7 +46,8 @@ const Main = () => {
             <div>{boardList.name}'s Board</div>
           </UserTitle>
           <Board boards={boardList.boardList} />
-        </MainBlock>
+          <CreateBoard name = {boardList}/>
+        </MainBlock >
       </div>
     </>
   );

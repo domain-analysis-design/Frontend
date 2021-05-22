@@ -36,6 +36,18 @@ const Button = styled.div`
         height:5vh;
     `}
 
+    ${props => props.feature === "create" &&
+    css`
+        position:fixed;
+        top: 67%;
+        left: 35%;
+        background: #fff;
+        width:20vh;
+        height:6vh;
+        color:black;
+        text-align : center;
+    `}
+    
     ${props => props.feature === "choiceBoard" &&
     css` // card sending choice board button
         width:110px;
