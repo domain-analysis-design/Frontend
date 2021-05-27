@@ -26,6 +26,14 @@ export const LOAD_BOARD_LIST_REQUEST = "board/LOAD_BOARD_LIST_REQUEST";
 export const LOAD_BOARD_LIST_SUCCESS = "board/LOAD_BOARD_LIST_SUCCESS";
 export const LOAD_BOARD_LIST_FAILURE = "board/LOAD_BOARD_LIST_FAILURE";
 
+export const ADD_BOARD_REQUEST = "board/ADD_BOARD_REQUEST";
+export const ADD_BOARD_SUCCESS = "board/ADD_BOARD_SUCCESS";
+export const ADD_BOARD_FAILURE = "board/ADD_BOARD_FAILURE";
+
+export const DELETE_BOARD_REQEUST = "board/DELETE_BOARD_REQEUST";
+export const DELETE_BOARD_SUCCESS = "board/DELETE_BOARD_SUCCESS";
+export const DELETE_BOARD_FAILURE = "board/DELETE_BOARD_FAILURE";
+
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -38,6 +46,15 @@ export const loadBoardRequestAction = createAction(LOAD_BOARD_REQUEST);
 
 export const loadBoardListRequestAction = createAction(LOAD_BOARD_LIST_REQUEST);
 
+export const addBoardRequestAction = createAction(
+  ADD_BOARD_REQUEST,
+  (data) => data,
+);
+
+export const deleteBoardRequestAction = createAction(
+  DELETE_BOARD_REQEUST,
+  (data) => data,
+);
 // reducer
 
 const board = handleActions(
@@ -81,6 +98,36 @@ const board = handleActions(
       boardListLoading: false,
       boardListDone: false,
       boardListError: "error",
+    }),
+    [ADD_BOARD_REQUEST]: (state, action) => {
+      return {
+        ...state,
+        boardList: {
+          ...state.boardList,
+          boardList: [...state.boardList.boardList].concat(action.payload),
+        },
+      };
+    },
+    [ADD_BOARD_SUCCESS]: (state, action) => ({
+      ...state,
+    }),
+    [ADD_BOARD_FAILURE]: (state, action) => ({
+      ...state,
+    }),
+    [DELETE_BOARD_REQEUST]: (state, action) => ({
+      ...state,
+      boardList: {
+        ...state.boardList,
+        boardList: state.boardList.boardList.filter(
+          (v, i) => v.boardName !== action.payload,
+        ),
+      },
+    }),
+    [DELETE_BOARD_SUCCESS]: (state, action) => ({
+      ...state,
+    }),
+    [DELETE_BOARD_FAILURE]: (state, action) => ({
+      ...state,
     }),
   },
   initialState,

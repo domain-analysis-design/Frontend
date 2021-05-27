@@ -1,19 +1,20 @@
 import faker from "faker";
+import shortid from "shortid";
 
-export const createOtherUser = () =>{
-  return{
-    UserList : new Array(20).fill().map((v,i)=>({
-      name : faker.name.findName(),
-    }))
-  }
-}
+export const createOtherUser = () => {
+  return {
+    UserList: new Array(20).fill().map((v, i) => ({
+      name: faker.name.findName(),
+    })),
+  };
+};
 export const createOtherBoard = () => {
-  return{
-    boardList : new Array(20).fill().map((v,i)=>({
+  return {
+    boardList: new Array(20).fill().map((v, i) => ({
       ...createBoardInUser(),
-    }))
-  }
-}
+    })),
+  };
+};
 export const createUser = () => {
   return {
     // name : faker.random.word(),
@@ -23,17 +24,18 @@ export const createUser = () => {
     })),
   };
 };
-export const createBoardInUser = () =>{
-  return{
-    boardName : faker.random.word(),
-    member : new Array(5).fill().map((v,i) => ({
-      memberID : faker.name.findName()
-    }))
-  }
-}
+export const createBoardInUser = () => {
+  return {
+    boardName: faker.random.word(),
+    member: new Array(5).fill().map((v, i) => ({
+      memberID: faker.name.findName(),
+    })),
+  };
+};
 
 export const createBoard = () => {
   return {
+    id: shortid.generate(),
     boardName: faker.random.word(),
     lists: new Array(5).fill().map((v, i) => ({
       ...createList(),
@@ -42,7 +44,7 @@ export const createBoard = () => {
       ...createCard(),
     })),
     member: new Array(5).fill().map((v, i) => ({
-      memberID : faker.name.findName()
+      memberID: faker.name.findName(),
     })),
   };
 };
@@ -50,7 +52,7 @@ export const createBoard = () => {
 export const createList = () => {
   return {
     listName: faker.random.word(),
-    cards: new Array(5).fill().map((v, i) => ({
+    cards: new Array(3).fill().map((v, i) => ({
       ...createCard(),
     })),
   };
