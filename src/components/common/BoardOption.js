@@ -123,6 +123,7 @@ function BoardOption({ board, method }) {
       {deleteToggle && (
         <Modal>
           <div
+            className="aiOutline"
             style={{
               display: "flex",
               justifyContent: "flex-end",

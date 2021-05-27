@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   AiOutlinePlus,
@@ -14,6 +14,7 @@ import useInput from "../../hooks/useInput";
 import { useDispatch } from "react-redux";
 import { addBoardRequestAction } from "../../reducers/board";
 import { createBoard } from "../../libs/util/dummyCreator";
+import { Redirect } from "react-router-dom";
 
 export const BoardItem = styled.div`
   width: 30vh;
@@ -108,6 +109,8 @@ const BoardBox = styled.div`
 `;
 
 function Board({ boards }) {
+  const [currBoard, setCurrBoard] = useState(null);
+
   const { boardList } = boards;
   let num = boardList.length;
 
@@ -140,13 +143,18 @@ function Board({ boards }) {
     localStorage.setItem("currentBoard", JSON.stringify(boardInfo));
   };
 
+  if (currBoard) return <Redirect to={`/main/${currBoard}`}></Redirect>;
+
   return (
     <BoardBox>
       {boardList.map((board) => (
-        <a
-          href={`/main/${board.id}`}
+        <div
+          // href={`/main/${board.id}`}
           onClick={() => {
+            console.log(board);
+            console.log("a 태그 눌렀음");
             tempLocalStorage(board);
+            setCurrBoard(board.id);
           }}
         >
           <BoardItem
@@ -165,13 +173,17 @@ function Board({ boards }) {
                 width: "4vh",
                 height: "4vh",
               }}
-              onClick={() => optionOpen(board)}
+              onClick={(e) => {
+                console.log(e);
+                e.stopPropagation();
+                optionOpen(board);
+              }}
             />
             {showOption[boardList.indexOf(board)] === true && (
               <BoardOption board={board} method={() => optionOpen(board)} />
             )}
           </BoardItem>
-        </a>
+        </div>
       ))}
       <CreateBoard name={boards} />
     </BoardBox>

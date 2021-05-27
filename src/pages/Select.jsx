@@ -20,6 +20,7 @@ const MainBox = styled.div`
   width: 60%;
   height: 100%;
   display: flex;
+  align-items: flex-start;
   overflow: auto;
   justify-content: space-between;
 `;
