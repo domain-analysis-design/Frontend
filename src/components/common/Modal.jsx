@@ -22,7 +22,7 @@ export const Modal = styled.div`
     width:45vh;
     height:30vh;
     top : 30%;
-    left : 35%;
+    left : 40%;
     overflow : auto;
   `
   }

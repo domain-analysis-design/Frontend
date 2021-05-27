@@ -45,8 +45,7 @@ const Main = () => {
             />
             <div>{boardList.name}'s Board</div>
           </UserTitle>
-          <Board boards={boardList.boardList} />
-          <CreateBoard name = {boardList}/>
+          <Board boards={boardList} />
         </MainBlock >
       </div>
     </>

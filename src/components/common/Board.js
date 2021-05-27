@@ -64,7 +64,8 @@ const BoardBox = styled.div`
 `;
 
 function Board({boards}){
-    let num = boards.length;
+    const {boardList} = boards;
+    let num = boardList.length;
     
     let initShow = new Array();
 
@@ -75,7 +76,7 @@ function Board({boards}){
     }
 
     const optionOpen = (board) => {
-        let index = boards.indexOf(board)
+        let index = boardList.indexOf(board)
 
         if(showOption[index]){
             showOption[index] = false
@@ -89,7 +90,7 @@ function Board({boards}){
     };
     return (
         <BoardBox>
-        {{ boards }.boards.map((board) => (
+        {boardList.map((board) => (
             <BoardItem>
                 <div style={{ position: "absolute", top: "1.5vh", left: "2vh" }}>
                     {board.boardName} Board
@@ -104,9 +105,10 @@ function Board({boards}){
                     }}
                     onClick={() => optionOpen(board)}
                 />
-                {showOption[{boards}.boards.indexOf(board)] === true &&  <BoardOption board = {board} method = {()=>optionOpen(board)} />}
+                {showOption[boardList.indexOf(board)] === true &&  <BoardOption board = {board} method = {()=>optionOpen(board)} />}
             </BoardItem>
         ))}
+        <CreateBoard name = {boards}/>
         </BoardBox>
     );
     }
