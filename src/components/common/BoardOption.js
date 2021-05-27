@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 import {AiOutlineClose} from "react-icons/ai";
-import {BiUserCircle, BiCheckbox} from "react-icons/bi";
+import {BiUserCircle } from "react-icons/bi";
+import { GrCheckboxSelected,GrCheckbox } from "react-icons/gr";
 import Button from "./Button";
 import { Modal } from './Modal';
 
@@ -43,6 +44,7 @@ const MemberBox = styled.div`
     color:black;
     margin : 2px auto;
     border-bottom : 1px solid gray;
+    cursor : pointer;
 `;
 
 function BoardOption({board,method}){
@@ -80,7 +82,22 @@ function BoardOption({board,method}){
         color:"black",
         marginLeft : "1vh"
     }
-    console.log(board)
+    
+    var num = board.member.length;
+
+    let initShow = new Array();
+
+    
+    for ( var i = 0; i < num; i++){
+        initShow[i] = false;
+    }
+    const [showOption,setShowOption] = useState([...initShow]);
+    
+    const searchMember = (member) => {
+        showOption[board.member.indexOf(member)] = !showOption[board.member.indexOf(member)]
+        setShowOption([...showOption])
+    }
+
     return(
         <Box style = {{position : "absolute", top:"4vh",left:"25vh",zIndex:"1"}}>
             <AiOutlineClose onClick = {method} style = {{color :"black", position :"absolute",top:"1vh",left:"25vh",width:"3vh",height:"3vh"}}/>
@@ -104,8 +121,13 @@ function BoardOption({board,method}){
             {deportToggle &&
                 <Modal feature = "deport">
                     {board.member.map(member=>
-                        <MemberBox >
-                            <div style = {{width:"20%"}}><BiCheckbox style = {{width:"5vh",height:"5vh"}}/></div>
+                        <MemberBox onClick = {() => searchMember(member)}>
+                            {showOption[board.member.indexOf(member)] === false &&
+                                <div style = {{width:"20%"}}><GrCheckbox style = {{width:"5vh",height:"5vh"}}/></div>
+                            }
+                            {showOption[board.member.indexOf(member)] === true &&
+                                <div style = {{width:"20%"}}><GrCheckboxSelected style = {{width:"5vh",height:"5vh"}}/></div>
+                            }
                             <div style = {{width:"60%",textAlign : "center",fontSize : "16px",margin:"auto 0"}}> {member.memberID} </div>
                             <div style = {{width:"20%"}}><BiUserCircle style = {{color : "gray",width:"5vh",height:"5vh"}}/></div>
                         </MemberBox>)}
