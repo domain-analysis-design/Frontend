@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Main from "./pages/Main";
 import Select from "./pages/Select";
 import "./App.css";
+import BoardDetail from "./pages/BoardDetail";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/register" component={Register} exact></Route>
         <Route path="/Select" component={Select} exact></Route>
         <Route path="/main" component={Main} exact></Route>
+        <Route path="/main/:id" component={Select} exact></Route>
       </Switch>
     </>
   );

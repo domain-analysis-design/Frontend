@@ -12,16 +12,18 @@ import {
 function* loadBoardSaga() {
   try {
     yield delay(100);
-    const res = createUser();
-    yield put({ type: LOAD_BOARD_SUCCESS, board: res });
+    // const res = createUser();
+    const res = localStorage.getItem("currentBoard");
+    yield put({ type: LOAD_BOARD_SUCCESS, board: JSON.parse(res) });
   } catch (error) {
     yield put({ type: LOAD_BOARD_FAILURE, error });
   }
 }
 
-function* loadBoardListSaga() {
+function* loadBoardListSaga(action) {
   try {
     yield delay(100);
+    // const res2 = yield call(`api/createBoard/${action.createUser}`, {})
     const res = createUser();
     yield put({ type: LOAD_BOARD_LIST_SUCCESS, boardList: res });
   } catch (error) {
