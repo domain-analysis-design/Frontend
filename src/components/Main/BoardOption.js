@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { GrCheckboxSelected, GrCheckbox } from "react-icons/gr";
-import Button from "./Button";
-import { Modal } from "./Modal";
+import Button from "../common/Button";
+import { Modal } from "../common/Modal";
 import { useDispatch } from "react-redux";
 import { deleteBoardRequestAction } from "../../reducers/board";
+import { Function1 } from "../../libs/util/function";
 
 const Box = styled.div`
   width: 30vh;
@@ -17,6 +18,15 @@ const Box = styled.div`
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
   box-sizing: border-box;
   resize: none;
+  position: absolute; 
+  top: 4vh; 
+  left: 25vh;
+  z-index: 1;
+
+  .Icon{
+    width:5vh;
+    height:5vh;
+  }
 `;
 
 const BoardTitle = styled.div`
@@ -49,6 +59,13 @@ const MemberBox = styled.div`
   cursor: pointer;
 `;
 
+const ID = styled.div`
+  width: 60%;
+  text-align: center;
+  font-size: 16px;
+  margin: auto 0;
+`;
+
 function BoardOption({ board, method }) {
   const dispatch = useDispatch();
   const [deleteToggle, setDeleteToggle] = useState(false);
@@ -64,10 +81,15 @@ function BoardOption({ board, method }) {
   };
   const DeleteBoard = () => {
     dispatch(deleteBoardRequestAction(board.boardName));
+    setDeportToggle(false);
+    setDeleteToggle(false);
   };
 
   const DeleteMember = () => {
     console.log("멤버를 지우시겠습니까?");
+    //왜 안됌??
+    board.member.filter((v,i) => (showOption[i] === true))
+    console.log(board.member)
   };
 
   const closeStyle = {
@@ -76,23 +98,8 @@ function BoardOption({ board, method }) {
     color: "black",
   };
 
-  const deleteTextStyle = {
-    display: "flex",
-    alignItems: "center",
-    fontSize: "25px",
-    width: "100%",
-    height: "10vh",
-    color: "black",
-    marginLeft: "1vh",
-  };
-
-  var num = board.member.length;
-
-  let initShow = new Array();
-
-  for (var i = 0; i < num; i++) {
-    initShow[i] = false;
-  }
+  let initShow = Function1(board.member);
+  
   const [showOption, setShowOption] = useState([...initShow]);
 
   const searchMember = (member) => {
@@ -103,9 +110,7 @@ function BoardOption({ board, method }) {
   };
 
   return (
-    <Box
-      style={{ position: "absolute", top: "4vh", left: "25vh", zIndex: "1" }}
-    >
+    <Box>
       <AiOutlineClose
         onClick={(e) =>{
           e.stopPropagation();
@@ -128,29 +133,16 @@ function BoardOption({ board, method }) {
       
       {deleteToggle && (
         <Modal>
-          <div
-            className="aiOutline"
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              height: "5vh",
-            }}
-          >
+          <div className="aiOutline">
             <AiOutlineClose style={closeStyle} onClick={(e) => {
               e.stopPropagation();
               onClickDelete();
               }} />
           </div>
 
-          <div style={deleteTextStyle}>board를 지우시겠습니까?</div>
+          <div className = "deleteStyle">board를 지우시겠습니까?</div>
           
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "2vh",
-            }}
-          >
+          <div className = "buttonBox">
 
             <Button feature="board" onClick={(e) => {
               e.stopPropagation();
@@ -178,29 +170,19 @@ function BoardOption({ board, method }) {
               searchMember(member)}}>
               {showOption[board.member.indexOf(member)] === false && (
                 <div style={{ width: "20%" }}>
-                  <GrCheckbox style={{ width: "5vh", height: "5vh" }} />
+                  <GrCheckbox className = "Icon" />
                 </div>
               )}
               {showOption[board.member.indexOf(member)] === true && (
                 <div style={{ width: "20%" }}>
-                  <GrCheckboxSelected style={{ width: "5vh", height: "5vh" }} />
+                  <GrCheckboxSelected className = "Icon" />
                 </div>
               )}
-              <div
-                style={{
-                  width: "60%",
-                  textAlign: "center",
-                  fontSize: "16px",
-                  margin: "auto 0",
-                }}
-              >
-                {" "}
-                {member.memberID}{" "}
-              </div>
+              <ID>
+                {" "}{member.memberID}{" "}
+              </ID>
               <div style={{ width: "20%" }}>
-                <BiUserCircle
-                  style={{ color: "gray", width: "5vh", height: "5vh" }}
-                />
+                <BiUserCircle className = "Icon"/>
               </div>
             </MemberBox>
           ))}

@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   AiOutlinePlus,
   AiOutlineEllipsis,
   AiOutlineClose,
 } from "react-icons/ai";
-import BoardOption from "../common/BoardOption";
+import BoardOption from "./BoardOption";
 import useToggle from "../../hooks/useToggle";
-import { Modal } from "./Modal";
-import Input from "./Input";
-import Button from "./Button";
+import { Modal } from "../common/Modal";
+import Input from "../common/Input";
+import Button from "../common/Button";
 import useInput from "../../hooks/useInput";
 import { useDispatch } from "react-redux";
 import { addBoardRequestAction } from "../../reducers/board";
 import { createBoard } from "../../libs/util/dummyCreator";
 import { Redirect } from "react-router-dom";
+import {Function1} from "../../libs/util/function";
 
 export const BoardItem = styled.div`
   width: 30vh;
@@ -112,15 +113,10 @@ function Board({ boards }) {
   const [currBoard, setCurrBoard] = useState(null);
 
   const { boardList } = boards;
-  let num = boardList.length;
 
-  let initShow = new Array();
+  let initShow = Function1(boardList);
 
-  const [showOption, setShowOption] = useState([...initShow]);
-
-  for (var i = 0; i < num; i++) {
-    initShow[i] = false;
-  }
+  const [showOption, setShowOption] = useState([]);
 
   const optionOpen = (board) => {
     let index = boardList.indexOf(board);

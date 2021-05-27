@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { createOtherBoard } from '../../libs/util/dummyCreator';
 import {GrCheckbox,GrCheckboxSelected} from 'react-icons/gr';
 import Button from './Button';
+import { Function1 } from '../../libs/util/function';
 
 const Box = styled.div`
     width:90%;
@@ -17,7 +18,7 @@ const Box = styled.div`
     position : relative;
 `;
 
-const BoardBox = styled.div`
+const BoardItem = styled.div`
     width:90%;
     height:5vh;
     margin: 3px auto 0;
@@ -28,18 +29,18 @@ const BoardBox = styled.div`
     cursor : pointer;
 `;
 
+const BoardBox = styled.div`
+    display: flex;
+    align-items: center;
+    cursor:pointer;
+`;
+
 function Search({feature,text}){
     
     const boards = createOtherBoard();
     
-    let num = boards.boardList.length;
+    let initShow = Function1(boards.boardList);
     
-    let initShow = new Array();
-
-    
-    for ( var i = 0; i < num; i++){
-        initShow[i] = false;
-    }
     const [showOption,setShowOption] = useState([...initShow]);
     
     const searchBoard = (board) => {
@@ -52,15 +53,15 @@ function Search({feature,text}){
     return(
         <Box>
             {boards.boardList.map(board=>
-            <div onClick = {()=>searchBoard(board)} style = {{display:"flex",alignItems:"center",cursor:"pointer"}}>
+            <BoardBox onClick = {()=>searchBoard(board)}>
                 {showOption[boards.boardList.indexOf(board)] === false &&
                     <GrCheckbox style = {{width:"3vh",height : "3vh",marginLeft:"3px"}}/>
                 }
                 {showOption[boards.boardList.indexOf(board)] === true &&
                     <GrCheckboxSelected style = {{width:"3vh",height : "3vh",marginLeft:"3px"}}/>
                 }
-                <BoardBox >{board.boardName}</BoardBox>    
-            </div>
+                <BoardItem >{board.boardName}</BoardItem>    
+            </BoardBox>
             )}
             <Button feature = "choiceBoard" onClick = {action}>{text}</Button>
         </Box>
