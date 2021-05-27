@@ -21,6 +21,11 @@ const HeaderBlock = styled.div`
     justify-content : space-between;
 `;
 
+const Title = styled.div`
+    font-size: 32px; 
+    color : white; 
+    cursor:pointer;
+`;
 
 function Header(){
     return (
@@ -30,7 +35,7 @@ function Header(){
                     <AiFillHome style = {{width : "7vh", height : "7vh", color:"white", cursor : "pointer"}}/>
                 </Link>
             </IconBox>
-            <div style = {{fontSize: "32px", color : "white", cursor:"pointer"}}>김박이조하</div>
+            <Title>김박이조하</Title>
             
             <IconBox>
                 <BsBellFill style = {{width : "7vh", height : "7vh", color:"white", cursor : "pointer"}} />

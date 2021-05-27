@@ -17,24 +17,37 @@ const BodyBlock = styled.div`
   align-items: center;
 `;
 
-const LoginBlock = styled.form`
+const LoginGroup = styled.form`
   width: 28%;
 `;
 
-const Icon = styled.div`
+const IconBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 9vh;
   height: 9vh;
   background: rgb(2, 106, 167);
+
+  .Icon{
+    width: 5vh;
+    height: 5vh;
+    color: white;
+  }
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  padding-top:10px;
 `;
+
+const LoginBlock = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`;
+
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
@@ -43,10 +56,6 @@ const Login = ({ history }) => {
 
   const [id, setId, onChangeId] = useInput("");
   const [password, setPassword, onChangePassword] = useInput("");
-
-  // useEffect(() => {
-  //   console.log(id, password);
-  // }, [id, password]);
 
   const onSubmit = () => {
     dispatch(loginRequestAction());
@@ -63,13 +72,13 @@ const Login = ({ history }) => {
       {/* <Header /> */}
 
       <BodyBlock>
-        <LoginBlock>
-          <div style={{ display: "flex", marginBottom: "20px" }}>
-            <Icon>
+        <LoginGroup>
+          <LoginBlock>
+            <IconBlock>
               <FaUserAlt
-                style={{ width: "5vh", height: "5vh", color: "white" }}
+                className = "Icon"
               />
-            </Icon>
+            </IconBlock>
             <Input
               feature="login"
               placeholder="  UserID"
@@ -78,12 +87,12 @@ const Login = ({ history }) => {
               // value={user.userID}
               onChange={onChangeId}
             />
-          </div>
+          </LoginBlock>
 
-          <div style={{ display: "flex", marginBottom: "30px" }}>
-            <Icon>
-              <FaKey style={{ width: "5vh", height: "5vh", color: "white" }} />
-            </Icon>
+          <LoginBlock>
+            <IconBlock>
+              <FaKey className = "Icon" />
+            </IconBlock>
             <Input
               feature="login"
               placeholder="  password"
@@ -92,7 +101,7 @@ const Login = ({ history }) => {
               // value={user.password}
               onChange={onChangePassword}
             />
-          </div>
+          </LoginBlock>
 
           <ButtonGroup>
             <Button feature="login" type="submit" onClick={onSubmit}>
@@ -102,7 +111,7 @@ const Login = ({ history }) => {
               <Button feature="login">Register</Button>
             </Link>
           </ButtonGroup>
-        </LoginBlock>
+        </LoginGroup>
       </BodyBlock>
     </>
   );

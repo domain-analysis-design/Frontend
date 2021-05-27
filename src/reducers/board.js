@@ -30,7 +30,7 @@ export const ADD_BOARD_REQUEST = "board/ADD_BOARD_REQUEST";
 export const ADD_BOARD_SUCCESS = "board/ADD_BOARD_SUCCESS";
 export const ADD_BOARD_FAILURE = "board/ADD_BOARD_FAILURE";
 
-export const DELETE_BOARD_REQEUST = "board/DELETE_BOARD_REQEUST";
+export const DELETE_BOARD_REQUEST = "board/DELETE_BOARD_REQUEST";
 export const DELETE_BOARD_SUCCESS = "board/DELETE_BOARD_SUCCESS";
 export const DELETE_BOARD_FAILURE = "board/DELETE_BOARD_FAILURE";
 
@@ -48,11 +48,21 @@ export const loadBoardListRequestAction = createAction(LOAD_BOARD_LIST_REQUEST);
 
 export const addBoardRequestAction = createAction(
   ADD_BOARD_REQUEST,
-  (data) => data,
+  (data) => data, //이게 saga한테 action으로 처리되는거같은데 맞나여?
 );
 
+// 영진 생각
+// board에서 createBoard를 data로 건너주면서 addBoardRequestAction호출 
+// saga에서 watchBoard로 REQUEST를 CATCH해서 addBoardSaga실행
+// addBoardSaga에서는 createBoard를 addBoardRequestAction에서 data로 받은것을
+// action.payload로 받아낼수 있음
+// action.payload를 res로 저장해서 res를 반환해주면
+// success에서 (action.res = 새로생성한 board)를 받아서
+// concat을 사용해서 배열 추가
+
+// delete도 똑같이
 export const deleteBoardRequestAction = createAction(
-  DELETE_BOARD_REQEUST,
+  DELETE_BOARD_REQUEST,
   (data) => data,
 );
 // reducer
@@ -99,33 +109,35 @@ const board = handleActions(
       boardListDone: false,
       boardListError: "error",
     }),
-    [ADD_BOARD_REQUEST]: (state, action) => {
+    [ADD_BOARD_REQUEST]: (state, action) => ({
+      ...state,
+    }),
+    [ADD_BOARD_SUCCESS]: (state, action) => {
       return {
         ...state,
         boardList: {
           ...state.boardList,
-          boardList: [...state.boardList.boardList].concat(action.payload),
+          boardList: [...state.boardList.boardList].concat(action.res),
         },
       };
     },
-    [ADD_BOARD_SUCCESS]: (state, action) => ({
-      ...state,
-    }),
     [ADD_BOARD_FAILURE]: (state, action) => ({
       ...state,
     }),
-    [DELETE_BOARD_REQEUST]: (state, action) => ({
-      ...state,
-      boardList: {
-        ...state.boardList,
-        boardList: state.boardList.boardList.filter(
-          (v, i) => v.boardName !== action.payload,
-        ),
-      },
-    }),
-    [DELETE_BOARD_SUCCESS]: (state, action) => ({
+    [DELETE_BOARD_REQUEST]: (state, action) => ({
       ...state,
     }),
+    [DELETE_BOARD_SUCCESS]: (state, action) => {
+      return{
+        ...state,
+        boardList: {
+          ...state.boardList,
+          boardList: state.boardList.boardList.filter(
+            (v, i) => v.boardName !== action.res,
+          ),
+        },
+      };
+    },
     [DELETE_BOARD_FAILURE]: (state, action) => ({
       ...state,
     }),

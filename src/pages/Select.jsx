@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import List, { CreateList } from "../components/common/List";
-import BoardHeader from "../components/BoardHeader";
-import { createBoard } from "../libs/util/dummyCreator";
-import LeftSide from "../components/LeftSide";
-import RightSide from "../components/RightSide";
+import List, { CreateList } from "../components/Select/List";
+import BoardHeader from "../components/Select/BoardHeader";
+import LeftSide from "../components/Select/LeftSide";
+import RightSide from "../components/Select/RightSide";
 import { useDispatch } from "react-redux";
 import {
   loadBoardRequestAction,
@@ -28,7 +27,7 @@ const MainBox = styled.div`
 const Select = () => {
   const BoardInfo = localStorage.getItem("currentBoard");
   const board = JSON.parse(BoardInfo);
-  console.log(board)
+  
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -5,9 +5,9 @@ import { BsBellFill } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
 import {GrGroup} from "react-icons/gr";
 import { Link } from 'react-router-dom';
-import Input from './common/Input';
-import useToggle from '../hooks/useToggle';
-import Search from './common/Search';
+import Input from '../common/Input';
+import useToggle from '../../hooks/useToggle';
+import Search from '../common/Search';
 
 const LeftGroup = styled.div`
     width:33.5%;
@@ -47,6 +47,9 @@ const MemberBox = styled.div`
     width:30vh;
     height:15vh;
     overflow : auto;
+    position : absolute;
+    top : 2vh;
+    left:27vh;
 `;
 
 const Member = styled.div`
@@ -71,6 +74,17 @@ const HeaderBlock = styled.div`
     justify-content : space-between;
 `;
 
+const SearchBox = styled.div`
+    position:absolute;
+    top:7vh;
+    left:32vh;
+    width:28vh;
+`;
+
+const InputBox = styled.div`
+    display:flex;
+    align-items:center;
+`;
 function BoardHeader({users}){
     const [toggle,setToggle] = useToggle();
     const [memberToggle,setMemberToggle] = useToggle();
@@ -86,7 +100,7 @@ function BoardHeader({users}){
                 <UserBox>
                     <GrGroup onClick = {setMemberToggle} style = {{cursor:"pointer",width:"4vh",height:"4vh"}}/>
                     {memberToggle &&
-                    <MemberBox style = {{position : "absolute",top : "2vh", left:"27vh"}}>
+                    <MemberBox>
                         {users.map(user => 
                             <Member>
                                 <BiUserCircle style = {{color : "gray",width:"4vh",height :"4vh"}}/>
@@ -95,13 +109,13 @@ function BoardHeader({users}){
                     </MemberBox>
                     }
                 </UserBox>
-                <div style = {{display:"flex", alignItems:"center"}}>
+                <InputBox>
                     <Input onClick = {setToggle} feature = "findUser" placeholder = "  Search User ..." />
                     {toggle && 
-                    <div style = {{position:"absolute",top:"7vh",left:"32vh",width:"28vh"}}>
+                    <SearchBox>
                         <Search feature = "user" text = "invite"></Search>
-                    </div>}
-                </div>
+                    </SearchBox>}
+                </InputBox>
             </LeftGroup>
             <RightGroup>
                 <IconBox>

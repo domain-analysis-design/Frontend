@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "../components/common/Button";
-import Card from "../components/common/Card";
+import Button from "../common/Button";
+import Card from "./Card";
 
 const Block = styled.div`
   width: 15%;
@@ -19,6 +19,10 @@ const ButtonBox = styled.div`
   padding-bottom: 1vh;
 `;
 
+const Box = styled.div`
+  border-bottom : 1px solid black;
+`;
+
 function LeftSide({ Board }) {
   console.log(Board);
   const AcceptCard = ({ card }) => {
@@ -32,7 +36,7 @@ function LeftSide({ Board }) {
   return (
     <Block>
       {Board.waitingCard.map((card) => (
-        <div style={{ borderBottom: "1px solid black" }}>
+        <Box>
           <Card card={card} feature="send" />
           <ButtonBox>
             <Button feature="accept" onClick={() => AcceptCard({ card })}>
@@ -46,7 +50,7 @@ function LeftSide({ Board }) {
               거절
             </Button>
           </ButtonBox>
-        </div>
+        </Box>
       ))}
     </Block>
   );

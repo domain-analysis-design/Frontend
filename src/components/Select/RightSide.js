@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
-import Input from "./common/Input";
-import Button from "./common/Button";
-import useToggle from "../hooks/useToggle";
-import Search from "./common/Search";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import useToggle from "../../hooks/useToggle";
+import Search from "../common/Search";
 
 const Block = styled.div`
   /* position: absolute;
@@ -38,13 +38,6 @@ function RightSide() {
   const [toggle, setToggle] = useToggle();
   const [sendToggle, setSendToggle] = useToggle();
   const [sendCard, setSendCard] = useState(initSendCard);
-
-  // console.log(sendCard === [])
-  // console.log(sendCard === Array(0))
-  // console.log(sendCard === null)
-  // console.log(sendCard == [""])
-  // console.log(sendCard === [''])
-  // console.log(sendCard == initSendCard)
 
   const SendCardListStyle = {
     display: "flex",
