@@ -64,7 +64,6 @@ function BoardOption({ board, method }) {
   };
   const DeleteBoard = () => {
     dispatch(deleteBoardRequestAction(board.boardName));
-    console.log("보드진짜 지워줘");
   };
 
   const DeleteMember = () => {
@@ -108,7 +107,9 @@ function BoardOption({ board, method }) {
       style={{ position: "absolute", top: "4vh", left: "25vh", zIndex: "1" }}
     >
       <AiOutlineClose
-        onClick={method}
+        onClick={(e) =>{
+          e.stopPropagation();
+          method(e)}}
         style={{
           color: "black",
           position: "absolute",
@@ -119,7 +120,12 @@ function BoardOption({ board, method }) {
         }}
       />
       <BoardTitle>{board.boardName} Board</BoardTitle>
-      <Block onClick={onClickDelete}>보드 삭제</Block>
+      <Block onClick={(e) => {
+        e.stopPropagation();
+        onClickDelete()}}>
+        보드 삭제
+      </Block>
+      
       {deleteToggle && (
         <Modal>
           <div
@@ -130,9 +136,14 @@ function BoardOption({ board, method }) {
               height: "5vh",
             }}
           >
-            <AiOutlineClose style={closeStyle} onClick={onClickDelete} />
+            <AiOutlineClose style={closeStyle} onClick={(e) => {
+              e.stopPropagation();
+              onClickDelete();
+              }} />
           </div>
+
           <div style={deleteTextStyle}>board를 지우시겠습니까?</div>
+          
           <div
             style={{
               display: "flex",
@@ -140,20 +151,31 @@ function BoardOption({ board, method }) {
               marginTop: "2vh",
             }}
           >
-            <Button feature="board" onClick={DeleteBoard}>
+
+            <Button feature="board" onClick={(e) => {
+              e.stopPropagation();
+              DeleteBoard();}}>
               예
             </Button>
-            <Button feature="board" onClick={onClickDelete}>
+            <Button feature="board" onClick={(e) => {
+              e.stopPropagation();
+              onClickDelete()}}>
               아니오
             </Button>
           </div>
         </Modal>
       )}
-      <Block onClick={onClickDeport}>팀원 추방</Block>
+      <Block onClick={(e) => {
+        e.stopPropagation();
+        onClickDeport()}}>
+          팀원 추방</Block>
+
       {deportToggle && (
         <Modal feature="deport">
           {board.member.map((member) => (
-            <MemberBox onClick={() => searchMember(member)}>
+            <MemberBox onClick={(e) => {
+              e.stopPropagation();
+              searchMember(member)}}>
               {showOption[board.member.indexOf(member)] === false && (
                 <div style={{ width: "20%" }}>
                   <GrCheckbox style={{ width: "5vh", height: "5vh" }} />
@@ -182,7 +204,10 @@ function BoardOption({ board, method }) {
               </div>
             </MemberBox>
           ))}
-          <Button feature="board" style={{ margin: "2vh auto 0px" }}>
+          <Button feature="board" style={{ margin: "2vh auto 0px" }} onClick = {(e)=>{
+            e.stopPropagation();
+            DeleteMember()
+          }}>
             추방하기
           </Button>
         </Modal>

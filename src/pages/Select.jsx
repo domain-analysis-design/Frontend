@@ -26,7 +26,9 @@ const MainBox = styled.div`
 `;
 
 const Select = () => {
-  const board = createBoard();
+  const BoardInfo = localStorage.getItem("currentBoard");
+  const board = JSON.parse(BoardInfo);
+  console.log(board)
   const dispatch = useDispatch();
 
   useEffect(() => {

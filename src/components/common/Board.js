@@ -149,10 +149,7 @@ function Board({ boards }) {
     <BoardBox>
       {boardList.map((board) => (
         <div
-          // href={`/main/${board.id}`}
           onClick={() => {
-            console.log(board);
-            console.log("a 태그 눌렀음");
             tempLocalStorage(board);
             setCurrBoard(board.id);
           }}
@@ -174,7 +171,6 @@ function Board({ boards }) {
                 height: "4vh",
               }}
               onClick={(e) => {
-                console.log(e);
                 e.stopPropagation();
                 optionOpen(board);
               }}
