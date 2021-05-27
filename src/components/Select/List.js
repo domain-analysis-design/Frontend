@@ -36,6 +36,8 @@ const ListFooter = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  font-size: 1.15rem; 
+  color: #555;
   &:hover {
     color: #112;
   }
@@ -72,10 +74,7 @@ function List({ list }) {
           <Card card={card}>card.cardName</Card>
         ))}
       </div>
-      <ListFooter
-        onClick={createCard}
-        style={{ fontSize: "1.15rem", color: "#555" }}
-      >
+      <ListFooter onClick={createCard} >
         <AiOutlinePlus />
         <div>Add another card</div>
       </ListFooter>

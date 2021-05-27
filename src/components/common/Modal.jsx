@@ -17,6 +17,27 @@ export const Modal = styled.div`
   resize: none;
   font-size: 14px;
 
+  .aiOutline{
+    display: flex;
+    justify-content: flex-end;
+    height: 5vh;
+  }
+
+  .deleteStyle{
+    display: flex;
+    align-items : center;
+    font-size: 25px;
+    width: 100%;
+    height: 10vh;
+    color: black;
+    margin-left: 1vh;
+  }
+
+  .buttonBox{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2vh;
+  }
   ${props => props.feature === "deport" &&
   css`
     width:45vh;
