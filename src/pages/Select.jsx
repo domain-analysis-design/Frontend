@@ -17,7 +17,7 @@ const Body = styled.div`
 `;
 
 const MainBox = styled.div`
-  width: 60%;
+  width: 70%;
   height: 100%;
   display: flex;
   align-items: flex-start;
@@ -41,7 +41,6 @@ const Select = () => {
       <BoardHeader users={board.member} />
       <Body>
         <LeftSide Board={board} />
-
         <MainBox>
           {board.lists.map((list) => (
             <List list={list}></List>

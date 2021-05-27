@@ -7,18 +7,23 @@ const ListBlock = styled.div`
   background-color: rgb(235, 236, 240);
   border-radius: 4px;
   margin: 0 1vh;
+  border: 1px solid red;
+  width: 250px;
 `;
 
 const ListHeader = styled.div`
   margin: 0 auto;
   width: 330px;
-  height: 70px;
-  padding: 2vh;
+  /* height: 70px; */
+  /* padding: 2vh; */
+  /* padding-bottom: 5px; */
+  padding-left: 1.8vh;
   box-sizing: border-box;
-  font-size: 28px;
+  /* font-size: 28px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid blue;
 `;
 
 const ListFooter = styled.div`
@@ -31,6 +36,9 @@ const ListFooter = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  &:hover {
+    color: #112;
+  }
 `;
 
 export const CreateList = () => {
@@ -54,7 +62,7 @@ function List({ list }) {
   return (
     <ListBlock>
       <ListHeader>
-        <div>{list.listName}</div>
+        <div style={{ fontSize: "1.15rem" }}>{list.listName}</div>
         <AiOutlineEllipsis
           style={{ cursor: "pointer", width: "4vh", height: "4vh" }}
         />
@@ -64,8 +72,11 @@ function List({ list }) {
           <Card card={card}>card.cardName</Card>
         ))}
       </div>
-      <ListFooter onClick={createCard}>
-        <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
+      <ListFooter
+        onClick={createCard}
+        style={{ fontSize: "1.15rem", color: "#555" }}
+      >
+        <AiOutlinePlus />
         <div>Add another card</div>
       </ListFooter>
     </ListBlock>
