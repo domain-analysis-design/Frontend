@@ -3,22 +3,29 @@ import styled, { css } from "styled-components";
 
 const CardBox = styled.div`
   border: 1px solid red;
-  width: 220px;
+  width: 95%;
+  border-radius: 3px;
   /* height: 40px; */
   background: white;
-  /* padding: 2vh; */
+  padding: 1vh 0.5vh;
   box-sizing: border-box;
-  margin: 1vh auto;
+  margin: 0.5vh auto;
   font-size: 20px;
+  color: #666;
+  &:hover {
+    background: #eee;
+  }
+
   cursor: pointer;
-  line-height: 40px;
+  /* line-height: 40px; */
   ${(props) =>
     props.feature === "send" &&
     css`
-      width: 300px;
-      height: 80px;
+      width: 220px;
+      /* height: 80px; */
       text-align: center;
-      line-height: 80px;
+      /* line-height: 80px; */
+      margin: 0.5vh auto;
     `}
 `;
 

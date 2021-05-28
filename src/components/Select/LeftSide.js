@@ -4,6 +4,8 @@ import Button from "../common/Button";
 import Card from "./Card";
 
 const Block = styled.div`
+  padding: 10px;
+  border: 1px solid #ddd;
   width: 15%;
   height: 100%;
   background-color: rgb(224, 224, 224);
@@ -20,7 +22,7 @@ const ButtonBox = styled.div`
 `;
 
 const Box = styled.div`
-  border-bottom : 1px solid black;
+  border-bottom: 1px solid black;
 `;
 
 function LeftSide({ Board }) {

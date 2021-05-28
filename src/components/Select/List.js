@@ -8,12 +8,12 @@ const ListBlock = styled.div`
   border-radius: 4px;
   margin: 0 1vh;
   border: 1px solid red;
-  width: 250px;
+  width: 500px;
 `;
 
 const ListHeader = styled.div`
   margin: 0 auto;
-  width: 330px;
+  width: 250px;
   /* height: 70px; */
   /* padding: 2vh; */
   /* padding-bottom: 5px; */
@@ -36,7 +36,7 @@ const ListFooter = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 1.15rem; 
+  font-size: 1.15rem;
   color: #555;
   &:hover {
     color: #112;
@@ -74,7 +74,7 @@ function List({ list }) {
           <Card card={card}>card.cardName</Card>
         ))}
       </div>
-      <ListFooter onClick={createCard} >
+      <ListFooter onClick={createCard}>
         <AiOutlinePlus />
         <div>Add another card</div>
       </ListFooter>
