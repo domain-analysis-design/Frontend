@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { AiFillHome } from "react-icons/ai";
 import { BsBellFill } from "react-icons/bs";
@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import Input from '../common/Input';
 import useToggle from '../../hooks/useToggle';
 import Search from '../common/Search';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsersRequestAction } from '../../reducers/totalData';
 
 const LeftGroup = styled.div`
     width:33.5%;
@@ -90,10 +91,13 @@ function BoardHeader({users}){
     const [toggle,setToggle] = useToggle();
     const [memberToggle,setMemberToggle] = useToggle();
     
+    const dispatch = useDispatch();
 
-    const { TotalUsers } = useSelector((state) => state.totalData);
-    console.log(3)
-    console.log(TotalUsers);
+    useEffect(()=>{
+        dispatch(getUsersRequestAction());
+    },[])
+    
+    const { TotalUsers } = useSelector((state)=>state.totalData)
 
     // localStorage에 users와 boards 넣어서
     // select Page인 boardHeader와 RightSide에서

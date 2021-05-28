@@ -40,37 +40,43 @@ function* loadBoardListSaga(action) {
   }
 }
 
-function* addBoardSaga(action){
-  try{
+function* addBoardSaga(action) {
+  try {
     const res = action.payload;
-    yield put({type : ADD_BOARD_SUCCESS,res})
-  }catch(error){
-    yield put({type : ADD_BOARD_FAILURE,error})
+    yield put({ type: ADD_BOARD_SUCCESS, res });
+  } catch (error) {
+    yield put({ type: ADD_BOARD_FAILURE, error });
   }
 }
 
-function* deleteBoardSaga(action){
-  try{
+function* deleteBoardSaga(action) {
+  try {
     const res = action.payload;
-    yield put({type : DELETE_BOARD_SUCCESS,res})
-  }catch(error){
-    yield put({type : DELETE_BOARD_FAILURE,error})
+    yield put({ type: DELETE_BOARD_SUCCESS, res });
+  } catch (error) {
+    yield put({ type: DELETE_BOARD_FAILURE, error });
   }
 }
 
-function* deleteBoardMemberSaga(action){
-  try{
-    const res = action.payload;
-    yield put({type : DELETE_BOARD_MEMBER_SUCCESS,res})
-  }catch(error){
-    yield put({type : DELETE_BOARD_MEMBER_FAILURE,error})
+function* deleteBoardMemberSaga(action) {
+  try {
+    const boardName = action.payload.boardName;
+    const deletedMember = action.payload.tmpDeletedMember;
+    // api call -> 백엔드에서 실제로 제거
+
+    yield put({
+      type: DELETE_BOARD_MEMBER_SUCCESS,
+      res: { boardName, deletedMember },
+    });
+  } catch (error) {
+    yield put({ type: DELETE_BOARD_MEMBER_FAILURE, error });
   }
 }
 
 export function* watchBoard() {
   yield takeLatest(LOAD_BOARD_REQUEST, loadBoardSaga);
   yield takeLatest(LOAD_BOARD_LIST_REQUEST, loadBoardListSaga);
-  yield takeLatest(ADD_BOARD_REQUEST,addBoardSaga);
-  yield takeLatest(DELETE_BOARD_REQUEST,deleteBoardSaga);
-  yield takeLatest(DELETE_BOARD_MEMBER_REQUEST,deleteBoardMemberSaga);
+  yield takeLatest(ADD_BOARD_REQUEST, addBoardSaga);
+  yield takeLatest(DELETE_BOARD_REQUEST, deleteBoardSaga);
+  yield takeLatest(DELETE_BOARD_MEMBER_REQUEST, deleteBoardMemberSaga);
 }

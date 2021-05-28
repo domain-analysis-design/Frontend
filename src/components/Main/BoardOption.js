@@ -6,7 +6,10 @@ import { GrCheckboxSelected, GrCheckbox } from "react-icons/gr";
 import Button from "../common/Button";
 import { Modal } from "../common/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteBoardMemberRequestAction, deleteBoardRequestAction } from "../../reducers/board";
+import {
+  deleteBoardMemberRequestAction,
+  deleteBoardRequestAction,
+} from "../../reducers/board";
 import { Function1 } from "../../libs/util/function";
 
 const Box = styled.div`
@@ -18,14 +21,14 @@ const Box = styled.div`
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
   box-sizing: border-box;
   resize: none;
-  position: absolute; 
-  top: 4vh; 
+  position: absolute;
+  top: 4vh;
   left: 25vh;
   z-index: 1;
 
-  .Icon{
-    width:5vh;
-    height:5vh;
+  .Icon {
+    width: 5vh;
+    height: 5vh;
   }
 `;
 
@@ -71,8 +74,10 @@ function BoardOption({ board, method }) {
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [deportToggle, setDeportToggle] = useState(false);
 
-  const { boardList } = useSelector(state => state.board)
-  
+  const { boardList } = useSelector((state) => state.board);
+  console.log(boardList)
+  console.log(board)
+
   const onClickDelete = () => {
     setDeportToggle(false);
     setDeleteToggle(!deleteToggle);
@@ -88,11 +93,19 @@ function BoardOption({ board, method }) {
   };
 
   const DeleteMember = () => {
-    console.log("멤버를 지우시겠습니까?");
-    //왜 안됌??
-    dispatch(deleteBoardMemberRequestAction())
-    board.member.filter((v,i) => (showOption[i] === true))
-    console.log(board.member)
+    let tmpDeletedMember = [];
+    showOption.forEach((v, i) => {
+      if (v) {
+        tmpDeletedMember.push(i);
+      }
+    });
+
+    dispatch(
+      deleteBoardMemberRequestAction({
+        tmpDeletedMember,
+        boardName: board.boardName,
+      }),
+    );
   };
 
   const closeStyle = {
@@ -102,22 +115,22 @@ function BoardOption({ board, method }) {
   };
 
   let initShow = Function1(board.member);
-  
+
   const [showOption, setShowOption] = useState([...initShow]);
 
   const searchMember = (member) => {
-    showOption[board.member.indexOf(member)] = !showOption[
-      board.member.indexOf(member)
-    ];
+    showOption[board.member.indexOf(member)] =
+      !showOption[board.member.indexOf(member)];
     setShowOption([...showOption]);
   };
 
   return (
     <Box>
       <AiOutlineClose
-        onClick={(e) =>{
+        onClick={(e) => {
           e.stopPropagation();
-          method(e)}}
+          method(e);
+        }}
         style={{
           color: "black",
           position: "absolute",
@@ -128,71 +141,93 @@ function BoardOption({ board, method }) {
         }}
       />
       <BoardTitle>{board.boardName} Board</BoardTitle>
-      <Block onClick={(e) => {
-        e.stopPropagation();
-        onClickDelete()}}>
+      <Block
+        onClick={(e) => {
+          e.stopPropagation();
+          onClickDelete();
+        }}
+      >
         보드 삭제
       </Block>
-      
+
       {deleteToggle && (
         <Modal>
           <div className="aiOutline">
-            <AiOutlineClose style={closeStyle} onClick={(e) => {
-              e.stopPropagation();
-              onClickDelete();
-              }} />
+            <AiOutlineClose
+              style={closeStyle}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickDelete();
+              }}
+            />
           </div>
 
-          <div className = "deleteStyle">board를 지우시겠습니까?</div>
-          
-          <div className = "buttonBox">
+          <div className="deleteStyle">board를 지우시겠습니까?</div>
 
-            <Button feature="board" onClick={(e) => {
-              e.stopPropagation();
-              DeleteBoard();}}>
+          <div className="buttonBox">
+            <Button
+              feature="board"
+              onClick={(e) => {
+                e.stopPropagation();
+                DeleteBoard();
+              }}
+            >
               예
             </Button>
-            <Button feature="board" onClick={(e) => {
-              e.stopPropagation();
-              onClickDelete()}}>
+            <Button
+              feature="board"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickDelete();
+              }}
+            >
               아니오
             </Button>
           </div>
         </Modal>
       )}
-      <Block onClick={(e) => {
-        e.stopPropagation();
-        onClickDeport()}}>
-          팀원 추방</Block>
+      <Block
+        onClick={(e) => {
+          e.stopPropagation();
+          onClickDeport();
+        }}
+      >
+        팀원 추방
+      </Block>
 
       {deportToggle && (
         <Modal feature="deport">
           {board.member.map((member) => (
-            <MemberBox onClick={(e) => {
-              e.stopPropagation();
-              searchMember(member)}}>
+            <MemberBox
+              onClick={(e) => {
+                e.stopPropagation();
+                searchMember(member);
+              }}
+            >
               {showOption[board.member.indexOf(member)] === false && (
                 <div style={{ width: "20%" }}>
-                  <GrCheckbox className = "Icon" />
+                  <GrCheckbox className="Icon" />
                 </div>
               )}
               {showOption[board.member.indexOf(member)] === true && (
                 <div style={{ width: "20%" }}>
-                  <GrCheckboxSelected className = "Icon" />
+                  <GrCheckboxSelected className="Icon" />
                 </div>
               )}
-              <ID>
-                {" "}{member.memberID}{" "}
-              </ID>
+              <ID> {member.memberID} </ID>
               <div style={{ width: "20%" }}>
-                <BiUserCircle className = "Icon"/>
+                <BiUserCircle className="Icon" />
               </div>
             </MemberBox>
           ))}
-          <Button feature="board" style={{ margin: "2vh auto 0px" }} onClick = {(e)=>{
-            e.stopPropagation();
-            DeleteMember()
-          }}>
+          <Button
+            feature="board"
+            style={{ margin: "2vh auto 0px" }}
+            onClick={(e) => {
+              e.stopPropagation();
+              DeleteMember();
+            }}
+          >
             추방하기
           </Button>
         </Modal>

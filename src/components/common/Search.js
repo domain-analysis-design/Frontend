@@ -35,16 +35,16 @@ const BoardBox = styled.div`
     cursor:pointer;
 `;
 
-function Search({feature,text}){
+function Search({boards,text}){
+    const boardList = boards.TotalBoards.boardList;
+    console.log(boardList)
     
-    const boards = createOtherBoard();
-    
-    let initShow = Function1(boards.boardList);
+    let initShow = Function1(boardList);
     
     const [showOption,setShowOption] = useState([...initShow]);
     
     const searchBoard = (board) => {
-        showOption[boards.boardList.indexOf(board)] = !showOption[boards.boardList.indexOf(board)]
+        showOption[boardList.indexOf(board)] = !showOption[boardList.indexOf(board)]
         setShowOption([...showOption])
     }
     const action = (e) =>{
@@ -52,12 +52,12 @@ function Search({feature,text}){
     }
     return(
         <Box>
-            {boards.boardList.map(board=>
+            {boardList.map(board=>
             <BoardBox onClick = {()=>searchBoard(board)}>
-                {showOption[boards.boardList.indexOf(board)] === false &&
+                {showOption[boardList.indexOf(board)] === false &&
                     <GrCheckbox style = {{width:"3vh",height : "3vh",marginLeft:"3px"}}/>
                 }
-                {showOption[boards.boardList.indexOf(board)] === true &&
+                {showOption[boardList.indexOf(board)] === true &&
                     <GrCheckboxSelected style = {{width:"3vh",height : "3vh",marginLeft:"3px"}}/>
                 }
                 <BoardItem >{board.boardName}</BoardItem>    

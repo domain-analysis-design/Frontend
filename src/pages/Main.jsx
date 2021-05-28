@@ -24,28 +24,29 @@ const Main = () => {
   const dispatch = useDispatch();
 
   const { boardList } = useSelector((state) => state.board);
-  const { TotalUsers, TotalBoards} = useSelector((state) => state.totalData);
-  console.log(TotalUsers)
-  console.log(3)
-  console.log(TotalBoards)
 
-  const tempBoardsLocalStorage = (TotalBoards) => {
-    if (localStorage.getItem("currentTotalBoards")) {
-      localStorage.removeItem("currentTotalBoards");
-    }
-    localStorage.setItem("currentTotalBoards", JSON.stringify(TotalBoards));
-  };
+  // const { TotalUsers, TotalBoards} = useSelector((state) => state.totalData);
+  // console.log(TotalUsers)
+  // console.log(3)
+  // console.log(TotalBoards)
 
-  const tempUsersLocalStorage = (TotalUsers) => {
-    if (localStorage.getItem("currentTotalUsers")) {
-      localStorage.removeItem("currentTotalUsers");
-    }
-    localStorage.setItem("currentTotalUsers", JSON.stringify(TotalUsers));
-  };
+  // const tempBoardsLocalStorage = (TotalBoards) => {
+  //   if (localStorage.getItem("currentTotalBoards")) {
+  //     localStorage.removeItem("currentTotalBoards");
+  //   }
+  //   localStorage.setItem("currentTotalBoards", JSON.stringify(TotalBoards));
+  // };
+
+  // const tempUsersLocalStorage = (TotalUsers) => {
+  //   if (localStorage.getItem("currentTotalUsers")) {
+  //     localStorage.removeItem("currentTotalUsers");
+  //   }
+  //   localStorage.setItem("currentTotalUsers", JSON.stringify(TotalUsers));
+  // };
 
   useEffect(() => {
-    tempBoardsLocalStorage(TotalBoards);
-    tempUsersLocalStorage(TotalUsers);
+    dispatch(loadBoardsRequestAction());
+    dispatch(loadUsersRequestAction());
     dispatch(loadBoardListRequestAction());
     dispatch(loadBoardsRequestAction());
     dispatch(loadUsersRequestAction());
