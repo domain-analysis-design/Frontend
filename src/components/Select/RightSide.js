@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import useToggle from "../../hooks/useToggle";
 import Search from "../common/Search";
+import { useDispatch, useSelector } from "react-redux";
+import { getBoardsRequestAction } from "../../reducers/totalData";
 
 const Block = styled.div`
   /* position: absolute;
@@ -45,6 +47,13 @@ function RightSide() {
     alignItems: "center",
   };
 
+  const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getBoardsRequestAction());
+    },[])
+    
+    const { TotalBoards } = useSelector((state)=>state.totalData)
   return (
     <Block>
       {!sendToggle && (
@@ -73,7 +82,7 @@ function RightSide() {
         placeholder="  Search Board ..."
       />
       {!toggle && <div style={{ background: "red", height: "20vh" }} />}
-      {toggle && <Search feature="board" text="choice" />}
+      {toggle && <Search boards = {{TotalBoards}} text="choice" />}
       <Button feature="sendingCard">Send</Button>
     </Block>
   );
