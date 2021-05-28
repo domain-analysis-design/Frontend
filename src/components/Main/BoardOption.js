@@ -75,6 +75,8 @@ function BoardOption({ board, method }) {
   const [deportToggle, setDeportToggle] = useState(false);
 
   const { boardList } = useSelector((state) => state.board);
+  console.log(boardList)
+  console.log(board)
 
   const onClickDelete = () => {
     setDeportToggle(false);
@@ -97,17 +99,13 @@ function BoardOption({ board, method }) {
         tmpDeletedMember.push(i);
       }
     });
-    console.log("멤버를 지우시겠습니까?");
-    //왜 안됌??
+
     dispatch(
       deleteBoardMemberRequestAction({
         tmpDeletedMember,
         boardName: board.boardName,
       }),
     );
-    // board.member.filter((v,i) => (showOption[i] === true))
-    // console.log(board.member)
-    console.log(tmpDeletedMember);
   };
 
   const closeStyle = {
