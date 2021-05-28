@@ -11,7 +11,7 @@ export const initialState = {
   boardListLoading: false,
   boardListDone: false,
   boardListError: null,
-  boardMember : null,
+  boardMember: null,
 };
 
 // action type
@@ -56,7 +56,7 @@ export const addBoardRequestAction = createAction(
 );
 
 // 영진 생각
-// board에서 createBoard를 data로 건너주면서 addBoardRequestAction호출 
+// board에서 createBoard를 data로 건너주면서 addBoardRequestAction호출
 // saga에서 watchBoard로 REQUEST를 CATCH해서 addBoardSaga실행
 // addBoardSaga에서는 createBoard를 addBoardRequestAction에서 data로 받은것을
 // action.payload로 받아낼수 있음
@@ -73,7 +73,7 @@ export const deleteBoardRequestAction = createAction(
 export const deleteBoardMemberRequestAction = createAction(
   DELETE_BOARD_MEMBER_REQUEST,
   (data) => data,
-)
+);
 // reducer
 
 const board = handleActions(
@@ -137,7 +137,7 @@ const board = handleActions(
       ...state,
     }),
     [DELETE_BOARD_SUCCESS]: (state, action) => {
-      return{
+      return {
         ...state,
         boardList: {
           ...state.boardList,
@@ -154,14 +154,22 @@ const board = handleActions(
       ...state,
     }),
     [DELETE_BOARD_MEMBER_SUCCESS]: (state, action) => {
-      return{
+      console.log(action.res);
+      return {
         ...state,
-        boardList: {
-          ...state.boardList,
-          boardList: state.boardList.boardList.filter(
-            (v, i) => v.boardName !== action.res,
-          ),
-        },
+        boardList: [...state.boardList].filter((v, i) => {
+          console.log(v);
+          if (v.boardName === action.res.boardName) {
+            return { ...v };
+          }
+        }), //[0]
+        // .member.filter((v2, i2) => {
+        //   {
+        //     if (!action.res.deletedMember.includes(i2)) {
+        //       return { ...v2 };
+        //     }
+        //   }
+        // }),
       };
     },
     [DELETE_BOARD_MEMBER_FAILURE]: (state, action) => ({
