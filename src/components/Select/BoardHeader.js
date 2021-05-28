@@ -7,7 +7,7 @@ import {GrGroup} from "react-icons/gr";
 import { Link } from 'react-router-dom';
 import Input from '../common/Input';
 import useToggle from '../../hooks/useToggle';
-import Search from '../common/Search';
+import SearchUser from '../common/SearchUser';
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersRequestAction } from '../../reducers/totalData';
 
@@ -128,7 +128,7 @@ function BoardHeader({users}){
                     <Input onClick = {setToggle} feature = "findUser" placeholder = "  Search User ..." />
                     {toggle && 
                     <SearchBox>
-                        <Search feature = "user" text = "invite"></Search>
+                        <SearchUser users = {TotalUsers} text = "invite"></SearchUser>
                     </SearchBox>}
                 </InputBox>
             </LeftGroup>
