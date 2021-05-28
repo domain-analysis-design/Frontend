@@ -16,6 +16,7 @@ const Body = styled.div`
 `;
 
 const MainBox = styled.div`
+  padding: 10px 30px;
   width: 70%;
   height: 100%;
   display: flex;
@@ -27,7 +28,7 @@ const MainBox = styled.div`
 const Select = () => {
   const BoardInfo = localStorage.getItem("currentBoard");
   const board = JSON.parse(BoardInfo);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
