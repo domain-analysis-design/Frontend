@@ -60,7 +60,6 @@ function* deleteBoardSaga(action) {
 
 function* deleteBoardMemberSaga(action) {
   try {
-    console.log("deleted member in saga", action.payload);
     const boardName = action.payload.boardName;
     const deletedMember = action.payload.tmpDeletedMember;
     // api call -> 백엔드에서 실제로 제거

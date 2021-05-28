@@ -157,18 +157,33 @@ const board = handleActions(
       console.log(action.res);
       return {
         ...state,
-        boardList: [...state.boardList].filter((v, i) => {
-          console.log(v);
-          if (v.boardName === action.res.boardName) {
-            return { ...v };
-          }
-        }), //[0]
-        // .member.filter((v2, i2) => {
-        //   {
-        //     if (!action.res.deletedMember.includes(i2)) {
-        //       return { ...v2 };
-        //     }
+        boardList: {
+          ...state.boardList,
+          boardList: state.boardList.boardList.map(
+            (v, i) => {
+              if(v.boardName === action.res.boardName){
+                v.member.filter((v2,i2)=>{
+                  // action.res.deletedMember.includes(i2)
+                  // console.log(v.member)
+                  console.log(action.res.deletedMember)
+                  console.log(i2)
+                  console.log(action.res.deletedMember.includes(i2))
+                })
+                return {...v}
+              }
+              return {...v}
+            }),
+        }
+        // [0].member.filter((v2, i2) => {
+        //   if (i2 in action.res.deletedMember) {
+        //     console.log(v2);
         //   }
+        //   //console.log(action.res.deletedMember.includes(i2));
+        //   // {
+        //   //   if (!action.res.deletedMember.includes(i2)) {
+        //   //     return { ...v2 };
+        //   //   }
+        //   // }
         // }),
       };
     },

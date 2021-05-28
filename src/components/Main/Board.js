@@ -154,7 +154,7 @@ function Board({ boards }) {
         >
           <BoardItem
             onClick={() => {
-              console.log(board.id);
+              // console.log(board.id);
             }}
           >
             <div style={{ position: "absolute", top: "1.5vh", left: "2vh" }}>
