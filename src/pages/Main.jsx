@@ -24,22 +24,28 @@ const Main = () => {
   const dispatch = useDispatch();
 
   const { boardList } = useSelector((state) => state.board);
+  const { TotalUsers, TotalBoards} = useSelector((state) => state.totalData);
+  console.log(TotalUsers)
+  console.log(3)
+  console.log(TotalBoards)
 
-  //여기 selector가 안됩니다 ㅜㅜ
-  // const { users,boards} = useSelector((state) => state.totalData);
-  // console.log(users);
-  // console.log(boards);
+  const tempBoardsLocalStorage = (TotalBoards) => {
+    if (localStorage.getItem("currentTotalBoards")) {
+      localStorage.removeItem("currentTotalBoards");
+    }
+    localStorage.setItem("currentTotalBoards", JSON.stringify(TotalBoards));
+  };
 
-  // localStorage에 users와 boards 넣어서
-  // select Page인 boardHeader와 RightSide에서
-  // 검색할떄 다른 user들과 boards 들을 saga를 이용하여
-  // localStorage에 접근하여 내용을 가져온다. 
-
-  if(localStorage.getItem("current")){
-    localStorage.removeItem("current");
-  }
+  const tempUsersLocalStorage = (TotalUsers) => {
+    if (localStorage.getItem("currentTotalUsers")) {
+      localStorage.removeItem("currentTotalUsers");
+    }
+    localStorage.setItem("currentTotalUsers", JSON.stringify(TotalUsers));
+  };
 
   useEffect(() => {
+    tempBoardsLocalStorage(TotalBoards);
+    tempUsersLocalStorage(TotalUsers);
     dispatch(loadBoardListRequestAction());
     dispatch(loadBoardsRequestAction());
     dispatch(loadUsersRequestAction());

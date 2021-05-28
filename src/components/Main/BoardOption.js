@@ -5,8 +5,8 @@ import { BiUserCircle } from "react-icons/bi";
 import { GrCheckboxSelected, GrCheckbox } from "react-icons/gr";
 import Button from "../common/Button";
 import { Modal } from "../common/Modal";
-import { useDispatch } from "react-redux";
-import { deleteBoardRequestAction } from "../../reducers/board";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteBoardMemberRequestAction, deleteBoardRequestAction } from "../../reducers/board";
 import { Function1 } from "../../libs/util/function";
 
 const Box = styled.div`
@@ -71,6 +71,8 @@ function BoardOption({ board, method }) {
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [deportToggle, setDeportToggle] = useState(false);
 
+  const { boardList } = useSelector(state => state.board)
+  
   const onClickDelete = () => {
     setDeportToggle(false);
     setDeleteToggle(!deleteToggle);
@@ -88,6 +90,7 @@ function BoardOption({ board, method }) {
   const DeleteMember = () => {
     console.log("멤버를 지우시겠습니까?");
     //왜 안됌??
+    dispatch(deleteBoardMemberRequestAction())
     board.member.filter((v,i) => (showOption[i] === true))
     console.log(board.member)
   };
