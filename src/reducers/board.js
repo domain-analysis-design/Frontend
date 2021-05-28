@@ -11,6 +11,7 @@ export const initialState = {
   boardListLoading: false,
   boardListDone: false,
   boardListError: null,
+  boardMember : null,
 };
 
 // action type
@@ -34,6 +35,9 @@ export const DELETE_BOARD_REQUEST = "board/DELETE_BOARD_REQUEST";
 export const DELETE_BOARD_SUCCESS = "board/DELETE_BOARD_SUCCESS";
 export const DELETE_BOARD_FAILURE = "board/DELETE_BOARD_FAILURE";
 
+export const DELETE_BOARD_MEMBER_REQUEST = "board/DELETE_BOARD_MEMBER_REQUEST";
+export const DELETE_BOARD_MEMBER_SUCCESS = "board/DELETE_BOARD_MEMBER_SUCCESS";
+export const DELETE_BOARD_MEMBER_FAILURE = "board/DELETE_BOARD_MEMBER_FAILURE";
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -65,6 +69,11 @@ export const deleteBoardRequestAction = createAction(
   DELETE_BOARD_REQUEST,
   (data) => data,
 );
+
+export const deleteBoardMemberRequestAction = createAction(
+  DELETE_BOARD_MEMBER_REQUEST,
+  (data) => data,
+)
 // reducer
 
 const board = handleActions(
@@ -139,6 +148,23 @@ const board = handleActions(
       };
     },
     [DELETE_BOARD_FAILURE]: (state, action) => ({
+      ...state,
+    }),
+    [DELETE_BOARD_MEMBER_REQUEST]: (state, action) => ({
+      ...state,
+    }),
+    [DELETE_BOARD_MEMBER_SUCCESS]: (state, action) => {
+      return{
+        ...state,
+        boardList: {
+          ...state.boardList,
+          boardList: state.boardList.boardList.filter(
+            (v, i) => v.boardName !== action.res,
+          ),
+        },
+      };
+    },
+    [DELETE_BOARD_MEMBER_FAILURE]: (state, action) => ({
       ...state,
     }),
   },
