@@ -112,7 +112,9 @@ const BoardBox = styled.div`
 function Board({ boards }) {
   const [currBoard, setCurrBoard] = useState(null);
 
+  
   const { boardList } = boards;
+  console.log(boardList)
 
   let initShow = Function1(boardList);
 

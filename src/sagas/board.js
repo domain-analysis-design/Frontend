@@ -13,6 +13,9 @@ import {
   DELETE_BOARD_REQUEST,
   DELETE_BOARD_SUCCESS,
   DELETE_BOARD_FAILURE,
+  DELETE_BOARD_MEMBER_REQUEST,
+  DELETE_BOARD_MEMBER_FAILURE,
+  DELETE_BOARD_MEMBER_SUCCESS,
 } from "../reducers/board";
 
 function* loadBoardSaga() {
@@ -55,9 +58,19 @@ function* deleteBoardSaga(action){
   }
 }
 
+function* deleteBoardMemberSaga(action){
+  try{
+    const res = action.payload;
+    yield put({type : DELETE_BOARD_MEMBER_SUCCESS,res})
+  }catch(error){
+    yield put({type : DELETE_BOARD_MEMBER_FAILURE,error})
+  }
+}
+
 export function* watchBoard() {
   yield takeLatest(LOAD_BOARD_REQUEST, loadBoardSaga);
   yield takeLatest(LOAD_BOARD_LIST_REQUEST, loadBoardListSaga);
   yield takeLatest(ADD_BOARD_REQUEST,addBoardSaga);
   yield takeLatest(DELETE_BOARD_REQUEST,deleteBoardSaga);
+  yield takeLatest(DELETE_BOARD_MEMBER_REQUEST,deleteBoardMemberSaga);
 }

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Input from '../common/Input';
 import useToggle from '../../hooks/useToggle';
 import Search from '../common/Search';
+import { useSelector } from "react-redux";
 
 const LeftGroup = styled.div`
     width:33.5%;
@@ -89,6 +90,16 @@ function BoardHeader({users}){
     const [toggle,setToggle] = useToggle();
     const [memberToggle,setMemberToggle] = useToggle();
     
+
+    const { TotalUsers } = useSelector((state) => state.totalData);
+    console.log(3)
+    console.log(TotalUsers);
+
+    // localStorage에 users와 boards 넣어서
+    // select Page인 boardHeader와 RightSide에서
+    // 검색할떄 다른 user들과 boards 들을 saga를 이용하여
+    // localStorage에 접근하여 내용을 가져온다. 
+
     return (
         <HeaderBlock>
             <LeftGroup>

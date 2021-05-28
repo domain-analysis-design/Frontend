@@ -3,8 +3,8 @@ import { createAction, handleActions } from "redux-actions";
 // inital state
 
 export const initialState = {
-    users : null,
-    boards : null,
+    TotalUsers : null,
+    TotalBoards : null,
 };
 
 // action type
@@ -40,7 +40,7 @@ const totalData = handleActions(
     [LOAD_BOARDS_SUCCESS]:(state,action) => {
         return{
             ...state,
-            boards:action.res,
+            TotalBoards:action.res,
         }},
     [LOAD_BOARDS_FAILURE]:(state,action) => ({
         ...state,
@@ -51,7 +51,7 @@ const totalData = handleActions(
     [LOAD_USERS_SUCCESS]:(state,action) => {
         return{
             ...state,
-            users:action.res,
+            TotalUsers:action.res,
         }},
     [LOAD_USERS_FAILURE]:(state,action) => ({
         ...state,
