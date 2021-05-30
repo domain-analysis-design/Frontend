@@ -3,21 +3,15 @@ import styled from "styled-components";
 import {
   AiOutlinePlus,
   AiOutlineEllipsis,
-  AiOutlineClose,
 } from "react-icons/ai";
 import BoardOption from "./BoardOption";
 import useToggle from "../../hooks/useToggle";
-import { Modal } from "../common/Modal";
-import Input from "../common/Input";
 import Button from "../common/Button";
-import useInput from "../../hooks/useInput";
-import { useDispatch } from "react-redux";
-import { addBoardRequestAction } from "../../reducers/board";
-import { createBoard } from "../../libs/util/dummyCreator";
 import { Redirect } from "react-router-dom";
 import {Function1} from "../../libs/util/function";
+import CreateBoardModal from "./CreateBoardModal";
 
-export const BoardItem = styled.div`
+const BoardItem = styled.div`
   width: 30vh;
   height: 15vh;
   cursor: pointer;
@@ -28,81 +22,6 @@ export const BoardItem = styled.div`
   position: relative;
 `;
 
-export const CreateBoard = ({ name }) => {
-  const [createToggle, setCreateToggle] = useToggle();
-  const [boardName, setBoardName, handleBoardName] = useInput("");
-
-  const dispatch = useDispatch();
-
-  const onCreateBoard = () => {
-    dispatch(addBoardRequestAction(createBoard()));
-
-    //dispatch(deleteBoardReqeustAction(boardId))
-  };
-
-  return (
-    <>
-      <BoardItem style={{ position: "relative" }} onClick={setCreateToggle}>
-        <AiOutlinePlus
-          style={{
-            color: "white",
-            width: "10vh",
-            height: "10vh",
-            position: "absolute",
-            top: "3vh",
-            left: "10vh",
-          }}
-        />
-      </BoardItem>
-      {createToggle && (
-        <>
-          <div
-            style={{
-              position: "fixed",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              background: "rgba(0, 0, 0, 0.298039)",
-            }}
-          />
-          <Modal feature="create">
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <AiOutlineClose
-                style={{ color: "black", width: "5vh", height: "5vh" }}
-                onClick={setCreateToggle}
-              />
-            </div>
-            <Input
-              feature="create"
-              placeholder="  Add Board Title"
-              onChange={handleBoardName}
-            />
-            <div
-              style={{
-                color: "black",
-                fontSize: "20px",
-                height: "18vh",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {name.name}'s WorkSpace
-            </div>
-          </Modal>
-          <Button
-            feature="create"
-            onClick={() => {
-              onCreateBoard();
-            }}
-          >
-            Create Board
-          </Button>
-        </>
-      )}
-    </>
-  );
-};
 const BoardBox = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -110,11 +29,14 @@ const BoardBox = styled.div`
 `;
 
 function Board({ boards }) {
+
+  console.log(boards.name)
   const [currBoard, setCurrBoard] = useState(null);
 
   
+  const [createToggle, setCreateToggle] = useToggle();
+  
   const { boardList } = boards;
-  console.log(boardList)
 
   let initShow = Function1(boardList);
 
@@ -152,11 +74,7 @@ function Board({ boards }) {
             setCurrBoard(board.id);
           }}
         >
-          <BoardItem
-            onClick={() => {
-              // console.log(board.id);
-            }}
-          >
+          <BoardItem>
             <div style={{ position: "absolute", top: "1.5vh", left: "2vh" }}>
               {board.boardName} Board
             </div>
@@ -179,7 +97,23 @@ function Board({ boards }) {
           </BoardItem>
         </div>
       ))}
-      <CreateBoard name={boards} />
+
+      <Button feature = "createBoard" onClick={setCreateToggle}>
+        <AiOutlinePlus
+            style={{
+              color: "white",
+              width: "10vh",
+              height: "10vh",
+              position: "absolute",
+              top: "3vh",
+              left: "10vh",
+            }}
+          />
+      </Button>
+
+      {createToggle && (
+        <CreateBoardModal name = {boards.name}/>
+      )}
     </BoardBox>
   );
 }
