@@ -95,6 +95,19 @@ const Button = styled.div`
       color: rgb(0, 0, 0);
       background-color: rgb(224, 224, 224);
     `}
+
+    ${(props) => props.feature === "createBoard" &&
+    css`
+      width: 30vh;
+    height: 15vh;
+    cursor: pointer;
+    background: rgb(2, 106, 167);
+    margin-bottom: 3vh;
+    font-size: 24px;
+    color: white;
+    position: relative;
+    `
+    }
 `;
 
 export default Button;
