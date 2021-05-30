@@ -77,6 +77,7 @@ function RightSide() {
         </SendCardList>
       )}
       <Input
+        style={{ width: "95%", height: "40px" }}
         feature="findGroup"
         onClick={setToggle}
         placeholder="  Search Board ..."

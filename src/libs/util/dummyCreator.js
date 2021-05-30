@@ -52,9 +52,16 @@ export const createBoard = () => {
 export const createList = () => {
   return {
     listName: faker.random.word(),
-    cards: new Array(3).fill().map((v, i) => ({
-      ...createCard(),
-    })),
+    cards: new Array(
+      faker.datatype.number({
+        min: 3,
+        max: 7,
+      }),
+    )
+      .fill()
+      .map((v, i) => ({
+        ...createCard(),
+      })),
   };
 };
 
@@ -72,7 +79,7 @@ export const createCard = () => {
 
 export const createItem = () => {
   return {
-    desc: faker.random.word(),
+    desc: faker.lorem.paragraph(),
     checked: faker.datatype.boolean(),
   };
 };

@@ -197,6 +197,20 @@ function BoardOption({ board, method }) {
 
       {deportToggle && (
         <Modal feature="deport">
+          <AiOutlineClose onClick={(e) => {
+          e.stopPropagation();
+          onClickDeport();
+        }}
+        style={{
+          color: "black",
+          position: "absolute",
+          top: "1vh",
+          right: "1vh",
+          width: "3vh",
+          height: "3vh",
+          boxSizing : "border-box",
+          border : "1px solid black",
+        }}/>
           {board.member.map((member) => (
             <MemberBox
               onClick={(e) => {
