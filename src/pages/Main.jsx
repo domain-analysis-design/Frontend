@@ -22,7 +22,7 @@ const UserTitle = styled.div`
 
 const Main = () => {
   const dispatch = useDispatch();
-
+  
   const { boardList } = useSelector((state) => state.board);
 
   // const { TotalUsers, TotalBoards} = useSelector((state) => state.totalData);
@@ -48,8 +48,8 @@ const Main = () => {
     dispatch(loadBoardsRequestAction());
     dispatch(loadUsersRequestAction());
     dispatch(loadBoardListRequestAction());
-    dispatch(loadBoardsRequestAction());
-    dispatch(loadUsersRequestAction());
+    // dispatch(loadBoardsRequestAction());
+    // dispatch(loadUsersRequestAction());
   }, []);
 
   if (!boardList) return null;

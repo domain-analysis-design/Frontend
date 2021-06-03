@@ -41,7 +41,9 @@ export const createBoard = () => {
       ...createList(),
     })),
     waitingCard: new Array(5).fill().map((v, i) => ({
-      ...createCard(),
+      cardName: faker.random.word(),
+      accept : false,
+      id : shortid.generate(),
     })),
     member: new Array(5).fill().map((v, i) => ({
       memberID: faker.name.findName(),

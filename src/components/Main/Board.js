@@ -30,7 +30,6 @@ const BoardBox = styled.div`
 
 function Board({ boards }) {
 
-  console.log(boards.name)
   const [currBoard, setCurrBoard] = useState(null);
 
   
