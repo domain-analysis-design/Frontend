@@ -16,6 +16,9 @@ import {
   DELETE_BOARD_MEMBER_REQUEST,
   DELETE_BOARD_MEMBER_FAILURE,
   DELETE_BOARD_MEMBER_SUCCESS,
+  UPDATE_WAIT_CARD_REQUEST,
+  UPDATE_WAIT_CARD_FAILURE,
+  UPDATE_WAIT_CARD_SUCCESS,
 } from "../reducers/board";
 
 function* loadBoardSaga() {
@@ -73,10 +76,21 @@ function* deleteBoardMemberSaga(action) {
   }
 }
 
+function* updateWaitCardSaga(action){
+  console.log(action.payload)
+  try{
+    const res = action.payload
+    yield put({type : UPDATE_WAIT_CARD_SUCCESS,res})
+  }catch(error){
+    yield put({type : UPDATE_WAIT_CARD_FAILURE,error});
+  }
+}
+
 export function* watchBoard() {
   yield takeLatest(LOAD_BOARD_REQUEST, loadBoardSaga);
   yield takeLatest(LOAD_BOARD_LIST_REQUEST, loadBoardListSaga);
   yield takeLatest(ADD_BOARD_REQUEST, addBoardSaga);
   yield takeLatest(DELETE_BOARD_REQUEST, deleteBoardSaga);
   yield takeLatest(DELETE_BOARD_MEMBER_REQUEST, deleteBoardMemberSaga);
+  yield takeLatest(UPDATE_WAIT_CARD_REQUEST, updateWaitCardSaga);
 }

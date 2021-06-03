@@ -48,8 +48,8 @@ const Main = () => {
     dispatch(loadBoardsRequestAction());
     dispatch(loadUsersRequestAction());
     dispatch(loadBoardListRequestAction());
-    dispatch(loadBoardsRequestAction());
-    dispatch(loadUsersRequestAction());
+    // dispatch(loadBoardsRequestAction());
+    // dispatch(loadUsersRequestAction());
   }, []);
 
   if (!boardList) return null;
