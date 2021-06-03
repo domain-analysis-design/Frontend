@@ -42,6 +42,10 @@ export const DELETE_BOARD_MEMBER_FAILURE = "board/DELETE_BOARD_MEMBER_FAILURE";
 export const UPDATE_WAIT_CARD_REQUEST = "board/UPDATE_WAIT_CARD_REQUEST";
 export const UPDATE_WAIT_CARD_SUCCESS = "board/UPDATE_WAIT_CARD_SUCCESS";
 export const UPDATE_WAIT_CARD_FAILURE = "board/UPDATE_WAIT_CARD_FAILURE";
+
+export const DELETE_WAIT_CARD_REQUEST = "board/DELETE_WAITE_CARD_REQUEST";
+export const DELETE_WAIT_CARD_SUCCESS = "board/DELETE_WAIT_CARD_SUCCESS";
+export const DELETE_WAIT_CARD_FAILURE = "board/DELETE_WAIT_CARD_FAILURE";
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -61,6 +65,7 @@ export const addBoardRequestAction = createAction(
 
 export const updateWaitCardRequestAction = createAction(UPDATE_WAIT_CARD_REQUEST);
 
+export const deleteWaitCardRequestAction = createAction(DELETE_WAIT_CARD_REQUEST);
 // 영진 생각
 // board에서 createBoard를 data로 건너주면서 addBoardRequestAction호출
 // saga에서 watchBoard로 REQUEST를 CATCH해서 addBoardSaga실행
@@ -194,24 +199,41 @@ const board = handleActions(
       ...state,
     }),
     [UPDATE_WAIT_CARD_SUCCESS] : (state,action) => {
-      return({
+      return{
         ...state,
         board : {
           ...state.board,
           waitingCard : 
             state.board.waitingCard.map((v,i) => {
-              // (v.id === action.res) ?
-              // {
-              //   ...v,
-              // } :
-              return{
-                ...v,
-              }
+              if(v.id === action.res){
+                return{
+                  ...v,
+                  accept : !action.res
+                }}else{
+                  return{
+                    ...v,
+                  }
+                }
           })
-      },
-    },console.log(state))
+        },
+      }
     },
     [UPDATE_WAIT_CARD_FAILURE] : (state,action) => ({
+      ...state,
+    }),
+    [DELETE_WAIT_CARD_REQUEST] : (state,action) => {
+      return{
+        ...state,
+        board : {
+          ...state.board,
+          waitingCard : state.board.waitingCard.filter((v,i) => (v.id !== action.res))
+        },
+      }
+    },
+    [DELETE_WAIT_CARD_SUCCESS] : (state,action) => ({
+      ...state,
+    }),
+    [DELETE_WAIT_CARD_FAILURE] : (state,action) => ({
       ...state,
     })
   },

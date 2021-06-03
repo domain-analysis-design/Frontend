@@ -79,6 +79,19 @@ const Input = styled.input`
         width:435px;
         height:40px;
     `}
+
+    ${props => props.feature ==="createList" &&
+    css`
+        width:270px;
+        height:50px;
+        margin-top:1px;
+    `}
+    ${props => props.feature ==="createCard" &&
+    css`
+        width:220px;
+        height:50px;
+        margin-top:1px;
+    `}
 `;
 
 export default Input;

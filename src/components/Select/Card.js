@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-const CardBox = styled.div`
+export const CardBox = styled.div`
   border: 1px solid red;
   width: 95%;
   border-radius: 3px;

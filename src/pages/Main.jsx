@@ -22,7 +22,7 @@ const UserTitle = styled.div`
 
 const Main = () => {
   const dispatch = useDispatch();
-
+  
   const { boardList } = useSelector((state) => state.board);
 
   // const { TotalUsers, TotalBoards} = useSelector((state) => state.totalData);

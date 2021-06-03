@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import styled from "styled-components";
-import { updateWaitCardRequestAction } from "../../reducers/board";
+import { deleteWaitCardRequestAction, updateWaitCardRequestAction } from "../../reducers/board";
 import Button from "../common/Button";
 import Card from "./Card";
 
@@ -29,7 +29,10 @@ const Box = styled.div`
 
 function LeftSide({ Board }) {
   const dispatch = useDispatch();
-  
+  const {board} = useSelector(state => state.board)
+  console.log(1)
+  console.log(board)
+  console.log(2)
   console.log(Board);
   const AcceptCard = ({ card }) => {
     console.log(card);
@@ -49,6 +52,7 @@ function LeftSide({ Board }) {
   const DenyCard = ({ card }) => {
     console.log(card);
     console.log(card.accept)
+    dispatch(deleteWaitCardRequestAction(card.id));
     //saga요청해서
     //board의 waitingCard를 지워줘야함
 
