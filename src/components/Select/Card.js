@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-const CardBox = styled.div`
+export const CardBox = styled.div`
   border: 1px solid red;
   width: 95%;
   border-radius: 3px;
@@ -19,7 +19,7 @@ const CardBox = styled.div`
   cursor: pointer;
   /* line-height: 40px; */
   ${(props) =>
-    props.feature === "send" &&
+    props.feature === false &&
     css`
       width: 220px;
       /* height: 80px; */
@@ -27,16 +27,23 @@ const CardBox = styled.div`
       /* line-height: 80px; */
       margin: 0.5vh auto;
     `}
+
+  ${props =>
+  props.feature === true &&
+  css`
+
+  `}
 `;
 
 function Card({ card, feature }) {
-  const OpenCard = ({ card, feature }) => {
-    if (feature !== "send") {
-      console.log(card);
+  console.log(feature)
+  const OpenCard = ({ card }) => {
+    if (card.accept !== false) {
+      console.log("카드창 보여주기");
     }
   };
   return (
-    <CardBox feature={feature} onClick={() => OpenCard({ card, feature })}>
+    <CardBox feature={feature} onClick={() => OpenCard({ card })}>
       {card.cardName}
     </CardBox>
   );

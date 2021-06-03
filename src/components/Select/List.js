@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { AiOutlineEllipsis, AiOutlinePlus } from "react-icons/ai";
-import Card from "./Card";
+import { AiOutlineEllipsis, AiOutlinePlus,AiOutlineClose } from "react-icons/ai";
+import Card, { CardBox } from "./Card";
+import useToggle from "../../hooks/useToggle";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
 const ListBlock = styled.div`
   background-color: rgb(235, 236, 240);
@@ -18,6 +21,7 @@ const ListHeader = styled.div`
   /* padding: 2vh; */
   /* padding-bottom: 5px; */
   padding-left: 1.8vh;
+  padding-right: 1.8vh;
   box-sizing: border-box;
   /* font-size: 28px; */
   display: flex;
@@ -44,22 +48,43 @@ const ListFooter = styled.div`
 `;
 
 export const CreateList = () => {
+  const [create,setCreate] = useToggle();
+
   const createList = () => {
-    console.log("createList");
+    setCreate();
+    console.log("진짜 list 생성");
   };
   return (
-    <ListBlock style={{ border: "1px solid red", height: "70px" }}>
-      <ListHeader style={{ cursor: "pointer" }} onClick={() => createList()}>
-        <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
-        <div>Add another List</div>
-      </ListHeader>
-    </ListBlock>
+    <>
+      {!create ?
+          <ListBlock style={{ border: "1px solid red", height: "70px" }}>
+            <ListHeader style={{ cursor: "pointer" }} onClick={() => setCreate()}>
+              <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
+              <div>Add another List</div>
+            </ListHeader>
+          </ListBlock>
+        :
+          <ListBlock style={{ border: "1px solid red", height: "100px" }}>
+              <div style = {{width:"280px",display:"flex",flexDirection :"column",alignItems:"center"}}>
+                  <Input feature = "createList" placeholder = "Enter List title..." />
+              </div>
+              <div style = {{display: "flex", marginTop : "1px", marginLeft:"3px", width:"130px",height:"50px",justifyContent:"space-between",alignItems:"center"}}>
+                <Button feature = "createList" onClick = {createList}>Add List</Button>
+                <AiOutlineClose style = {{width:"20px",height:"20px"}} onClick = {setCreate}/>
+              </div>
+              
+          </ListBlock>
+      } 
+    </>
   );
 };
 
 function List({ list }) {
+  const [create,setCreate] = useToggle();
+
   const createCard = () => {
-    console.log("createCard");
+    setCreate();
+    console.log("진짜 card 생성");
   };
   return (
     <ListBlock>
@@ -74,10 +99,20 @@ function List({ list }) {
           <Card card={card}>card.cardName</Card>
         ))}
       </div>
-      <ListFooter onClick={createCard}>
-        <AiOutlinePlus />
-        <div>Add another card</div>
-      </ListFooter>
+      {!create ?
+        <ListFooter onClick={createCard}>
+          <AiOutlinePlus />
+          <div>Add another card</div>
+        </ListFooter>
+      :
+        <CardBox>
+          <Input feature = "createCard" placeholder = "Enter Card Title..."/>
+          <div style = {{display: "flex", marginTop : "3px", marginLeft:"3px", width:"130px",height:"45px",justifyContent:"space-between",alignItems:"center"}}>
+                <Button feature = "createList" onClick = {createCard}>Add Card</Button>
+                <AiOutlineClose style = {{width:"20px",height:"20px"}} onClick = {setCreate}/>
+          </div>
+        </CardBox>  
+    }
     </ListBlock>
   );
 }

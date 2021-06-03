@@ -108,6 +108,15 @@ const Button = styled.div`
     position: relative;
     `
     }
+
+    ${props => props.feature ==="createList" &&
+    css`
+      width:100px;
+      height:40px;
+      font-size:16px;
+      /* margin-top : 5px;
+      margin-left : 10px; */
+    `}
 `;
 
 export default Button;
