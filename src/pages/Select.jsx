@@ -33,10 +33,12 @@ const Select = () => {
 
   useEffect(() => {
     dispatch(loadBoardRequestAction());
+    //loadBoardRequestAction : localStorage에 있는 currentBoard 갖고오기
     return () => {
       dispatch(initializeBoardRequestAction());
+      // 다 썻으면 초기화 시켜주기
     };
-  }, []);
+  }, [BoardInfo]);
 
   return (
     <>
