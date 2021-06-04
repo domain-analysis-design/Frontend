@@ -46,6 +46,10 @@ export const UPDATE_WAIT_CARD_FAILURE = "board/UPDATE_WAIT_CARD_FAILURE";
 export const DELETE_WAIT_CARD_REQUEST = "board/DELETE_WAITE_CARD_REQUEST";
 export const DELETE_WAIT_CARD_SUCCESS = "board/DELETE_WAIT_CARD_SUCCESS";
 export const DELETE_WAIT_CARD_FAILURE = "board/DELETE_WAIT_CARD_FAILURE";
+
+export const UPDATE_BOARD_REQUEST = "board/UPDATE_BOARD_REQUEST";
+export const UPDATE_BOARD_SUCCESS = "board/UPDATE_BOARD_SUCCESS";
+export const UPDATE_BOARD_FAILURE = "board/UPDATE_BOARD_FAILURE";
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -83,6 +87,11 @@ export const deleteBoardRequestAction = createAction(
 
 export const deleteBoardMemberRequestAction = createAction(
   DELETE_BOARD_MEMBER_REQUEST,
+  (data) => data,
+);
+
+export const updateBoardRequestAction = createAction(
+  UPDATE_BOARD_REQUEST,
   (data) => data,
 );
 // reducer
@@ -221,7 +230,10 @@ const board = handleActions(
     [UPDATE_WAIT_CARD_FAILURE] : (state,action) => ({
       ...state,
     }),
-    [DELETE_WAIT_CARD_REQUEST] : (state,action) => {
+    [DELETE_WAIT_CARD_REQUEST] : (state,action) => ({
+      ...state,
+    }),
+    [DELETE_WAIT_CARD_SUCCESS] : (state,action) => {
       return{
         ...state,
         board : {
@@ -230,12 +242,22 @@ const board = handleActions(
         },
       }
     },
-    [DELETE_WAIT_CARD_SUCCESS] : (state,action) => ({
-      ...state,
-    }),
     [DELETE_WAIT_CARD_FAILURE] : (state,action) => ({
       ...state,
-    })
+    }),
+    [UPDATE_BOARD_REQUEST] : (state,action) => ({
+      ...state,
+    }),
+    [UPDATE_BOARD_SUCCESS] : (state,action) => {
+      
+      return{
+        ...state,
+        board : action.res,
+      };
+    },
+    [UPDATE_BOARD_FAILURE] : (state,action) => ({
+      ...state,
+    }),
   },
   initialState,
 );

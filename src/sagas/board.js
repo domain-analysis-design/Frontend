@@ -22,12 +22,16 @@ import {
   DELETE_WAIT_CARD_FAILURE,
   DELETE_WAIT_CARD_SUCCESS,
   DELETE_WAIT_CARD_REQUEST,
+  UPDATE_BOARD_REQUEST,
+  UPDATE_BOARD_FAILURE,
+  UPDATE_BOARD_SUCCESS,
 } from "../reducers/board";
 
 function* loadBoardSaga() {
+  //loadBoardRequestAction : localStorage에 있는 currentBoard 갖고오기
   try {
     yield delay(100);
-    // const res = createUser();
+
     const res = localStorage.getItem("currentBoard");
     yield put({ type: LOAD_BOARD_SUCCESS, board: JSON.parse(res) });
   } catch (error) {
@@ -36,9 +40,10 @@ function* loadBoardSaga() {
 }
 
 function* loadBoardListSaga(action) {
+  //loadBoardListRequestAction : 사용자 board 정보 갖고오기
   try {
     yield delay(100);
-    // const res2 = yield call(`api/createBoard/${action.createUser}`, {})
+
     const res = createUser();
     yield put({ type: LOAD_BOARD_LIST_SUCCESS, boardList: res });
   } catch (error) {
@@ -47,6 +52,7 @@ function* loadBoardListSaga(action) {
 }
 
 function* addBoardSaga(action) {
+        //addBoardRequestAction : board 생성
   try {
     const res = action.payload;
     yield put({ type: ADD_BOARD_SUCCESS, res });
@@ -56,6 +62,7 @@ function* addBoardSaga(action) {
 }
 
 function* deleteBoardSaga(action) {
+  //deleteBoardSaga 보드삭제
   try {
     const res = action.payload;
     yield put({ type: DELETE_BOARD_SUCCESS, res });
@@ -65,6 +72,7 @@ function* deleteBoardSaga(action) {
 }
 
 function* deleteBoardMemberSaga(action) {
+  //deleteBoardMemberRequestAction : 팀원 추방
   try {
     const boardName = action.payload.boardName;
     const deletedMember = action.payload.tmpDeletedMember;
@@ -80,6 +88,7 @@ function* deleteBoardMemberSaga(action) {
 }
 
 function* updateWaitCardSaga(action){
+  //waitcard 상태 수정하기 accept하기
   try{
     const res = action.payload
     yield put({type : UPDATE_WAIT_CARD_SUCCESS,res})
@@ -89,11 +98,23 @@ function* updateWaitCardSaga(action){
 }
 
 function* deleteWaitCardSaga(action){
+  //waitcard 상태 수정하기
   try{
     const res = action.payload;
     yield put({type : DELETE_WAIT_CARD_SUCCESS,res});
   }catch(error){
     yield put({type : DELETE_WAIT_CARD_FAILURE,error});
+  }
+}
+
+function* updateBoardRequestSaga(action){
+  // board 정보 저장하기
+  try{
+    const res = action.payload;
+    console.log(res);
+    yield put({type : UPDATE_BOARD_SUCCESS,res})
+  }catch(error){
+    yield put({type : UPDATE_BOARD_FAILURE,error});
   }
 }
 export function* watchBoard() {
@@ -104,4 +125,5 @@ export function* watchBoard() {
   yield takeLatest(DELETE_BOARD_MEMBER_REQUEST, deleteBoardMemberSaga);
   yield takeLatest(UPDATE_WAIT_CARD_REQUEST, updateWaitCardSaga);
   yield takeLatest(DELETE_WAIT_CARD_REQUEST, deleteWaitCardSaga);
+  yield takeLatest(UPDATE_BOARD_REQUEST, updateBoardRequestSaga);
 }

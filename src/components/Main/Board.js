@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   AiOutlinePlus,
@@ -10,6 +10,8 @@ import Button from "../common/Button";
 import { Redirect } from "react-router-dom";
 import {Function1} from "../../libs/util/function";
 import CreateBoardModal from "./CreateBoardModal";
+import { useSelector } from "react-redux";
+import { updateBoardRequestAction } from "../../reducers/board";
 
 const BoardItem = styled.div`
   width: 30vh;
@@ -32,18 +34,17 @@ function Board({ boards }) {
 
   const [currBoard, setCurrBoard] = useState(null);
 
-  
   const [createToggle, setCreateToggle] = useToggle();
   
   const { boardList } = boards;
-
+  
   let initShow = Function1(boardList);
-
+  
   const [showOption, setShowOption] = useState([]);
-
+  
   const optionOpen = (board) => {
     let index = boardList.indexOf(board);
-
+    
     if (showOption[index]) {
       showOption[index] = false;
       setShowOption([...showOption]);
@@ -55,13 +56,16 @@ function Board({ boards }) {
     }
   };
 
-  const tempLocalStorage = (boardInfo) => {
-    if (localStorage.getItem("currentBoard")) {
-      localStorage.removeItem("currentBoard");
+  const board = useSelector((state)=>state.board)
+  useEffect(() => {
+    return () => {
+      if (localStorage.getItem("currentBoard")) {
+        localStorage.removeItem("currentBoard");
+      }
+      localStorage.setItem("currentBoard", JSON.stringify(board));
     }
-    localStorage.setItem("currentBoard", JSON.stringify(boardInfo));
-  };
-
+  }, [])
+  
   if (currBoard) return <Redirect to={`/main/${currBoard}`}></Redirect>;
 
   return (
@@ -69,7 +73,7 @@ function Board({ boards }) {
       {boardList.map((board) => (
         <div
           onClick={() => {
-            tempLocalStorage(board);
+            updateBoardRequestAction(board);
             setCurrBoard(board.id);
           }}
         >
