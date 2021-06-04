@@ -27,13 +27,11 @@ import {
   UPDATE_BOARD_SUCCESS,
 } from "../reducers/board";
 
-function* loadBoardSaga() {
+function* loadBoardSaga(action) {
   //loadBoardRequestAction : localStorage에 있는 currentBoard 갖고오기
   try {
-    yield delay(100);
-
-    const res = localStorage.getItem("currentBoard");
-    yield put({ type: LOAD_BOARD_SUCCESS, board: JSON.parse(res) });
+    const res = action.payload;
+    yield put({ type: LOAD_BOARD_SUCCESS, board : res });
   } catch (error) {
     yield put({ type: LOAD_BOARD_FAILURE, error });
   }

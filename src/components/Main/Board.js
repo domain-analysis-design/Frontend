@@ -10,8 +10,8 @@ import Button from "../common/Button";
 import { Redirect } from "react-router-dom";
 import {Function1} from "../../libs/util/function";
 import CreateBoardModal from "./CreateBoardModal";
-import { useSelector } from "react-redux";
-import { updateBoardRequestAction } from "../../reducers/board";
+import { useDispatch, useSelector } from "react-redux";
+import { loadBoardRequestAction, updateBoardRequestAction } from "../../reducers/board";
 
 const BoardItem = styled.div`
   width: 30vh;
@@ -31,6 +31,8 @@ const BoardBox = styled.div`
 `;
 
 function Board({ boards }) {
+  
+  const dispatch = useDispatch();
 
   const [currBoard, setCurrBoard] = useState(null);
 
@@ -56,15 +58,20 @@ function Board({ boards }) {
     }
   };
 
-  const board = useSelector((state)=>state.board)
-  useEffect(() => {
-    return () => {
-      if (localStorage.getItem("currentBoard")) {
-        localStorage.removeItem("currentBoard");
-      }
-      localStorage.setItem("currentBoard", JSON.stringify(board));
-    }
-  }, [])
+  function saveBoardInLocal(board){
+    // board를 redux에 저장
+    dispatch(loadBoardRequestAction(board))
+    // updateBoardRequestAction(board);
+    // const board = useSelector((state)=>state.board)
+    // if (localStorage.getItem("currentBoard")) {
+    //   localStorage.removeItem("currentBoard");
+    // }
+    // localStorage.setItem("currentBoard", JSON.stringify(board));
+    // useEffect(() => {
+    //   return () => {
+    //   }
+    // }, [])
+  }
   
   if (currBoard) return <Redirect to={`/main/${currBoard}`}></Redirect>;
 
@@ -73,7 +80,7 @@ function Board({ boards }) {
       {boardList.map((board) => (
         <div
           onClick={() => {
-            updateBoardRequestAction(board);
+            saveBoardInLocal(board);
             setCurrBoard(board.id);
           }}
         >

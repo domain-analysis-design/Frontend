@@ -23,27 +23,27 @@ const UserTitle = styled.div`
 const Main = () => {
   const dispatch = useDispatch();
   
-  const { boardList } = useSelector((state) => state.board);
-
+  
   // const { TotalUsers, TotalBoards} = useSelector((state) => state.totalData);
   // console.log(TotalUsers)
   // console.log(3)
   // console.log(TotalBoards)
-
+  
   // const tempBoardsLocalStorage = (TotalBoards) => {
-  //   if (localStorage.getItem("currentTotalBoards")) {
-  //     localStorage.removeItem("currentTotalBoards");
-  //   }
-  //   localStorage.setItem("currentTotalBoards", JSON.stringify(TotalBoards));
-  // };
-
-  // const tempUsersLocalStorage = (TotalUsers) => {
-  //   if (localStorage.getItem("currentTotalUsers")) {
-  //     localStorage.removeItem("currentTotalUsers");
-  //   }
-  //   localStorage.setItem("currentTotalUsers", JSON.stringify(TotalUsers));
-  // };
-
+    //   if (localStorage.getItem("currentTotalBoards")) {
+      //     localStorage.removeItem("currentTotalBoards");
+      //   }
+      //   localStorage.setItem("currentTotalBoards", JSON.stringify(TotalBoards));
+      // };
+      
+      // const tempUsersLocalStorage = (TotalUsers) => {
+        //   if (localStorage.getItem("currentTotalUsers")) {
+          //     localStorage.removeItem("currentTotalUsers");
+          //   }
+          //   localStorage.setItem("currentTotalUsers", JSON.stringify(TotalUsers));
+          // };
+  const { boardList } = useSelector((state) => state.board);
+          
   useEffect(() => {
     dispatch(loadBoardsRequestAction());
     //loadBoardsRequestAction 시스템 사용 boards들 갖고오기
@@ -51,7 +51,6 @@ const Main = () => {
     //loadUsersRequestAction 시스템 사용 user들 갖고오기
     dispatch(loadBoardListRequestAction());
     //loadBoardListRequestAction : 사용자 board 정보 갖고오기
-
   }, []);
 
   if (!boardList) return null;
