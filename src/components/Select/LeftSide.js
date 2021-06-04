@@ -30,9 +30,6 @@ const Box = styled.div`
 function LeftSide({ Board }) {
   const dispatch = useDispatch();
   const AcceptCard = ({ card }) => {
-    console.log(card);
-    console.log(card.accept)
-    console.log(card.id)
     dispatch(updateWaitCardRequestAction(card.id));
   };
 

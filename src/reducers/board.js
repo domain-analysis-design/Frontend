@@ -58,7 +58,10 @@ export const initializeBoardListRequestAction = createAction(
   INITIALIZE_BOARD_LIST,
 );
 
-export const loadBoardRequestAction = createAction(LOAD_BOARD_REQUEST);
+export const loadBoardRequestAction = createAction(
+    LOAD_BOARD_REQUEST,
+    (data)=>data
+  );
 
 export const loadBoardListRequestAction = createAction(LOAD_BOARD_LIST_REQUEST);
 
@@ -217,7 +220,7 @@ const board = handleActions(
               if(v.id === action.res){
                 return{
                   ...v,
-                  accept : !action.res
+                  accept : !v.accept
                 }}else{
                   return{
                     ...v,
