@@ -88,6 +88,7 @@ function BoardOption({ board, method }) {
   };
   const DeleteBoard = () => {
     dispatch(deleteBoardRequestAction(board.boardName));
+  //deleteBoardSaga 보드삭제
     setDeportToggle(false);
     setDeleteToggle(false);
   };
@@ -105,6 +106,7 @@ function BoardOption({ board, method }) {
         tmpDeletedMember,
         boardName: board.boardName,
       }),
+      //deleteBoardMemberRequestAction : 팀원 추방
     );
   };
 

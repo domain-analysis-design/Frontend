@@ -16,6 +16,7 @@ import {
 } from "../reducers/totalData";
 
 function* loadBoardsSaga() {
+  //loadBoardsRequestAction 시스템 사용 boards들 갖고오기
   try {
     const res = createOtherBoard();
 

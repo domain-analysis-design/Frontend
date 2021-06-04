@@ -46,10 +46,12 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(loadBoardsRequestAction());
+    //loadBoardsRequestAction 시스템 사용 boards들 갖고오기
     dispatch(loadUsersRequestAction());
+    //loadUsersRequestAction 시스템 사용 user들 갖고오기
     dispatch(loadBoardListRequestAction());
-    // dispatch(loadBoardsRequestAction());
-    // dispatch(loadUsersRequestAction());
+    //loadBoardListRequestAction : 사용자 board 정보 갖고오기
+
   }, []);
 
   if (!boardList) return null;

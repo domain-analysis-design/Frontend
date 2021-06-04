@@ -17,6 +17,7 @@ function CreateBoardModal({name}){
 
     const onCreateBoard = () => {
         dispatch(addBoardRequestAction(createBoard()));
+        //addBoardRequestAction : board 생성
     };
 
     return(
