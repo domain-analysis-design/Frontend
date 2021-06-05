@@ -38,12 +38,13 @@ export const createBoard = () => {
     id: shortid.generate(),
     boardName: faker.random.word(),
     lists: new Array(5).fill().map((v, i) => ({
+      columnIndex: i,
       ...createList(),
     })),
     waitingCard: new Array(5).fill().map((v, i) => ({
       cardName: faker.random.word(),
-      accept : false,
-      id : shortid.generate(),
+      accept: false,
+      id: shortid.generate(),
     })),
     member: new Array(5).fill().map((v, i) => ({
       memberID: faker.name.findName(),
@@ -62,6 +63,7 @@ export const createList = () => {
     )
       .fill()
       .map((v, i) => ({
+        cardIndex: i,
         ...createCard(),
       })),
   };

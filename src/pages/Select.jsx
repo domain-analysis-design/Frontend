@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   loadBoardRequestAction,
   initializeBoardRequestAction,
+  updateList,
 } from "../reducers/board";
+import { useCallback } from "react";
 
 const Body = styled.div`
   display: flex;
@@ -27,12 +29,36 @@ const MainBox = styled.div`
 
 const Select = () => {
   //redux에 board가지고오기
-  const {board} = useSelector((state)=>state.board);
-  console.log(board)
-  // const BoardInfo = localStorage.getItem("currentBoard");
-  // const board = JSON.parse(BoardInfo);
+  const { board } = useSelector((state) => state.board);
 
   const dispatch = useDispatch();
+
+  const handleMoveMyCard = useCallback(
+    (from, to) => {
+      const { task, fromColumnIndex, fromItemIndex } = from;
+      const { toColumnIndex, toItemIndex } = to;
+
+      const myLists = [...board.lists];
+      // remove card
+      myLists[fromColumnIndex].cards.splice(fromItemIndex, 1);
+      // move card
+      myLists[toColumnIndex].cards.splice(toItemIndex, 0, task);
+
+      dispatch(
+        updateList({
+          from: {
+            fromCards: myLists[fromColumnIndex].cards,
+            fromColumnIndex,
+          },
+          to: {
+            toCards: myLists[toColumnIndex].cards,
+            toColumnIndex,
+          },
+        }),
+      );
+    },
+    [board],
+  );
 
   // useEffect(() => {
   //   if (localStorage.getItem("currentBoard")) {
@@ -50,14 +76,20 @@ const Select = () => {
   //   };
   // }, []);
 
+  if (!board) return null;
+
   return (
     <>
       <BoardHeader users={board.member} />
       <Body>
         <LeftSide Board={board} />
         <MainBox>
-          {board.lists.map((list) => (
-            <List list={list}></List>
+          {board.lists.map((list, i) => (
+            <List
+              list={list}
+              handleMoveMyCard={handleMoveMyCard}
+              columnIndex={i}
+            ></List>
           ))}
           <CreateList />
         </MainBox>
