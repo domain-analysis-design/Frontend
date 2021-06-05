@@ -21,7 +21,7 @@ export const CardBox = styled.div`
   ${(props) =>
     props.feature === false &&
     css`
-      width: 220px;
+      width: 20vh;
       /* height: 80px; */
       text-align: center;
       /* line-height: 80px; */
@@ -31,7 +31,14 @@ export const CardBox = styled.div`
   ${props =>
   props.feature === true &&
   css`
-
+    width: 25vh;
+    height: 8vh;
+      /* height: 80px; */
+    text-align: center;
+    line-height: 5vh;
+    margin: 0.5vh auto;
+    background-color: rgb(52, 152, 219);
+    color : white;
   `}
 `;
 
