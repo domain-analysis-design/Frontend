@@ -127,6 +127,7 @@ function List({ list, handleMoveMyCard, columnIndex }) {
         toColumnIndex: columnIndex,
         toItemIndex: list.cards.length,
       };
+      console.log("from, to", from, to);
       handleMoveMyCard(from, to);
     },
     //canDrop: (item) => item.columnIndex !== columnIndex,

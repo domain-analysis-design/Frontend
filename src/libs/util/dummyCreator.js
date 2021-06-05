@@ -37,10 +37,37 @@ export const createBoard = () => {
   return {
     id: shortid.generate(),
     boardName: faker.random.word(),
-    lists: new Array(5).fill().map((v, i) => ({
-      columnIndex: i,
-      ...createList(),
-    })),
+    lists: new Array(6).fill().map((v, i) => {
+      if (i === 0) {
+        return {
+          columnIndex: i,
+          cards: new Array(5).fill().map((v, i2) => ({
+            columnIndex: i,
+            cardIndex: i2,
+            cardName: faker.random.word(),
+            accept: false,
+            id: shortid.generate(),
+          })),
+        };
+      } else if (i === 5) {
+        return {
+          columnIndex: 5,
+          cards: [
+            {
+              columnIndex: 5,
+              cardIndex: 0,
+              cardName: faker.random.word(),
+              accept: false,
+              id: shortid.generate(),
+            },
+          ],
+        };
+      }
+      return {
+        columnIndex: i,
+        ...createList(i),
+      };
+    }),
     waitingCard: new Array(5).fill().map((v, i) => ({
       cardName: faker.random.word(),
       accept: false,
@@ -52,7 +79,7 @@ export const createBoard = () => {
   };
 };
 
-export const createList = () => {
+export const createList = (columnIndex) => {
   return {
     listName: faker.random.word(),
     cards: new Array(
@@ -64,13 +91,14 @@ export const createList = () => {
       .fill()
       .map((v, i) => ({
         cardIndex: i,
-        ...createCard(),
+        ...createCard(columnIndex),
       })),
   };
 };
 
-export const createCard = () => {
+export const createCard = (columnIndex) => {
   return {
+    columnIndex,
     cardName: faker.random.word(),
     items: new Array(5).fill().map((v, i) => ({
       ...createItem(),

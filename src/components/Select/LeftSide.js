@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { SaveBoardInLocal } from "../../libs/util/function";
-import { deleteWaitCardRequestAction, updateWaitCardRequestAction } from "../../reducers/board";
+import {
+  deleteWaitCardRequestAction,
+  updateWaitCardRequestAction,
+} from "../../reducers/board";
 import Button from "../common/Button";
 import Card from "./Card";
+import { useDrag, useDrop } from "react-dnd";
+import { ItemTypes } from "../../libs/util/dnd";
 
 const Block = styled.div`
   padding: 10px;
@@ -28,8 +33,8 @@ const Box = styled.div`
   border-bottom: 1px solid black;
 `;
 
-function LeftSide({ Board }) {
-  const {board} = useSelector((state) => state.board);
+function LeftSide({ Board, handleMoveMyCard }) {
+  const { board } = useSelector((state) => state.board);
 
   const dispatch = useDispatch();
   const AcceptCard = ({ card }) => {
@@ -43,15 +48,56 @@ function LeftSide({ Board }) {
     //unmount됐을때 바꿔주자
     //SaveBoardInLocal(board);
   };
+  const [{ isOver, canDrop }, dropRef] = useDrop({
+    accept: ItemTypes.CARD,
+    drop: (task) => {
+      console.log("task : ", task);
+      const from = {
+        task: task.item,
+        fromColumnIndex: 0,
+        fromItemIndex: task.item.cardIndex,
+      };
+      const to = {
+        // toColumnIndex: columnIndex,
+        // toItemIndex: list.cards.length,
+      };
+      console.log("from, to", from, to);
+      handleMoveMyCard(from, to);
+    },
+    //canDrop: (item) => item.columnIndex !== columnIndex,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  });
 
-  
+  // const [, dragRef, preview] = useDrag({
+  //   // (*)
+  //   type: ItemTypes.CARD,
+  //   item2: {
+  //     fuck: 1,
+  //   },
+  //   item: {
+  //     type: ItemTypes.CARD,
+  //     fromColumnIndex: 0,
+  //     // fromItemIndex: index,
+  //     // item: card,
+  //     //toItemIndex: card.cardIndex,
+  //   },
+  //   collect: (monitor) => ({
+  //     isDragging: monitor.isDragging(),
+  //   }),
+  //   // end: (item) => {
+  //   //   console.log(`${index} should move to ${JSON.stringify(item)}`);
+  //   // },
+  // });
 
   return (
-    <Block>
-      {Board.waitingCard.map((card) => (
+    <Block ref={dropRef}>
+      {Board.lists[0].cards.map((card, i) => (
         <Box>
-          <Card card={card} feature={card.accept} />
-          {!card.accept ? 
+          <Card card={card} feature={card.accept} index={i} columnIndex={0} />
+          {!card.accept ? (
             <ButtonBox>
               <Button feature="accept" onClick={() => AcceptCard({ card })}>
                 승인
@@ -64,9 +110,9 @@ function LeftSide({ Board }) {
                 거절
               </Button>
             </ButtonBox>
-          :
-          <div></div>
-        }
+          ) : (
+            <div></div>
+          )}
         </Box>
       ))}
     </Block>
