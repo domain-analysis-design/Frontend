@@ -8,7 +8,7 @@ import BoardOption from "./BoardOption";
 import useToggle from "../../hooks/useToggle";
 import Button from "../common/Button";
 import { Redirect } from "react-router-dom";
-import {Function1} from "../../libs/util/function";
+import {Function1, SaveBoardInLocal} from "../../libs/util/function";
 import CreateBoardModal from "./CreateBoardModal";
 import { useDispatch, useSelector } from "react-redux";
 import { loadBoardRequestAction, updateBoardRequestAction } from "../../reducers/board";
@@ -58,19 +58,10 @@ function Board({ boards }) {
     }
   };
 
-  function saveBoardInLocal(board){
+  function saveBoard(board){
     // board를 redux에 저장
     dispatch(loadBoardRequestAction(board))
-    // updateBoardRequestAction(board);
-    // const board = useSelector((state)=>state.board)
-    // if (localStorage.getItem("currentBoard")) {
-    //   localStorage.removeItem("currentBoard");
-    // }
-    // localStorage.setItem("currentBoard", JSON.stringify(board));
-    // useEffect(() => {
-    //   return () => {
-    //   }
-    // }, [])
+    SaveBoardInLocal(board)
   }
   
   if (currBoard) return <Redirect to={`/main/${currBoard}`}></Redirect>;
@@ -80,7 +71,7 @@ function Board({ boards }) {
       {boardList.map((board) => (
         <div
           onClick={() => {
-            saveBoardInLocal(board);
+            saveBoard(board);
             setCurrBoard(board.id);
           }}
         >
