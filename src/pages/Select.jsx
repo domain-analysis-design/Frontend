@@ -10,7 +10,10 @@ import {
   initializeBoardRequestAction,
   updateList,
 } from "../reducers/board";
+
 import { useCallback } from "react";
+import { SaveBoardInLocal } from "../libs/util/function";
+
 
 const Body = styled.div`
   display: flex;
@@ -29,6 +32,7 @@ const MainBox = styled.div`
 
 const Select = () => {
   //redux에 board가지고오기
+
   const { board } = useSelector((state) => state.board);
 
   const dispatch = useDispatch();
@@ -67,19 +71,39 @@ const Select = () => {
   //   localStorage.setItem("currentBoard", JSON.stringify(board));
   // }, [])
 
-  // useEffect(() => {
-  //   // dispatch(loadBoardRequestAction());
-  //   //loadBoardRequestAction : localStorage에 있는 currentBoard 갖고와서  redux저장
-  //   return () => {
-  //     dispatch(initializeBoardRequestAction());
-  //     // 다 썻으면 초기화 시켜주기
-  //   };
-  // }, []);
+  const {board} = useSelector((state) => state.board);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const BoardInfo = localStorage.getItem("currentBoard");
+
+
+    const currBoard = JSON.parse(BoardInfo);
+    
+    dispatch(loadBoardRequestAction(currBoard))
+    // SaveBoardInLocal(board)
+    
+  }, []);
+
 
   if (!board) return null;
 
+
+  useEffect(() => {
+    
+    return () => {
+      if(board){
+        SaveBoardInLocal(board);
+      }
+      
+    };
+  }, [board])
+
+  if(!board) return <div>123</div>
+
   return (
-    <>
+    <div>
       <BoardHeader users={board.member} />
       <Body>
         <LeftSide Board={board} />
@@ -95,7 +119,7 @@ const Select = () => {
         </MainBox>
         <RightSide />
       </Body>
-    </>
+    </div>
   );
 };
 

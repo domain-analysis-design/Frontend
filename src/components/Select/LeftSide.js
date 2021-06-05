@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import styled from "styled-components";
+import { SaveBoardInLocal } from "../../libs/util/function";
 import { deleteWaitCardRequestAction, updateWaitCardRequestAction } from "../../reducers/board";
 import Button from "../common/Button";
 import Card from "./Card";
@@ -28,32 +29,44 @@ const Box = styled.div`
 `;
 
 function LeftSide({ Board }) {
+  const {board} = useSelector((state) => state.board);
+
   const dispatch = useDispatch();
   const AcceptCard = ({ card }) => {
     dispatch(updateWaitCardRequestAction(card.id));
+    //unmount됐을때 바꿔주자
+    //SaveBoardInLocal(board);
   };
 
   const DenyCard = ({ card }) => {
     dispatch(deleteWaitCardRequestAction(card.id));
+    //unmount됐을때 바꿔주자
+    //SaveBoardInLocal(board);
   };
+
+  
 
   return (
     <Block>
       {Board.waitingCard.map((card) => (
         <Box>
           <Card card={card} feature={card.accept} />
-          <ButtonBox>
-            <Button feature="accept" onClick={() => AcceptCard({ card })}>
-              승인
-            </Button>
-            <Button
-              feature="deny"
-              onClick={() => DenyCard({ card })}
-              style={{ marginLeft: "20px" }}
-            >
-              거절
-            </Button>
-          </ButtonBox>
+          {!card.accept ? 
+            <ButtonBox>
+              <Button feature="accept" onClick={() => AcceptCard({ card })}>
+                승인
+              </Button>
+              <Button
+                feature="deny"
+                onClick={() => DenyCard({ card })}
+                style={{ marginLeft: "20px" }}
+              >
+                거절
+              </Button>
+            </ButtonBox>
+          :
+          <div></div>
+        }
         </Box>
       ))}
     </Block>
