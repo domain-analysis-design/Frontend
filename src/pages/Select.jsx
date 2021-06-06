@@ -55,6 +55,13 @@ const Select = () => {
         cardIndex: toItemIndex,
         columnIndex: toColumnIndex,
       });
+      myLists[fromColumnIndex].cards = myLists[fromColumnIndex].cards.map(
+        (v, i) => {
+          return { ...v, cardIndex: i };
+        },
+      );
+      console.log("from", myLists[fromColumnIndex].cards);
+      console.log("to", myLists[toColumnIndex].cards);
 
       dispatch(
         updateList({

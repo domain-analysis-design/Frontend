@@ -41,7 +41,7 @@ const SendCard = styled.div`
 function RightSide({ Board, handleMoveMyCard, columnIndex }) {
   const initSendCard = [];
   const [toggle, setToggle] = useToggle();
-  const [sendToggle, setSendToggle] = useToggle();
+  const [sendToggle, setSendToggle] = useToggle(false);
   const [sendCard, setSendCard] = useState(initSendCard);
 
   const SendCardListStyle = {
@@ -82,15 +82,28 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
   const { TotalBoards } = useSelector((state) => state.totalData);
   return (
     <Block ref={dropRef}>
-      {Board.lists[5].cards.map((card, i) => (
-        <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
-      ))}
-      {!sendToggle && (
+      {!Board.lists[5].cards ? (
         <SendCardList style={SendCardListStyle}>
           <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
         </SendCardList>
+      ) : (
+        Board.lists[5].cards.map((card, i) => (
+          <div style={{ width: "100%" }}>
+            <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
+          </div>
+        ))
       )}
-      {sendToggle && (
+      {/* {Board.lists[5].cards.map((card, i) => (
+        <div style={{ width: "100%" }}>
+          <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
+        </div>
+      ))} */}
+      {/* {!sendToggle && (
+        <SendCardList style={SendCardListStyle}>
+          <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
+        </SendCardList>
+      )} */}
+      {/* {sendToggle && (
         <SendCardList>
           {sendCard.map((card) => {
             <div
@@ -100,11 +113,11 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
                 borderBottom: "1px solid black",
               }}
             >
-              1{/* <SendCard>{card.cardName}</SendCard> */}
+              
             </div>;
           })}
         </SendCardList>
-      )}
+      )} */}
       <Input
         style={{ width: "95%", height: "40px" }}
         feature="findGroup"
