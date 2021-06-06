@@ -17,7 +17,7 @@ const ListBlock = styled.div`
   background-color: rgb(235, 236, 240);
   border-radius: 4px;
   margin: 0 1vh;
-  border: 1px solid red;
+
   width: 250px;
 `;
 
@@ -34,7 +34,6 @@ const ListHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid blue;
 `;
 
 const ListFooter = styled.div`
@@ -64,14 +63,14 @@ export const CreateList = () => {
   return (
     <>
       {!create ? (
-        <ListBlock style={{ border: "1px solid red", height: "70px" }}>
+        <ListBlock style={{ height: "70px" }}>
           <ListHeader style={{ cursor: "pointer" }} onClick={() => setCreate()}>
             <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
             <div>Add another List</div>
           </ListHeader>
         </ListBlock>
       ) : (
-        <ListBlock style={{ border: "1px solid red", height: "100px" }}>
+        <ListBlock style={{ height: "100px" }}>
           <div
             style={{
               width: "280px",

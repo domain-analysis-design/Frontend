@@ -7,7 +7,6 @@ import { ItemTypes } from "../../libs/util/dnd";
 import { useDragLayer } from "react-dnd";
 
 export const CardBox = styled.div`
-  border: 1px solid red;
   width: 95%;
   border-radius: 3px;
   /* height: 40px; */
@@ -18,7 +17,7 @@ export const CardBox = styled.div`
   font-size: 20px;
   color: #666;
   &:hover {
-    background: #eee;
+    background: #ccc;
   }
 
   cursor: pointer;
@@ -33,19 +32,18 @@ export const CardBox = styled.div`
       margin: 0.5vh auto;
     `}
 
-  ${props =>
-  props.feature === true &&
-  css`
-    width: 25vh;
-    height: 8vh;
+  ${(props) =>
+    props.feature === true &&
+    css`
+      width: 25vh;
+      height: 8vh;
       /* height: 80px; */
-    text-align: center;
-    line-height: 5vh;
-    margin: 0.5vh auto;
-    background-color: rgb(52, 152, 219);
-    color : white;
-  `}
-
+      text-align: center;
+      line-height: 5vh;
+      margin: 0.5vh auto;
+      background-color: rgb(52, 152, 219);
+      color: white;
+    `}
 `;
 
 function Card({ card, feature, index, columnIndex }) {

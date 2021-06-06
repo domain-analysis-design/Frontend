@@ -7,7 +7,9 @@ import { Function1 } from "../../libs/util/function";
 
 const Wrapper = styled.div`
   width: 100%;
-  border: 1px solid red;
+  border: 1px solid #999;
+  padding: 10px 0;
+  margin-bottom: 10px;
 `;
 
 const Box = styled.div`
@@ -41,9 +43,8 @@ const BoardBox = styled.div`
   cursor: pointer;
 `;
 
-function Search({ boards, text }) {
+function Search({ boards, text, setToggle, setCurrentBoard }) {
   const boardList = boards.TotalBoards.boardList;
-  console.log(boardList);
 
   let initShow = Function1(boardList);
 
@@ -56,7 +57,23 @@ function Search({ boards, text }) {
     setShowOption([...showOption]);
   };
   const action = (e) => {
-    console.log(e);
+    setShowOption(
+      showOption.map((v, i) => {
+        if (v) {
+          setCurrentBoard(boardList[i]);
+          setToggle(false);
+
+          return !v;
+        }
+        return v;
+      }),
+    );
+
+    // showOption.forEach((v, i) => {
+    //   if (v) {
+    //     console.log(boardList[i]);
+    //   }
+    // });
   };
   return (
     <Wrapper>
@@ -77,7 +94,18 @@ function Search({ boards, text }) {
           </BoardBox>
         ))}
       </Box>
-      <Button feature="choiceBoard" onClick={action} className="choice-btn">
+      <Button
+        feature="choiceBoard"
+        onClick={action}
+        className="choice-btn"
+        style={{
+          fontSize: "1rem",
+          background: "#ddd",
+          border: "1px solid #999",
+          color: "#111",
+          height: "30px",
+        }}
+      >
         {text}
       </Button>
     </Wrapper>

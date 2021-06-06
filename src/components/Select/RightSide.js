@@ -10,6 +10,8 @@ import { getBoardsRequestAction } from "../../reducers/totalData";
 import Card from "./Card";
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../libs/util/dnd";
+import shortid from "shortid";
+import { sendCardAction } from "../../reducers/board";
 
 const Block = styled.div`
   /* position: absolute;
@@ -21,6 +23,7 @@ const Block = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
 `;
 
 const SendCardList = styled.div`
@@ -43,6 +46,8 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
   const [toggle, setToggle] = useToggle();
   const [sendToggle, setSendToggle] = useToggle(false);
   const [sendCard, setSendCard] = useState(initSendCard);
+
+  const [currentBoard, setCurrentBoard] = useState(null);
 
   const SendCardListStyle = {
     display: "flex",
@@ -79,25 +84,50 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
     dispatch(getBoardsRequestAction());
   }, []);
 
+  useEffect(() => {
+    console.log(currentBoard);
+  }, [currentBoard]);
+
+  const sendCardHhandler = () => {
+    let sendConfirm = window.confirm("카드를 전송하시겠습니까?");
+    if (sendConfirm) {
+      dispatch(sendCardAction());
+    }
+  };
+
   const { TotalBoards } = useSelector((state) => state.totalData);
   return (
     <Block ref={dropRef}>
-      {!Board.lists[5].cards ? (
+      <div
+        style={{
+          padding: "20px",
+          background: "#059be5",
+          border: "1px solid #ddd",
+          color: "#fff",
+          fontWeight: "bold",
+        }}
+      >
+        ✈️Card List to Send
+      </div>
+      {Board.lists[5].cards.length === 0 && (
         <SendCardList style={SendCardListStyle}>
           <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
         </SendCardList>
-      ) : (
-        Board.lists[5].cards.map((card, i) => (
+      )}
+      <div
+        style={{
+          width: "100%",
+          background: "#eee",
+          padding: "5px 0",
+          margin: "5px 0",
+        }}
+      >
+        {Board.lists[5].cards.map((card, i) => (
           <div style={{ width: "100%" }}>
             <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
           </div>
-        ))
-      )}
-      {/* {Board.lists[5].cards.map((card, i) => (
-        <div style={{ width: "100%" }}>
-          <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
-        </div>
-      ))} */}
+        ))}
+      </div>
       {/* {!sendToggle && (
         <SendCardList style={SendCardListStyle}>
           <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
@@ -118,15 +148,49 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
           })}
         </SendCardList>
       )} */}
+      <div
+        style={{
+          padding: "20px",
+          background: "#df5981",
+          border: "1px solid #ddd",
+          color: "#fff",
+          fontWeight: "bold",
+        }}
+      >
+        🚀Target Board
+      </div>
       <Input
-        style={{ width: "95%", height: "40px" }}
+        style={{
+          width: "95%",
+          height: "40px",
+          fontSize: "0.75rem",
+          background: "#f2a797",
+          color: "#fff",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
         feature="findGroup"
         onClick={setToggle}
-        placeholder="  Search Board ..."
+        placeholder={
+          currentBoard ? currentBoard.boardName : "  Search Board ..."
+        }
       />
       {!toggle && <div style={{ background: "red", height: "20vh" }} />}
-      {toggle && <Search boards={{ TotalBoards }} text="choice" />}
-      <Button feature="sendingCard">Send</Button>
+      {toggle && (
+        <Search
+          boards={{ TotalBoards }}
+          text="choice"
+          setToggle={setToggle}
+          setCurrentBoard={setCurrentBoard}
+        />
+      )}
+      <Button
+        feature="sendingCard"
+        style={{ width: "100%" }}
+        onClick={sendCardHhandler}
+      >
+        Send
+      </Button>
     </Block>
   );
 }
