@@ -53,13 +53,13 @@ export const createBoard = () => {
         return {
           columnIndex: 5,
           cards: [
-            {
-              columnIndex: 5,
-              cardIndex: 0,
-              cardName: faker.random.word(),
-              accept: false,
-              id: shortid.generate(),
-            },
+            // {
+            //   columnIndex: 5,
+            //   cardIndex: 0,
+            //   cardName: faker.random.word(),
+            //   accept: false,
+            //   id: shortid.generate(),
+            // },
           ],
         };
       }

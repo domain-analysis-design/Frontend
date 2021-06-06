@@ -55,6 +55,8 @@ export const MOVE_CARD = "board/MOVE_CARD";
 
 export const UPDATE_LIST = "board/UPDATE_LIST";
 
+export const SEND_CARD = "board/SEND_CARD";
+
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -110,6 +112,8 @@ export const updateBoardRequestAction = createAction(
 export const moveCardRequestAction = createAction(MOVE_CARD, (data) => data);
 
 export const updateList = createAction(UPDATE_LIST, (data) => data);
+
+export const sendCardAction = createAction(SEND_CARD);
 
 // reducer
 
@@ -305,6 +309,21 @@ const board = handleActions(
         },
       };
     },
+    [SEND_CARD]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: state.board.lists.map((v, i) => {
+          if (i === 5) {
+            return {
+              ...v,
+              cards: [],
+            };
+          }
+          return { ...v };
+        }),
+      },
+    }),
   },
   initialState,
 );

@@ -20,7 +20,7 @@ const Body = styled.div`
 `;
 
 const MainBox = styled.div`
-  padding: 10px 30px;
+  padding: 10px 20px;
   width: 70%;
   height: 100%;
   display: flex;
