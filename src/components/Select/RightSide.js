@@ -7,6 +7,9 @@ import useToggle from "../../hooks/useToggle";
 import Search from "../common/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { getBoardsRequestAction } from "../../reducers/totalData";
+import Card from "./Card";
+import { useDrag, useDrop } from "react-dnd";
+import { ItemTypes } from "../../libs/util/dnd";
 
 const Block = styled.div`
   /* position: absolute;
@@ -35,10 +38,10 @@ const SendCard = styled.div`
   background: rgb(247, 245, 250);
 `;
 
-function RightSide() {
+function RightSide({ Board, handleMoveMyCard, columnIndex }) {
   const initSendCard = [];
   const [toggle, setToggle] = useToggle();
-  const [sendToggle, setSendToggle] = useToggle();
+  const [sendToggle, setSendToggle] = useToggle(false);
   const [sendCard, setSendCard] = useState(initSendCard);
 
   const SendCardListStyle = {
@@ -47,21 +50,60 @@ function RightSide() {
     alignItems: "center",
   };
 
+  const [{ isOver, canDrop }, dropRef] = useDrop({
+    accept: ItemTypes.CARD,
+    drop: (task) => {
+      console.log("task : ", task);
+      const from = {
+        task: task.item,
+        fromColumnIndex: task.item.columnIndex,
+        fromItemIndex: task.item.cardIndex,
+      };
+      const to = {
+        toColumnIndex: 5,
+        toItemIndex: Board.lists[5].cards.length,
+      };
+      console.log("from, to", from, to);
+      handleMoveMyCard(from, to);
+    },
+    //canDrop: (item) => item.columnIndex !== columnIndex,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  });
+
   const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(getBoardsRequestAction());
-    },[])
-    
-    const { TotalBoards } = useSelector((state)=>state.totalData)
+  useEffect(() => {
+    dispatch(getBoardsRequestAction());
+  }, []);
+
+  const { TotalBoards } = useSelector((state) => state.totalData);
   return (
-    <Block>
-      {!sendToggle && (
+    <Block ref={dropRef}>
+      {!Board.lists[5].cards ? (
         <SendCardList style={SendCardListStyle}>
           <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
         </SendCardList>
+      ) : (
+        Board.lists[5].cards.map((card, i) => (
+          <div style={{ width: "100%" }}>
+            <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
+          </div>
+        ))
       )}
-      {sendToggle && (
+      {/* {Board.lists[5].cards.map((card, i) => (
+        <div style={{ width: "100%" }}>
+          <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
+        </div>
+      ))} */}
+      {/* {!sendToggle && (
+        <SendCardList style={SendCardListStyle}>
+          <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
+        </SendCardList>
+      )} */}
+      {/* {sendToggle && (
         <SendCardList>
           {sendCard.map((card) => {
             <div
@@ -71,11 +113,11 @@ function RightSide() {
                 borderBottom: "1px solid black",
               }}
             >
-              1{/* <SendCard>{card.cardName}</SendCard> */}
+              
             </div>;
           })}
         </SendCardList>
-      )}
+      )} */}
       <Input
         style={{ width: "95%", height: "40px" }}
         feature="findGroup"
@@ -83,7 +125,7 @@ function RightSide() {
         placeholder="  Search Board ..."
       />
       {!toggle && <div style={{ background: "red", height: "20vh" }} />}
-      {toggle && <Search boards = {{TotalBoards}} text="choice" />}
+      {toggle && <Search boards={{ TotalBoards }} text="choice" />}
       <Button feature="sendingCard">Send</Button>
     </Block>
   );

@@ -14,7 +14,6 @@ import {
 import { useCallback } from "react";
 import { SaveBoardInLocal } from "../libs/util/function";
 
-
 const Body = styled.div`
   display: flex;
   height: 91.9vh;
@@ -43,10 +42,26 @@ const Select = () => {
       const { toColumnIndex, toItemIndex } = to;
 
       const myLists = [...board.lists];
+
+      if (fromColumnIndex === toColumnIndex) {
+        return;
+      }
+
       // remove card
       myLists[fromColumnIndex].cards.splice(fromItemIndex, 1);
       // move card
-      myLists[toColumnIndex].cards.splice(toItemIndex, 0, task);
+      myLists[toColumnIndex].cards.splice(toItemIndex, 0, {
+        ...task,
+        cardIndex: toItemIndex,
+        columnIndex: toColumnIndex,
+      });
+      myLists[fromColumnIndex].cards = myLists[fromColumnIndex].cards.map(
+        (v, i) => {
+          return { ...v, cardIndex: i };
+        },
+      );
+      console.log("from", myLists[fromColumnIndex].cards);
+      console.log("to", myLists[toColumnIndex].cards);
 
       dispatch(
         updateList({
@@ -71,53 +86,55 @@ const Select = () => {
   //   localStorage.setItem("currentBoard", JSON.stringify(board));
   // }, [])
 
-  const {board} = useSelector((state) => state.board);
+  // const {board} = useSelector((state) => state.board);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    const BoardInfo = localStorage.getItem("currentBoard");
+  // useEffect(() => {
+  //   const BoardInfo = localStorage.getItem("currentBoard");
 
+  //   const currBoard = JSON.parse(BoardInfo);
 
-    const currBoard = JSON.parse(BoardInfo);
-    
-    dispatch(loadBoardRequestAction(currBoard))
-    // SaveBoardInLocal(board)
-    
-  }, []);
-
+  //   dispatch(loadBoardRequestAction(currBoard));
+  //   // SaveBoardInLocal(board)
+  // }, []);
 
   if (!board) return null;
 
+  // useEffect(() => {
+  //   return () => {
+  //     if (board) {
+  //       SaveBoardInLocal(board);
+  //     }
+  //   };
+  // }, [board]);
 
-  useEffect(() => {
-    
-    return () => {
-      if(board){
-        SaveBoardInLocal(board);
-      }
-      
-    };
-  }, [board])
-
-  if(!board) return <div>123</div>
+  // if (!board) return <div>123</div>;
 
   return (
     <div>
       <BoardHeader users={board.member} />
       <Body>
-        <LeftSide Board={board} />
+        <LeftSide Board={board} handleMoveMyCard={handleMoveMyCard} />
         <MainBox>
-          {board.lists.map((list, i) => (
-            <List
-              list={list}
-              handleMoveMyCard={handleMoveMyCard}
-              columnIndex={i}
-            ></List>
-          ))}
+          {board.lists.map((list, i) => {
+            if (i !== 0 && i !== 5) {
+              return (
+                <List
+                  list={list}
+                  handleMoveMyCard={handleMoveMyCard}
+                  columnIndex={i}
+                ></List>
+              );
+            }
+          })}
           <CreateList />
         </MainBox>
-        <RightSide />
+        <RightSide
+          Board={board}
+          handleMoveMyCard={handleMoveMyCard}
+          columnIndex={5}
+        />
       </Body>
     </div>
   );
