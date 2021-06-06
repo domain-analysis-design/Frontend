@@ -230,17 +230,22 @@ const board = handleActions(
         ...state,
         board: {
           ...state.board,
-          waitingCard: state.board.waitingCard.map((v, i) => {
-            if (v.id === action.res) {
+          lists: [...state.board.lists].map((v, i) => {
+            if (i === 0) {
               return {
                 ...v,
-                accept: !v.accept,
-              };
-            } else {
-              return {
-                ...v,
+                cards: v.cards.map((v2, i2) => {
+                  if (v2.id === action.res) {
+                    return {
+                      ...v2,
+                      accept: !v2.accept,
+                    };
+                  }
+                  return { ...v2 };
+                }),
               };
             }
+            return { ...v };
           }),
         },
       };
