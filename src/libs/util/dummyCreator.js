@@ -47,11 +47,13 @@ export const createBoard = () => {
             cardName: faker.random.word(),
             accept: false,
             id: shortid.generate(),
+            items: [],
+            comments: [],
           })),
         };
-      } else if (i === 5) {
+      } else if (i === 1) {
         return {
-          columnIndex: 5,
+          columnIndex: 1,
           cards: [
             // {
             //   columnIndex: 5,
@@ -111,13 +113,15 @@ export const createCard = (columnIndex) => {
 
 export const createItem = () => {
   return {
-    desc: faker.lorem.paragraph(),
-    checked: faker.datatype.boolean(),
+    id: shortid.generate(),
+    desc: faker.random.word(),
+    checked: false,
   };
 };
 
 export const createComment = () => {
   return {
+    id: shortid.generate(),
     desc: faker.random.word(),
   };
 };

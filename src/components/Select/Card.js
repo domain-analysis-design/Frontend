@@ -1,10 +1,13 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState } from "react";
 import styled, { css } from "styled-components";
 import { useDispatch } from "react-redux";
 import { moveCardRequestAction } from "../../reducers/board";
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../libs/util/dnd";
 import { useDragLayer } from "react-dnd";
+import { Modal } from "../common/Modal";
+import CardDetail from "./CardDetail";
+import { Modal as MD } from "antd";
 
 export const CardBox = styled.div`
   width: 95%;
@@ -50,11 +53,23 @@ function Card({ card, feature, index, columnIndex }) {
   const dispatch = useDispatch();
   const ref = useRef(null); // (*)
 
+  const [cardModal, setCardModal] = useState(false);
+
   console.log(feature);
   const OpenCard = ({ card }) => {
-    if (card.accept !== false) {
-      console.log("카드창 보여주기");
-    }
+    // if (card.accept !== false) {
+    //   console.log("카드창 보여주기");
+    // }
+    console.log(card);
+    setCardModal(!cardModal);
+  };
+
+  const handleOk = () => {
+    setCardModal(false);
+  };
+
+  const handleCancel = () => {
+    setCardModal(false);
   };
 
   // const moveCard = (dragIndex, hoverIndex) => {
@@ -125,14 +140,38 @@ function Card({ card, feature, index, columnIndex }) {
     <div ref={(node) => dragRef(drop(node))}>
       <CardBox
         feature={feature}
-
-        // onClick={() => {
-        //   moveCard({ dragIndex: 0, hoverIndex: index });
-        //   OpenCard({ card });
-        // }}
+        onClick={() => {
+          OpenCard({ card });
+        }}
       >
         {card.cardName}
       </CardBox>
+      {cardModal && (
+        <Modal card>
+          <div
+            style={{
+              cursor: "pointer",
+              textAlign: "right",
+              fontSize: "1.5rem",
+              marginLeft: "98%",
+            }}
+            onClick={handleCancel}
+          >
+            x
+          </div>
+          <CardDetail card={card} />
+        </Modal>
+      )}
+      {/* <MD
+        title="Basic Modal"
+        visible={cardModal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </MD> */}
     </div>
   );
 }

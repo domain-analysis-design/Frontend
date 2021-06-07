@@ -118,7 +118,7 @@ const Select = () => {
         <LeftSide Board={board} handleMoveMyCard={handleMoveMyCard} />
         <MainBox>
           {board.lists.map((list, i) => {
-            if (i !== 0 && i !== 5) {
+            if (i !== 0 && i !== 1) {
               return (
                 <List
                   list={list}

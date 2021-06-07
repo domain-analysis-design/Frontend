@@ -1,4 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
+import shortid from "shortid";
 
 //  initial  state
 
@@ -57,6 +58,18 @@ export const UPDATE_LIST = "board/UPDATE_LIST";
 
 export const SEND_CARD = "board/SEND_CARD";
 
+export const CREATE_LIST = "board/CREATE_LIST";
+
+export const CREATE_CARD = "board/CREATE_CARD";
+
+export const CHECK_ITEM = "board/CHECK_ITEM";
+
+export const DELETE_ITEM = "board/DELETE_ITEM";
+
+export const ADD_ITEM = "board/ADD_ITEM";
+
+export const ADD_COMMENT = "board/ADD_COMMENT";
+
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -114,6 +127,18 @@ export const moveCardRequestAction = createAction(MOVE_CARD, (data) => data);
 export const updateList = createAction(UPDATE_LIST, (data) => data);
 
 export const sendCardAction = createAction(SEND_CARD);
+
+export const createListAction = createAction(CREATE_LIST);
+
+export const createCardAction = createAction(CREATE_CARD);
+
+export const checkItemAction = createAction(CHECK_ITEM, (data) => data);
+
+export const deleteItemAction = createAction(DELETE_ITEM);
+
+export const addItemAction = createAction(ADD_ITEM);
+
+export const addCommentAction = createAction(ADD_COMMENT);
 
 // reducer
 
@@ -314,7 +339,7 @@ const board = handleActions(
       board: {
         ...state.board,
         lists: state.board.lists.map((v, i) => {
-          if (i === 5) {
+          if (i === 1) {
             return {
               ...v,
               cards: [],
@@ -324,7 +349,140 @@ const board = handleActions(
         }),
       },
     }),
+    [CREATE_LIST]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: [...state.board.lists, action.payload],
+      },
+    }),
+    [CREATE_CARD]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: state.board.lists.map((v, i) => {
+          if (i === action.payload.columnIndex) {
+            return {
+              ...v,
+              cards: v.cards.concat(action.payload.card),
+            };
+          }
+          return { ...v };
+        }),
+      },
+    }),
+    [CHECK_ITEM]: (state, action) => {
+      return {
+        ...state,
+        board: {
+          ...state.board,
+          lists: state.board.lists.map((v, i) => {
+            if (i === action.payload.columnIndex) {
+              return {
+                ...v,
+                cards: v.cards.map((v2, i2) => {
+                  if (i2 === action.payload.cardIndex) {
+                    return {
+                      ...v2,
+                      items: v2.items.map((v3, i3) => {
+                        if (v3.id === action.payload.id) {
+                          return { ...v3, checked: !v3.checked };
+                        }
+                        return { ...v3 };
+                      }),
+                    };
+                  }
+                  return { ...v2 };
+                }),
+              };
+            }
+            return { ...v };
+          }),
+        },
+      };
+    },
+    [DELETE_ITEM]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: state.board.lists.map((v, i) => {
+          if (i === action.payload.columnIndex) {
+            return {
+              ...v,
+              cards: v.cards.map((v2, i2) => {
+                if (i2 === action.payload.cardIndex) {
+                  return {
+                    ...v2,
+                    items: v2.items.filter((v3, i3) => {
+                      if (v3.id !== action.payload.id) {
+                        return { ...v3 };
+                      }
+                    }),
+                  };
+                }
+                return { ...v2 };
+              }),
+            };
+          }
+          return { ...v };
+        }),
+      },
+    }),
+    [ADD_ITEM]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: state.board.lists.map((v, i) => {
+          if (i === action.payload.columnIndex) {
+            return {
+              ...v,
+              cards: v.cards.map((v2, i2) => {
+                if (i2 === action.payload.cardIndex) {
+                  return {
+                    ...v2,
+                    items: v2.items.concat({
+                      id: shortid.generate(),
+                      desc: action.payload.itemTitle,
+                      checked: false,
+                    }),
+                  };
+                }
+                return { ...v2 };
+              }),
+            };
+          }
+          return { ...v };
+        }),
+      },
+    }),
+    [ADD_COMMENT]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: state.board.lists.map((v, i) => {
+          if (i === action.payload.columnIndex) {
+            return {
+              ...v,
+              cards: v.cards.map((v2, i2) => {
+                if (i2 === action.payload.cardIndex) {
+                  return {
+                    ...v2,
+                    comments: v2.comments.concat({
+                      id: shortid.generate(),
+                      desc: action.payload.commentTitle,
+                    }),
+                  };
+                }
+                return { ...v2 };
+              }),
+            };
+          }
+          return { ...v };
+        }),
+      },
+    }),
   },
+
   initialState,
 );
 

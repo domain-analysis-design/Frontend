@@ -1,13 +1,13 @@
 import React from "react";
-import styled,{css} from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Modal = styled.div`
-  position:fixed;
+  position: fixed;
   top: 35%;
   left: 40%;
   width: 40vh;
-  height:25vh;
-  
+  height: 25vh;
+
   padding: 6px 18px;
   background: #fff;
   border: 1px solid #ccc;
@@ -17,15 +17,15 @@ export const Modal = styled.div`
   resize: none;
   font-size: 14px;
 
-  .aiOutline{
+  .aiOutline {
     display: flex;
     justify-content: flex-end;
     height: 5vh;
   }
 
-  .deleteStyle{
+  .deleteStyle {
     display: flex;
-    align-items : center;
+    align-items: center;
     font-size: 25px;
     width: 100%;
     height: 10vh;
@@ -33,27 +33,35 @@ export const Modal = styled.div`
     margin-left: 1vh;
   }
 
-  .buttonBox{
+  .buttonBox {
     display: flex;
     justify-content: space-between;
     margin-top: 2vh;
   }
-  ${props => props.feature === "deport" &&
-  css`
-    width:45vh;
-    height:30vh;
-    top : 30%;
-    left : 40%;
-    overflow : auto;
-  `
-  }
+  ${(props) =>
+    props.feature === "deport" &&
+    css`
+      width: 45vh;
+      height: 30vh;
+      top: 30%;
+      left: 40%;
+      overflow: auto;
+    `}
 
-  ${props => props.feature === "create" &&
-  css`
-    left : 35%;
-    width: 65vh;
-    height: 30vh;
-  `
-  }
+  ${(props) =>
+    props.feature === "create" &&
+    css`
+      left: 35%;
+      width: 65vh;
+      height: 30vh;
+    `}
+
+${(props) =>
+    props.card &&
+    css`
+      top: 10%;
+      left: 30%;
+      width: 65vh;
+      height: 80vh;
+    `}
 `;
-

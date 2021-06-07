@@ -65,8 +65,8 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
         fromItemIndex: task.item.cardIndex,
       };
       const to = {
-        toColumnIndex: 5,
-        toItemIndex: Board.lists[5].cards.length,
+        toColumnIndex: 1,
+        toItemIndex: Board.lists[1].cards.length,
       };
       console.log("from, to", from, to);
       handleMoveMyCard(from, to);
@@ -109,7 +109,7 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
       >
         ✈️Card List to Send
       </div>
-      {Board.lists[5].cards.length === 0 && (
+      {Board.lists[1].cards.length === 0 && (
         <SendCardList style={SendCardListStyle}>
           <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
         </SendCardList>
@@ -122,7 +122,7 @@ function RightSide({ Board, handleMoveMyCard, columnIndex }) {
           margin: "5px 0",
         }}
       >
-        {Board.lists[5].cards.map((card, i) => (
+        {Board.lists[1].cards.map((card, i) => (
           <div style={{ width: "100%" }}>
             <Card card={card} index={i} columnIndex={card.columnIndex}></Card>
           </div>
