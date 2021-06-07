@@ -70,6 +70,9 @@ export const ADD_ITEM = "board/ADD_ITEM";
 
 export const ADD_COMMENT = "board/ADD_COMMENT";
 
+export const INVITE_USER_REQUEST = "board/INVITE_USER_REQUEST";
+export const INVITE_USER_SUCCESS = "board/INVITE_USER_SUCCESS";
+export const INVITE_USER_FAILURE = "board/INVITE_USER_FAILURE";
 export const DENY_CARD = "board/DENY_CARD";
 
 // action creator
@@ -142,6 +145,7 @@ export const addItemAction = createAction(ADD_ITEM);
 
 export const addCommentAction = createAction(ADD_COMMENT);
 
+export const inviteUserRequestAction = createAction(INVITE_USER_REQUEST);
 export const denyCardAction = createAction(DENY_CARD, (data) => data);
 
 // reducer
@@ -484,6 +488,21 @@ const board = handleActions(
           return { ...v };
         }),
       },
+    }),
+    [INVITE_USER_REQUEST] : (state,action) =>({
+        ...state,
+    }),
+    [INVITE_USER_SUCCESS] : (state,action) =>{
+      return {
+        ...state,
+        board : {
+          ...state.board,
+          member : state.board.member.concat({memberID : action.res})
+        }
+      };
+    },
+    [INVITE_USER_FAILURE] : (state,action) =>({
+      ...state,
     }),
     [DENY_CARD]: (state, action) => ({
       ...state,

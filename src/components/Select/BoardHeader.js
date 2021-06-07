@@ -99,6 +99,19 @@ function BoardHeader({users}){
     
     const { TotalUsers } = useSelector((state)=>state.totalData)
 
+    const SetToggleHandler = () =>{
+        setToggle()
+        if(memberToggle){
+            setMemberToggle()
+        }
+    }
+
+    const SetMemberHandler = () =>{
+        setMemberToggle()
+        if(toggle){
+            setToggle()
+        }
+    }
     // localStorage에 users와 boards 넣어서
     // select Page인 boardHeader와 RightSide에서
     // 검색할떄 다른 user들과 boards 들을 saga를 이용하여
@@ -113,7 +126,7 @@ function BoardHeader({users}){
                     </Link>
                 </IconBox>
                 <UserBox>
-                    <GrGroup onClick = {setMemberToggle} style = {{cursor:"pointer",width:"4vh",height:"4vh"}}/>
+                    <GrGroup onClick = {SetMemberHandler} style = {{cursor:"pointer",width:"4vh",height:"4vh"}}/>
                     {memberToggle &&
                     <MemberBox>
                         {users.map(user => 
@@ -125,7 +138,7 @@ function BoardHeader({users}){
                     }
                 </UserBox>
                 <InputBox>
-                    <Input onClick = {setToggle} feature = "findUser" placeholder = "  Search User ..." />
+                    <Input onClick = {SetToggleHandler} feature = "findUser" placeholder = "  Search User ..." />
                     {toggle && 
                     <SearchBox>
                         <SearchUser users = {TotalUsers} text = "invite"></SearchUser>
