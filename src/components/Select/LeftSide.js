@@ -5,6 +5,7 @@ import { SaveBoardInLocal } from "../../libs/util/function";
 import {
   deleteWaitCardRequestAction,
   updateWaitCardRequestAction,
+  denyCardAction,
 } from "../../reducers/board";
 import Button from "../common/Button";
 import Card from "./Card";
@@ -44,7 +45,8 @@ function LeftSide({ Board, handleMoveMyCard }) {
   };
 
   const DenyCard = ({ card }) => {
-    dispatch(deleteWaitCardRequestAction(card.id));
+    console.log(card);
+    dispatch(denyCardAction(card.id));
     //unmount됐을때 바꿔주자
     //SaveBoardInLocal(board);
   };
@@ -95,7 +97,7 @@ function LeftSide({ Board, handleMoveMyCard }) {
   return (
     <Block ref={dropRef}>
       {Board.lists[0].cards.map((card, i) => (
-        <Box>
+        <Box key={i}>
           <Card card={card} feature={card.accept} index={i} columnIndex={0} />
           {!card.accept ? (
             <ButtonBox>

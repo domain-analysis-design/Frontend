@@ -11,7 +11,10 @@
 ### Frontend
 
 ```js
-# go to directory
+
+# git clone https://github.com/zinozino1/domain-analysis.git
+
+# go to cloned directory
 $ cd /domain-analysis
 
 # install dependencies
