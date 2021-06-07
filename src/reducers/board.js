@@ -70,6 +70,8 @@ export const ADD_ITEM = "board/ADD_ITEM";
 
 export const ADD_COMMENT = "board/ADD_COMMENT";
 
+export const DENY_CARD = "board/DENY_CARD";
+
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -139,6 +141,8 @@ export const deleteItemAction = createAction(DELETE_ITEM);
 export const addItemAction = createAction(ADD_ITEM);
 
 export const addCommentAction = createAction(ADD_COMMENT);
+
+export const denyCardAction = createAction(DENY_CARD, (data) => data);
 
 // reducer
 
@@ -474,6 +478,25 @@ const board = handleActions(
                   };
                 }
                 return { ...v2 };
+              }),
+            };
+          }
+          return { ...v };
+        }),
+      },
+    }),
+    [DENY_CARD]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: state.board.lists.map((v, i) => {
+          if (i === 0) {
+            return {
+              ...v,
+              cards: v.cards.filter((v2, i2) => {
+                if (v2.id !== action.payload) {
+                  return { ...v2 };
+                }
               }),
             };
           }
