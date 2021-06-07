@@ -372,7 +372,6 @@ const board = handleActions(
       },
     }),
     [CHECK_ITEM]: (state, action) => {
-      console.log(action.payload);
       return {
         ...state,
         board: {

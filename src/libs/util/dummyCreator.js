@@ -47,6 +47,8 @@ export const createBoard = () => {
             cardName: faker.random.word(),
             accept: false,
             id: shortid.generate(),
+            items: [],
+            comments: [],
           })),
         };
       } else if (i === 1) {
