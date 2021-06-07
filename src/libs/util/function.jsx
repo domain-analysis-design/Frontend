@@ -3,7 +3,7 @@ export const Function1 = (item) => {
 
     let initShow = new Array();
 
-    for (var i = 0; i < num; i++){
+    for (var i = 0; i < num; i++) {
         initShow[i] = false;
     }
 
@@ -17,5 +17,5 @@ export const SaveBoardInLocal = (board) => {
     }
     console.log("요건?")
     localStorage.setItem("currentBoard", JSON.stringify(board));
-    
+
 }

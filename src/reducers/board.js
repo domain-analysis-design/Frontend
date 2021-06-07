@@ -70,6 +70,9 @@ export const ADD_ITEM = "board/ADD_ITEM";
 
 export const ADD_COMMENT = "board/ADD_COMMENT";
 
+export const INVITE_USER_REQUEST = "board/INVITE_USER_REQUEST";
+export const INVITE_USER_SUCCESS = "board/INVITE_USER_SUCCESS";
+export const INVITE_USER_FAILURE = "board/INVITE_USER_FAILURE";
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -140,6 +143,7 @@ export const addItemAction = createAction(ADD_ITEM);
 
 export const addCommentAction = createAction(ADD_COMMENT);
 
+export const inviteUserRequestAction = createAction(INVITE_USER_REQUEST);
 // reducer
 
 const board = handleActions(
@@ -481,6 +485,21 @@ const board = handleActions(
         }),
       },
     }),
+    [INVITE_USER_REQUEST] : (state,action) =>({
+        ...state,
+    }),
+    [INVITE_USER_SUCCESS] : (state,action) =>{
+      return {
+        ...state,
+        board : {
+          ...state.board,
+          member : state.board.member.concat({memberID : action.res})
+        }
+      };
+    },
+    [INVITE_USER_FAILURE] : (state,action) =>({
+      ...state,
+    })
   },
 
   initialState,
