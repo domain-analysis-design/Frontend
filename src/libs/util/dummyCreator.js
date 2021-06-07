@@ -111,6 +111,7 @@ export const createCard = (columnIndex) => {
 
 export const createItem = () => {
   return {
+    id: shortid.generate(),
     desc: faker.random.word(),
     checked: false,
   };
@@ -118,6 +119,7 @@ export const createItem = () => {
 
 export const createComment = () => {
   return {
+    id: shortid.generate(),
     desc: faker.random.word(),
   };
 };
