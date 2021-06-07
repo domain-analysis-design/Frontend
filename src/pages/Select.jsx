@@ -84,30 +84,30 @@ const Select = () => {
   //     localStorage.removeItem("currentBoard");
   //   }
   //   localStorage.setItem("currentBoard", JSON.stringify(board));
-  // }, [])
+  // }, [board]);
 
   // const {board} = useSelector((state) => state.board);
 
   // const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const BoardInfo = localStorage.getItem("currentBoard");
+  useEffect(() => {
+    const BoardInfo = localStorage.getItem("currentBoard");
 
-  //   const currBoard = JSON.parse(BoardInfo);
+    const currBoard = JSON.parse(BoardInfo);
 
-  //   dispatch(loadBoardRequestAction(currBoard));
-  //   // SaveBoardInLocal(board)
-  // }, []);
+    dispatch(loadBoardRequestAction(currBoard));
+    // SaveBoardInLocal(board)
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (board) {
+        SaveBoardInLocal(board);
+      }
+    };
+  }, [board]);
 
   if (!board) return null;
-
-  // useEffect(() => {
-  //   return () => {
-  //     if (board) {
-  //       SaveBoardInLocal(board);
-  //     }
-  //   };
-  // }, [board]);
 
   // if (!board) return <div>123</div>;
 
