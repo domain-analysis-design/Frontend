@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { AiOutlineEllipsis, AiOutlinePlus,AiOutlineClose } from "react-icons/ai";
+import {
+  AiOutlineEllipsis,
+  AiOutlinePlus,
+  AiOutlineClose,
+} from "react-icons/ai";
 import Card, { CardBox } from "./Card";
 import useToggle from "../../hooks/useToggle";
 import Input from "../common/Input";
 import Button from "../common/Button";
+import update from "immutability-helper";
+import { useDrag, useDrop } from "react-dnd";
+import { ItemTypes } from "../../libs/util/dnd";
+import { useDispatch, useSelector } from "react-redux";
+import { createListAction, createCardAction } from "../../reducers/board";
 
 const ListBlock = styled.div`
   background-color: rgb(235, 236, 240);
   border-radius: 4px;
   margin: 0 1vh;
-  border: 1px solid red;
-  width: 500px;
+
+  width: 250px;
 `;
 
 const ListHeader = styled.div`
@@ -27,7 +36,6 @@ const ListHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid blue;
 `;
 
 const ListFooter = styled.div`
@@ -48,72 +56,187 @@ const ListFooter = styled.div`
 `;
 
 export const CreateList = () => {
-  const [create,setCreate] = useToggle();
+  const dispatch = useDispatch();
+  const { board } = useSelector((state) => state.board);
 
-  const createList = () => {
-    setCreate();
-    console.log("진짜 list 생성");
+  const [create, setCreate] = useToggle();
+  const [listTitle, setListTitle] = useState("");
+  const onChangeListTitle = (e) => {
+    setListTitle(e.target.value);
   };
+
+  const createList = useCallback(() => {
+    setCreate();
+
+    dispatch(
+      createListAction({
+        columnIndex: board.lists.length,
+        listName: listTitle,
+        cards: [],
+      }),
+    );
+  }, [listTitle, setCreate, board]);
   return (
     <>
-      {!create ?
-          <ListBlock style={{ border: "1px solid red", height: "70px" }}>
-            <ListHeader style={{ cursor: "pointer" }} onClick={() => setCreate()}>
-              <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
-              <div>Add another List</div>
-            </ListHeader>
-          </ListBlock>
-        :
-          <ListBlock style={{ border: "1px solid red", height: "100px" }}>
-              <div style = {{width:"280px",display:"flex",flexDirection :"column",alignItems:"center"}}>
-                  <Input feature = "createList" placeholder = "Enter List title..." />
-              </div>
-              <div style = {{display: "flex", marginTop : "1px", marginLeft:"3px", width:"130px",height:"50px",justifyContent:"space-between",alignItems:"center"}}>
-                <Button feature = "createList" onClick = {createList}>Add List</Button>
-                <AiOutlineClose style = {{width:"20px",height:"20px"}} onClick = {setCreate}/>
-              </div>
-              
-          </ListBlock>
-      } 
+      {!create ? (
+        <ListBlock style={{ height: "70px" }}>
+          <ListHeader style={{ cursor: "pointer" }} onClick={() => setCreate()}>
+            <AiOutlinePlus style={{ width: "5vh", height: "5vh" }} />
+            <div>Add another List</div>
+          </ListHeader>
+        </ListBlock>
+      ) : (
+        <ListBlock style={{ height: "100px" }}>
+          <div
+            style={{
+              width: "280px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Input
+              feature="createList"
+              placeholder="Enter List title..."
+              onChange={onChangeListTitle}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              marginTop: "1px",
+              marginLeft: "3px",
+              width: "130px",
+              height: "50px",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Button feature="createList" onClick={createList}>
+              Add List
+            </Button>
+            <AiOutlineClose
+              style={{ width: "20px", height: "20px" }}
+              onClick={setCreate}
+            />
+          </div>
+        </ListBlock>
+      )}
     </>
   );
 };
 
-function List({ list }) {
-  const [create,setCreate] = useToggle();
+function List({ list, handleMoveMyCard, columnIndex }) {
+  const [create, setCreate] = useToggle(false);
 
-  const createCard = () => {
-    setCreate();
-    console.log("진짜 card 생성");
+  const [cardTitle, setCardTitle] = useState("");
+  const onChangeCardTitle = (e) => {
+    setCardTitle(e.target.value);
   };
-  return (
-    <ListBlock>
-      <ListHeader>
-        <div style={{ fontSize: "1.15rem" }}>{list.listName}</div>
-        <AiOutlineEllipsis
-          style={{ cursor: "pointer", width: "4vh", height: "4vh" }}
-        />
-      </ListHeader>
-      <div>
-        {list.cards.map((card) => (
-          <Card card={card}>card.cardName</Card>
-        ))}
-      </div>
-      {!create ?
-        <ListFooter onClick={createCard}>
-          <AiOutlinePlus />
-          <div>Add another card</div>
-        </ListFooter>
-      :
-        <CardBox>
-          <Input feature = "createCard" placeholder = "Enter Card Title..."/>
-          <div style = {{display: "flex", marginTop : "3px", marginLeft:"3px", width:"130px",height:"45px",justifyContent:"space-between",alignItems:"center"}}>
-                <Button feature = "createList" onClick = {createCard}>Add Card</Button>
-                <AiOutlineClose style = {{width:"20px",height:"20px"}} onClick = {setCreate}/>
-          </div>
-        </CardBox>  
+
+  const dispatch = useDispatch();
+  const createCard = useCallback(() => {
+    setCreate();
+    // console.log(columnIndex);
+    if (create) {
+      dispatch(
+        createCardAction({
+          columnIndex,
+          card: {
+            cardIndex: list.cards.length,
+            columnIndex,
+            cardName: cardTitle,
+            items: [],
+            comments: [],
+          },
+        }),
+      );
+      console.log({
+        columnIndex,
+        card: {
+          cardIndex: list.cards.length,
+          columnIndex,
+          cardName: cardTitle,
+          items: [],
+          comments: [],
+        },
+      });
     }
-    </ListBlock>
+  }, [columnIndex, cardTitle, create]);
+
+  const [{ isOver, canDrop }, dropRef] = useDrop({
+    accept: ItemTypes.CARD,
+    drop: (task) => {
+      const from = {
+        task: task.item,
+        fromColumnIndex: task.fromColumnIndex,
+        fromItemIndex: task.fromItemIndex,
+      };
+      const to = {
+        toColumnIndex: columnIndex,
+        toItemIndex: list.cards.length,
+      };
+      console.log("from, to", from, to);
+      handleMoveMyCard(from, to);
+    },
+    //canDrop: (item) => item.columnIndex !== columnIndex,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  });
+
+  return (
+    <div ref={dropRef}>
+      <ListBlock>
+        <ListHeader>
+          <div style={{ fontSize: "1.15rem" }}>{list.listName}</div>
+          <AiOutlineEllipsis
+            style={{ cursor: "pointer", width: "4vh", height: "4vh" }}
+          />
+        </ListHeader>
+        <div>
+          {list.cards.map((card, i) => (
+            <Card card={card} index={i} columnIndex={list.columnIndex}>
+              card.cardName
+            </Card>
+          ))}
+        </div>
+        {!create ? (
+          <ListFooter onClick={createCard}>
+            <AiOutlinePlus />
+            <div>Add another card</div>
+          </ListFooter>
+        ) : (
+          <CardBox>
+            <Input
+              feature="createCard"
+              placeholder="Enter Card Title..."
+              onChange={onChangeCardTitle}
+            />
+            <div
+              style={{
+                display: "flex",
+                marginTop: "3px",
+                marginLeft: "3px",
+                width: "130px",
+                height: "45px",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Button feature="createList" onClick={createCard}>
+                Add Card
+              </Button>
+              <AiOutlineClose
+                style={{ width: "20px", height: "20px" }}
+                onClick={setCreate}
+              />
+            </div>
+          </CardBox>
+        )}
+      </ListBlock>
+    </div>
   );
 }
 

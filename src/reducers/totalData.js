@@ -30,6 +30,10 @@ export const GET_USERS_FAILURE = "totalData/GET_USERS_FAILURE";
 export const GET_BOARDS_REQUEST = "totalData/GET_BOARDS_REQUEST";
 export const GET_BOARDS_SUCCESS = "totalData/GET_BOARDS_SUCCESS";
 export const GET_BOARDS_FAILURE = "totalData/GET_BOARDS_FAILURE";
+
+export const INVITE_USER_REQUEST = "totalData/INVITE_USER_REQUEST";
+export const INVITE_USER_SUCCESS = "totalData/INVITE_USER_SUCCESS";
+export const INVITE_USER_FAILURE = "totalData/INVITE_USER_FAILURE";
 //action creator
 
 export const initializeBoardsRequestAction = createAction(INITIALIZE_BOARDS);
@@ -41,6 +45,7 @@ export const loadUsersRequestAction = createAction( LOAD_USERS_REQUEST);
 export const getUsersRequestAction = createAction(GET_USERS_REQUEST);
 export const getBoardsRequestAction = createAction(GET_BOARDS_REQUEST);
 
+export const inviteUserInTotalRequestAction = createAction(INVITE_USER_REQUEST, data=>data);
 //reducer
 
 const totalData = handleActions(
@@ -95,6 +100,19 @@ const totalData = handleActions(
     [GET_BOARDS_FAILURE]:(state,action) => ({
         ...state,
     }),
+    [INVITE_USER_REQUEST]:(state,action) =>({
+        ...state,
+    }),
+    [INVITE_USER_SUCCESS]:(state,action) =>({
+        ...state,
+        TotalUsers :{
+            UserList : 
+                state.TotalUsers.UserList.filter((v,i) => i !== action.res)
+        }
+    }),
+    [INVITE_USER_FAILURE]:(state,action) =>({
+        ...state,
+    })
 }, initialState,
 );
 

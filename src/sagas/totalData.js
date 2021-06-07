@@ -7,6 +7,10 @@ import {
   GET_USERS_FAILURE,
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
+  inviteUserInTotalRequestAction,
+  INVITE_USER_FAILURE,
+  INVITE_USER_REQUEST,
+  INVITE_USER_SUCCESS,
   LOAD_BOARDS_FAILURE,
   LOAD_BOARDS_REQUEST,
   LOAD_BOARDS_SUCCESS,
@@ -68,9 +72,19 @@ function* getBoardsSaga(){
     yield put({ type: GET_BOARDS_FAILURE, error });
   }
 }
+
+function* inviteUserSaga(action){
+  try{
+    const res = action.payload;
+    yield put({type : INVITE_USER_SUCCESS,res});
+  }catch(error){
+    yield put({type : INVITE_USER_FAILURE,error});
+  }
+}
 export function* watchTotalData() {
   yield takeLatest(LOAD_BOARDS_REQUEST, loadBoardsSaga);
   yield takeLatest(LOAD_USERS_REQUEST, loadUsersSaga);
   yield takeLatest(GET_USERS_REQUEST, getUsersSaga);
   yield takeLatest(GET_BOARDS_REQUEST, getBoardsSaga);
+  yield takeLatest(INVITE_USER_REQUEST,inviteUserSaga);
 }

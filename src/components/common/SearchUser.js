@@ -4,6 +4,9 @@ import { createOtherBoard } from '../../libs/util/dummyCreator';
 import {GrCheckbox,GrCheckboxSelected} from 'react-icons/gr';
 import Button from './Button';
 import { Function1 } from '../../libs/util/function';
+import { useDispatch } from 'react-redux';
+import { inviteUserRequestAction } from '../../reducers/board';
+import { inviteUserInTotalRequestAction } from '../../reducers/totalData';
 
 const Box = styled.div`
     width:90%;
@@ -36,6 +39,8 @@ const BoardBox = styled.div`
 `;
 
 function SearchUser({users,text}){
+    const dispatch = useDispatch();
+
     const UserList = users.UserList;
     console.log(UserList)
     
@@ -47,8 +52,10 @@ function SearchUser({users,text}){
         showOption[UserList.indexOf(user)] = !showOption[UserList.indexOf(user)]
         setShowOption([...showOption])
     }
-    const action = (e) =>{
-        console.log(e)
+    const inviteUser = () =>{
+        let num = showOption.findIndex(element => element === true)
+        dispatch(inviteUserRequestAction(UserList[num].name))
+        dispatch(inviteUserInTotalRequestAction(num))
     }
     return(
         
@@ -64,7 +71,7 @@ function SearchUser({users,text}){
                 <BoardItem >{user.name}</BoardItem>    
             </BoardBox>
             )}
-            <Button feature = "choiceBoard" onClick = {action}>{text}</Button>
+            <Button feature = "choiceBoard" onClick = {inviteUser}>{text}</Button>
         </Box>
     )
 }

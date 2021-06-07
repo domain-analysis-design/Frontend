@@ -25,6 +25,9 @@ import {
   UPDATE_BOARD_REQUEST,
   UPDATE_BOARD_FAILURE,
   UPDATE_BOARD_SUCCESS,
+  INVITE_USER_REQUEST,
+  INVITE_USER_FAILURE,
+  INVITE_USER_SUCCESS,
 } from "../reducers/board";
 
 function* loadBoardSaga(action) {
@@ -115,6 +118,17 @@ function* updateBoardRequestSaga(action){
     yield put({type : UPDATE_BOARD_FAILURE,error});
   }
 }
+
+function* inviteUserSaga(action){
+  try{
+    console.log("A")
+    console.log(action.payload);
+    const res = action.payload;
+    yield put({type : INVITE_USER_SUCCESS,res});
+  }catch(error){
+    yield put({type : INVITE_USER_FAILURE,error});
+  }
+}
 export function* watchBoard() {
   yield takeLatest(LOAD_BOARD_REQUEST, loadBoardSaga);
   yield takeLatest(LOAD_BOARD_LIST_REQUEST, loadBoardListSaga);
@@ -124,4 +138,5 @@ export function* watchBoard() {
   yield takeLatest(UPDATE_WAIT_CARD_REQUEST, updateWaitCardSaga);
   yield takeLatest(DELETE_WAIT_CARD_REQUEST, deleteWaitCardSaga);
   yield takeLatest(UPDATE_BOARD_REQUEST, updateBoardRequestSaga);
+  yield takeLatest(INVITE_USER_REQUEST,  inviteUserSaga);
 }

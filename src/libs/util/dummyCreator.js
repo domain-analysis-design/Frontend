@@ -37,13 +37,43 @@ export const createBoard = () => {
   return {
     id: shortid.generate(),
     boardName: faker.random.word(),
-    lists: new Array(5).fill().map((v, i) => ({
-      ...createList(),
-    })),
+    lists: new Array(6).fill().map((v, i) => {
+      if (i === 0) {
+        return {
+          columnIndex: i,
+          cards: new Array(5).fill().map((v, i2) => ({
+            columnIndex: i,
+            cardIndex: i2,
+            cardName: faker.random.word(),
+            accept: false,
+            id: shortid.generate(),
+            items: [],
+            comments: [],
+          })),
+        };
+      } else if (i === 1) {
+        return {
+          columnIndex: 1,
+          cards: [
+            // {
+            //   columnIndex: 5,
+            //   cardIndex: 0,
+            //   cardName: faker.random.word(),
+            //   accept: false,
+            //   id: shortid.generate(),
+            // },
+          ],
+        };
+      }
+      return {
+        columnIndex: i,
+        ...createList(i),
+      };
+    }),
     waitingCard: new Array(5).fill().map((v, i) => ({
       cardName: faker.random.word(),
-      accept : false,
-      id : shortid.generate(),
+      accept: false,
+      id: shortid.generate(),
     })),
     member: new Array(5).fill().map((v, i) => ({
       memberID: faker.name.findName(),
@@ -51,7 +81,7 @@ export const createBoard = () => {
   };
 };
 
-export const createList = () => {
+export const createList = (columnIndex) => {
   return {
     listName: faker.random.word(),
     cards: new Array(
@@ -62,13 +92,15 @@ export const createList = () => {
     )
       .fill()
       .map((v, i) => ({
-        ...createCard(),
+        cardIndex: i,
+        ...createCard(columnIndex),
       })),
   };
 };
 
-export const createCard = () => {
+export const createCard = (columnIndex) => {
   return {
+    columnIndex,
     cardName: faker.random.word(),
     items: new Array(5).fill().map((v, i) => ({
       ...createItem(),
@@ -81,13 +113,15 @@ export const createCard = () => {
 
 export const createItem = () => {
   return {
-    desc: faker.lorem.paragraph(),
-    checked: faker.datatype.boolean(),
+    id: shortid.generate(),
+    desc: faker.random.word(),
+    checked: false,
   };
 };
 
 export const createComment = () => {
   return {
+    id: shortid.generate(),
     desc: faker.random.word(),
   };
 };
