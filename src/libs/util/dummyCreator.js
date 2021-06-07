@@ -111,8 +111,8 @@ export const createCard = (columnIndex) => {
 
 export const createItem = () => {
   return {
-    desc: faker.lorem.paragraph(),
-    checked: faker.datatype.boolean(),
+    desc: faker.random.word(),
+    checked: false,
   };
 };
 
