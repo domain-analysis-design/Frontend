@@ -49,9 +49,9 @@ export const createBoard = () => {
             id: shortid.generate(),
           })),
         };
-      } else if (i === 5) {
+      } else if (i === 1) {
         return {
-          columnIndex: 5,
+          columnIndex: 1,
           cards: [
             // {
             //   columnIndex: 5,

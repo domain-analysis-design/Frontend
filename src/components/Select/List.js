@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import {
   AiOutlineEllipsis,
@@ -12,6 +12,8 @@ import Button from "../common/Button";
 import update from "immutability-helper";
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../libs/util/dnd";
+import { useDispatch, useSelector } from "react-redux";
+import { createListAction, createCardAction } from "../../reducers/board";
 
 const ListBlock = styled.div`
   background-color: rgb(235, 236, 240);
@@ -54,12 +56,26 @@ const ListFooter = styled.div`
 `;
 
 export const CreateList = () => {
-  const [create, setCreate] = useToggle();
+  const dispatch = useDispatch();
+  const { board } = useSelector((state) => state.board);
 
-  const createList = () => {
-    setCreate();
-    console.log("진짜 list 생성");
+  const [create, setCreate] = useToggle();
+  const [listTitle, setListTitle] = useState("");
+  const onChangeListTitle = (e) => {
+    setListTitle(e.target.value);
   };
+
+  const createList = useCallback(() => {
+    setCreate();
+
+    dispatch(
+      createListAction({
+        columnIndex: board.lists.length,
+        listName: listTitle,
+        cards: [],
+      }),
+    );
+  }, [listTitle, setCreate, board]);
   return (
     <>
       {!create ? (
@@ -79,7 +95,11 @@ export const CreateList = () => {
               alignItems: "center",
             }}
           >
-            <Input feature="createList" placeholder="Enter List title..." />
+            <Input
+              feature="createList"
+              placeholder="Enter List title..."
+              onChange={onChangeListTitle}
+            />
           </div>
           <div
             style={{
@@ -107,12 +127,42 @@ export const CreateList = () => {
 };
 
 function List({ list, handleMoveMyCard, columnIndex }) {
-  const [create, setCreate] = useToggle();
+  const [create, setCreate] = useToggle(false);
 
-  const createCard = () => {
-    setCreate();
-    console.log("진짜 card 생성");
+  const [cardTitle, setCardTitle] = useState("");
+  const onChangeCardTitle = (e) => {
+    setCardTitle(e.target.value);
   };
+
+  const dispatch = useDispatch();
+  const createCard = useCallback(() => {
+    setCreate();
+    // console.log(columnIndex);
+    if (create) {
+      dispatch(
+        createCardAction({
+          columnIndex,
+          card: {
+            cardIndex: list.cards.length,
+            columnIndex,
+            cardName: cardTitle,
+            items: [],
+            comments: [],
+          },
+        }),
+      );
+      console.log({
+        columnIndex,
+        card: {
+          cardIndex: list.cards.length,
+          columnIndex,
+          cardName: cardTitle,
+          items: [],
+          comments: [],
+        },
+      });
+    }
+  }, [columnIndex, cardTitle, create]);
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: ItemTypes.CARD,
@@ -159,7 +209,11 @@ function List({ list, handleMoveMyCard, columnIndex }) {
           </ListFooter>
         ) : (
           <CardBox>
-            <Input feature="createCard" placeholder="Enter Card Title..." />
+            <Input
+              feature="createCard"
+              placeholder="Enter Card Title..."
+              onChange={onChangeCardTitle}
+            />
             <div
               style={{
                 display: "flex",

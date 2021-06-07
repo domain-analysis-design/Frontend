@@ -57,6 +57,10 @@ export const UPDATE_LIST = "board/UPDATE_LIST";
 
 export const SEND_CARD = "board/SEND_CARD";
 
+export const CREATE_LIST = "board/CREATE_LIST";
+
+export const CREATE_CARD = "board/CREATE_CARD";
+
 // action creator
 
 export const initializeBoardRequestAction = createAction(INITIALIZE_BOARD);
@@ -114,6 +118,10 @@ export const moveCardRequestAction = createAction(MOVE_CARD, (data) => data);
 export const updateList = createAction(UPDATE_LIST, (data) => data);
 
 export const sendCardAction = createAction(SEND_CARD);
+
+export const createListAction = createAction(CREATE_LIST);
+
+export const createCardAction = createAction(CREATE_CARD);
 
 // reducer
 
@@ -314,10 +322,32 @@ const board = handleActions(
       board: {
         ...state.board,
         lists: state.board.lists.map((v, i) => {
-          if (i === 5) {
+          if (i === 1) {
             return {
               ...v,
               cards: [],
+            };
+          }
+          return { ...v };
+        }),
+      },
+    }),
+    [CREATE_LIST]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: [...state.board.lists, action.payload],
+      },
+    }),
+    [CREATE_CARD]: (state, action) => ({
+      ...state,
+      board: {
+        ...state.board,
+        lists: state.board.lists.map((v, i) => {
+          if (i === action.payload.columnIndex) {
+            return {
+              ...v,
+              cards: v.cards.concat(action.payload.card),
             };
           }
           return { ...v };
